@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Director View · Relationship Growth Command Center</title>
 <style>
@@ -31,7 +31,10 @@
 #view-execution [data-amanda]:focus-visible,#view-execution [data-coach-type]:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
 </style></head><body>
 <div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Overview</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
-<main class="main"><div class="top"><div><h1>Relationship Growth Command Center</h1><p>Grow the right relationships. Protect the book. Turn agent feedback into action.<div id="dirPowerBiStatus" style="font-size:10px;color:#667085;margin-top:4px">Checking latest LP Power BI import…</div></p></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership">2 NEED LEADERSHIP ↗</button></div></div>
+<main class="main"><div class="top"><div><h1>Relationship Growth Command Center</h1><p>Grow the right relationships. Protect the book. Turn agent feedback into action.<div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+<span id="dirPowerBiStatus" style="font-size:10px;color:#667085">Waiting to sync shared tracker data…</span>
+<button id="dirSyncNow" type="button" style="border:1px solid #d7dfeb;background:#fff;border-radius:8px;padding:5px 9px;font-size:10px;cursor:pointer">Sync Now</button>
+</div></p></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership">2 NEED LEADERSHIP ↗</button></div></div>
 
 <section class="view active" id="view-overview"><div class="grid kpis"><div class="card click" data-drill="active"><div class="label">Road to 200</div><div class="big" id="kpiActive">136 / 200</div><div class="delta" id="kpiActiveDelta" data-live-delta="active">Latest shared Power BI</div><div class="hint">See active roster</div></div><div class="card click" data-drill="channel"><div class="label">Channel</div><div class="big"><span id="dirChannelCount">2</span></div><div class="delta" data-live-delta="channel">Latest shared Power BI</div></div><div class="card click" data-drill="tierA"><div class="label">A</div><div class="big"><span id="dirACount">18</span></div><div class="delta" data-live-delta="tierA">Latest shared Power BI</div></div><div class="card click" data-drill="tierB"><div class="label">B</div><div class="big"><span id="dirBCount">20</span></div><div class="delta" data-live-delta="tierB">Latest shared Power BI</div></div><div class="card click" data-drill="atRisk"><div class="label">At Risk</div><div class="big">4</div><div class="delta down">1 needs attention</div></div><div class="card click" data-drill="feedback"><div class="label">Agent Voice</div><div class="big" id="feedbackCount">7</div><div class="delta" id="repeatMini">2 repeat issues</div></div></div>
 <div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
@@ -65,7 +68,7 @@
 <div class="card"><div class="label">Manager Diagnosis</div><div class="minirow" data-amanda="effort" id="amandaDiag-effort"><b>Effort</b><span>Are the calls/touches happening?</span></div><div class="minirow" data-amanda="contact" id="amandaDiag-contact"><b>Contact</b><span>Are agents actually connecting?</span></div><div class="minirow" data-amanda="booking" id="amandaDiag-booking"><b>Booking</b><span>Are connections becoming meetings?</span></div><div class="minirow" data-amanda="show" id="amandaDiag-show"><b>Show</b><span>Are booked meetings being held?</span></div><div class="minirow" data-amanda="conversion" id="amandaDiag-conversion"><b>Conversion</b><span>Are relationships advancing?</span></div><p class="meta">Once RM data is connected, this should identify the first weak point instead of making you interpret a pile of numbers.</p></div></div></div>
 <div class="section"><h3>Coach / Recognize / Follow Up</h3><div class="managerGrid"><div class="managerBox" data-coach-type="Coach"><h4>Coach This</h4><p>Use when execution or conversion is off pace. Document the expectation and the next check-in.</p></div><div class="managerBox" data-coach-type="Recognize"><h4>Recognize This</h4><p>Capture what Amanda is doing well so management is not only about misses.</p></div><div class="managerBox" data-coach-type="Follow Up"><h4>Follow Up With Amanda</h4><p>Set a date so coaching does not disappear after the conversation.</p></div></div></div>
 <div class="section"><div class="card"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><div><div class="label">Manager Notes / Coaching Log</div><p class="meta">Private to this browser in this standalone Director page.</p></div><button class="btn primary" id="addCoachBtn">+ Add Coaching Note</button></div><div id="coachSavedPreview" class="coachList"></div></div></div>
-<div class="section"><div class="card"><div class="label">Trend View</div><p class="meta">This Week vs Last Week and This Month vs Last Month for calls, connections, booking rate, held meetings and advancement.</p><div id="amandaTrendLive" class="dataNeeded">Loading RM activity…</div></div></div>
+<div class="section"><div class="card" id="amandaTrendCard" data-amanda-trend="1" role="button" tabindex="0" style="cursor:pointer"><div class="label"><span id="amandaTrendOpen" role="button" tabindex="0" style="cursor:pointer">Trend View ↗</span></div><p class="meta">This Week vs Last Week and This Month vs Last Month for calls, connections, booking rate, held meetings and advancement.</p><div id="amandaTrendLive" class="dataNeeded">Loading RM activity…</div></div></div>
 </section>
 <section class="view" id="view-feedback"><div class="viewHead"><h2>Agent Feedback & Experience</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="feedback"><div class="label">Feedback Received</div><div class="big" id="feedbackCountDetail">7</div></div><div class="card click" data-drill="repeat"><div class="label">Repeat Issues</div><div class="big" id="repeatCount">2</div><div class="delta down">Pattern detected</div></div><div class="card click" data-drill="feedbackRisk"><div class="label">Relationships at Risk</div><div class="big">2</div></div></div><div class="section"><div class="grid two"><div class="card"><div class="label">How this protects your lane</div><p class="meta">Feedback is documented, routed to the appropriate leader, and monitored for relationship impact. LP remediation remains with LP leadership.</p></div><div class="card"><div class="label">Recent Saved Feedback</div><div id="feedbackSavedPreview" class="savedPreview"></div></div></div></div></section>
 <section class="view" id="view-impact"><div class="viewHead"><h2>Director Impact</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="protected"><div class="label">At-Risk Protected</div><div class="big">4</div></div><div class="card click" data-drill="strategic"><div class="label">Strategic / Builder</div><div class="big">5</div></div><div class="card click" data-drill="escalations"><div class="label">Experience Items Routed</div><div class="big">6</div></div></div><div class="section"><div class="card"><div class="label">Recent Director Work Logged</div><div id="workSavedPreview" class="savedPreview"></div></div></div></section>
@@ -110,6 +113,7 @@ const ranges={today:{active:'136 / 200',delta:'Today',calls:'42',connections:'16
 const WORK_KEY='director_work_v2',FEEDBACK_KEY='director_feedback_v2',COACH_KEY='director_coaching_v1';
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function safeClass(id,op,cls){const el=$(id);if(el&&el.classList)el.classList[op](cls);return el}
 function showView(name){
  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
  document.querySelectorAll('.nav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
@@ -123,11 +127,11 @@ function openDrill(key){
  $('drawerSummary').textContent=d.summary;
  $('drawerResults').innerHTML=d.rows.length?d.rows.map((r,i)=>`<div class="result"><div class="resultTop"><div><h3>${esc(r[0])}</h3><div class="meta">${r.slice(1).map(esc).join(' · ')}</div></div><span class="pill ${/risk|repeat|high/i.test(r.join(' '))?'risk':'good'}">${i+1}</span></div><div class="actions"><button class="primary" data-toast="View Relationship · ${esc(r[0])}">View Relationship</button><button data-log-agent="${esc(r[0])}">Log Activity</button></div></div>`).join(''):`<div class="result"><h3>No agent-level records here yet.</h3><div class="meta">${esc(d.summary)}</div></div>`;
  closeAllOverlays();
- $('drawerBack').classList.add('open');
+ safeClass('drawerBack','add','open');
  document.body.style.overflow='hidden';
 }
 function closeDrawer(){
- $('drawerBack').classList.remove('open');
+ safeClass('drawerBack','remove','open');
  document.body.style.overflow='';
 }
 function toastMsg(msg){
@@ -138,7 +142,7 @@ function toastMsg(msg){
 function saved(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch{return[]}}
 function put(key,a){try{localStorage.setItem(key,JSON.stringify(a))}catch(_){}}
 function closeAllOverlays(){
- $('drawerBack').classList.remove('open');
+ safeClass('drawerBack','remove','open');
  document.querySelectorAll('.modalBack.open').forEach(m=>m.classList.remove('open'));
  document.body.style.overflow='';
 }
@@ -208,14 +212,17 @@ function renderWhoNeeds(k){
  $('whoPreview').innerHTML=rows.length?rows.slice(0,3).map(r=>`<div class="whoPerson"><b>${esc(r[0])}</b><span>${esc(r[1])} · ${esc(r[2])}</span></div>`).join(''):`<div class="whoPerson" style="grid-column:1/-1"><b>No real follow-ups are due ${label.toLowerCase()}.</b><span>Add a follow-up date in Log My Work or Agent Feedback and it will appear here automatically.</span></div>`;
 }
 function setRange(k){
+ window.__directorSelectedRange=k;
  const d=ranges[k]||ranges.month;
  document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===k));
  $('kpiActive').textContent=d.active;$('kpiActiveDelta').textContent=d.delta;
  $('kpiCalls').textContent=d.calls;$('kpiConnections').textContent=d.connections;$('kpiBooked').textContent=d.booked;$('kpiHeld').textContent=d.held;$('kpiAdvanced').textContent=d.advanced;
  $('mCalls').textContent=d.calls;$('mConnections').textContent=d.connections;$('mHeld').textContent=d.held;
  renderWhoNeeds(k);
- loadAmandaExecutionLive(k);
- loadDirectorSharedPowerBi(false);
+ if(window.__directorLiveReady){
+   loadAmandaExecutionLive(k);
+   loadDirectorSharedPowerBi(false);
+ }
  try{localStorage.setItem('director_range_v2',k)}catch(_){}
 }
 document.addEventListener('click',e=>{
@@ -239,10 +246,6 @@ $('sharedMgmt').addEventListener('change',e=>{const yes=e.target.value==='Yes';$
 document.querySelectorAll('.modalBack').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllOverlays()});
 renderSaved();
-let initialRange='month';try{initialRange=localStorage.getItem('director_range_v2')||'month'}catch(_){}
-setRange(initialRange);
-const initial=location.hash.replace('#','');
-showView(['growth','relationships','execution','feedback','impact','priorities'].includes(initial)?initial:'overview');
 
 /* VNEXT2: explicit Director navigation + tile bindings.
 Root cause: the prior all-tiles patch did not include .module and explicitly skipped data-view tiles. */
@@ -305,6 +308,7 @@ function dirUpdateGrowthDrills(snapshot,receipt){
  }
 }
 async function loadDirectorSharedPowerBi(force){
+ const st=$('dirPowerBiStatus');if(st)st.textContent='Syncing latest LP Power BI data…';
  try{
   const [logs,profiles]=await Promise.all([
    dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),
@@ -347,9 +351,15 @@ function dBounds(k){
  return{start:dLocalDate(s),end:dLocalDate(e),label:'This Week',factor:1};
 }
 async function dSb(path){
- const r=await fetch(DIRECTOR_RM_URL+'/rest/v1/'+path,{headers:{apikey:DIRECTOR_RM_KEY,Authorization:'Bearer '+DIRECTOR_RM_KEY,'Content-Type':'application/json'}});
- if(!r.ok)throw new Error('RM data request failed ('+r.status+')');
- return await r.json();
+ const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),12000);
+ try{
+   const r=await fetch(DIRECTOR_RM_URL+'/rest/v1/'+path,{signal:ctl.signal,cache:'no-store',headers:{apikey:DIRECTOR_RM_KEY,Authorization:'Bearer '+DIRECTOR_RM_KEY,'Content-Type':'application/json'}});
+   if(!r.ok){let msg='';try{msg=await r.text()}catch(_){}throw new Error('RM data request failed ('+r.status+')'+(msg?' · '+msg.slice(0,160):''));}
+   return await r.json();
+ }catch(e){
+   if(e&&e.name==='AbortError')throw new Error('RM data request timed out');
+   throw e;
+ }finally{clearTimeout(timer)}
 }
 function dZwDecode(s){
  try{const bits=String(s||'').replace(/\u200B/g,'0').replace(/\u200C/g,'1');let out='';for(let i=0;i+7<bits.length;i+=8)out+=String.fromCharCode(parseInt(bits.slice(i,i+8),2));return decodeURIComponent(escape(atob(out)))}catch(e){return''}
@@ -373,7 +383,7 @@ function dSignals(a){
  const agentConnection=excluded.has(type)?((type==='CTC Call'||type==='Under Contract Call')&&liveCall):connection;
  return{callAttempt:call,liveCall,agentConnection,twoWayText,meeting:isMeeting,voicemail:vm};
 }
-function dGoal(base,k){const f=dBounds(k).factor;return k==='today'?Math.ceil(base*f):k==='month'?Math.round(base*f):base}
+function dGoal(base,k){return base}
 function dCleanNotes(n){return String(n||'').replace(/[\u2063\u2064\u200B\u200C].*$/s,'').trim()}
 function dRow(a,extra=''){return[a.agent_name||'Unknown',a.act_type||'Activity',(a.act_date||'')+(a.outcome?' · '+a.outcome:'')+(extra?' · '+extra:''),dCleanNotes(a.notes||'').slice(0,300)]}
 function dPaintCard(key,value,goal,status){
@@ -427,12 +437,12 @@ async function loadAmandaExecutionLive(k){
     const row=[m.agent_name,'Week '+week,done+' of '+needed+' expected touches',over?'Follow-up cadence needs attention':'On cadence'];campaignRows.push(row);if(over)campaignOverdue.push(row);
   });
   const gc=dGoal(235,k),gw=dGoal(60,k),gcon=dGoal(35,k),gct=dGoal(40,k),gb=dGoal(9,k),gh=dGoal(3,k);
-  dPaintCard('cold',cold.length+' / '+gc,b.label+' goal: '+gc,dPace(cold.length,gc)+' · calls actually logged');
-  dPaintCard('warm',warm.length+' / '+gw,b.label+' goal: '+gw,dPace(warm.length,gw)+' · non-cold relationship call attempts');
-  dPaintCard('connections',connections.length+' / '+gcon,b.label+' goal: '+gcon,dPace(connections.length,gcon)+' · phone conversations + genuine two-way texts/meetings');
-  dPaintCard('ctouches',cTouches.length+' / '+gct,b.label+' goal: '+gct,dPace(cTouches.length,gct)+' · connected touches with current C-tier agents');
-  dPaintCard('booked',booked.length+' / '+gb,b.label+' target: '+gb,dPace(booked.length,gb)+' · booked is separate from held');
-  dPaintCard('held',held.length+' / '+gh,b.label+' target: '+gh,dPace(held.length,gh)+' · completed meetings');
+  dPaintCard('cold',k==='week'?cold.length+' / '+gc:String(cold.length),'Weekly goal: '+gc,(k==='week'?dPace(cold.length,gc)+' · ':'')+'calls actually logged '+b.label.toLowerCase());
+  dPaintCard('warm',k==='week'?warm.length+' / '+gw:String(warm.length),'Weekly goal: '+gw,(k==='week'?dPace(warm.length,gw)+' · ':'')+'non-cold relationship call attempts '+b.label.toLowerCase());
+  dPaintCard('connections',k==='week'?connections.length+' / '+gcon:String(connections.length),'Weekly goal: '+gcon,(k==='week'?dPace(connections.length,gcon)+' · ':'')+'phone conversations + genuine two-way texts/meetings');
+  dPaintCard('ctouches',k==='week'?cTouches.length+' / '+gct:String(cTouches.length),'Weekly goal: '+gct,(k==='week'?dPace(cTouches.length,gct)+' · ':'')+'connected touches with current C-tier agents');
+  dPaintCard('booked',k==='week'?booked.length+' / '+gb:String(booked.length),'Weekly target: 8–10',(k==='week'?dPace(booked.length,gb)+' · ':'')+'booked is separate from held');
+  dPaintCard('held',k==='week'?held.length+' / '+gh:String(held.length),'Weekly target: '+gh,(k==='week'?dPace(held.length,gh)+' · ':'')+'completed meetings '+b.label.toLowerCase());
   dPaintCard('followups',followDone.length+' done · '+overdueAmanda.length+' overdue',b.label,'Click to see exact due agents');
   dPaintCard('campaigns',active.length+' active · '+campaignOverdue.length+' need attention','Weeks 1–4','Newest New Realtor Meeting per agent');
   const workdays=Math.max(1,Math.min(5,new Date().getDay()===0?5:new Date().getDay()));const weeklyExpected=Math.round(235*(workdays/5)),paceGap=Math.max(0,weeklyExpected-(k==='week'?cold.length:0));
@@ -442,7 +452,7 @@ async function loadAmandaExecutionLive(k){
   const missing=held.filter(a=>!String(dCleanNotes(a.notes||'')).trim()||!String(a.outcome||'').trim());
   dPaintNeed('missingNotes','Meetings missing outcomes / notes',missing.length?missing.slice(0,3).map(x=>x.agent_name).join(', '):'No missing meeting outcomes/notes found in this period.',missing.length+' incomplete');
   const contactRate=dFmtPct(connections.length,calls.length),bookingRate=dFmtPct(booked.length,connections.length);
-  dPaintDiag('effort','Effort · '+dPace(cold.length,gc),cold.length+' cold calls vs '+gc+' goal');
+  dPaintDiag('effort',k==='week'?'Effort · '+dPace(cold.length,gc):'Effort · '+b.label,cold.length+' cold calls logged · weekly goal '+gc);
   dPaintDiag('contact','Contact · '+contactRate,connections.length+' connections from '+calls.length+' call attempts');
   dPaintDiag('booking','Booking · '+bookingRate,booked.length+' booked from '+connections.length+' connections');
   dPaintDiag('show','Show',held.length+' meetings held in '+b.label.toLowerCase());
@@ -493,7 +503,7 @@ function openAmandaDetail(key){
  <div class="result"><h3>What this means</h3><div class="meta">${esc(d.meaning)}</div></div>
  <div class="result"><h3>What you should inspect</h3><div class="meta">${esc(d.inspect)}</div></div>
  <div class="result"><h3>Your manager move</h3><div class="meta">${esc(d.coach)}</div><div class="actions"><button class="primary" id="coachFromAmanda">+ Add Coaching Note</button></div></div>`;
- closeAllOverlays();$('drawer').classList.add('open');$('drawer').setAttribute('aria-hidden','false');
+ closeAllOverlays();safeClass('drawer','add','open');$('drawer').setAttribute('aria-hidden','false');
  setTimeout(()=>{const b=$('coachFromAmanda');if(b)b.addEventListener('click',()=>{closeAllOverlays();openCoachPrefill('Coach',d.title+' — ');});},0);
 }
 function openCoachPrefill(type,prefix=''){
@@ -513,11 +523,71 @@ function bindDirectorNavigation(){
  document.querySelectorAll('.module[data-view], [data-view].module').forEach(el=>activateLikeButton(el,()=>showView(el.dataset.view)));
  document.querySelectorAll('[data-drill]').forEach(el=>{if(!el.closest('.drawer,.modal'))activateLikeButton(el,()=>openDrill(el.dataset.drill));});
  document.querySelectorAll('.kpi,.tile,.metric,.stat,.score,.miniCard,.actionCard,.whoCard,.card').forEach(el=>{
-  if(el.closest('.drawer,.modal')||el.dataset.drill||el.dataset.view||el.tagName==='A'||el.tagName==='BUTTON'||el.closest('a,button'))return;
+  if(el.closest('.drawer,.modal')||el.dataset.drill||el.dataset.view||el.dataset.amandaTrend||el.tagName==='A'||el.tagName==='BUTTON'||el.closest('a,button'))return;
   activateLikeButton(el,()=>openFunctionalTile(el));
  });
 }
-document.addEventListener('DOMContentLoaded',()=>{bindDirectorNavigation();setTimeout(()=>{loadDirectorSharedPowerBi(true);loadAmandaExecutionLive(localStorage.getItem('director_range_v2')||'week')},50)});
-setTimeout(bindDirectorNavigation,0);
+
+function openAmandaTrend(){
+ const b=dBounds(amandaLive.period||window.__directorSelectedRange||'week');
+ const m=amandaLive.metrics||{}, rows=amandaLive.rows||[];
+ const calls=rows.filter(a=>dSignals(a).callAttempt);
+ const connections=rows.filter(a=>dSignals(a).agentConnection);
+ const booked=rows.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
+ const held=rows.filter(a=>dSignals(a).meeting);
+ const byDay={};
+ rows.forEach(a=>{const d=String(a.act_date||'Unknown');if(!byDay[d])byDay[d]={calls:0,connections:0,booked:0,held:0};
+   const s=dSignals(a);if(s.callAttempt)byDay[d].calls++;if(s.agentConnection)byDay[d].connections++;
+   if(String(a.outcome||'').trim()==='Meeting Scheduled')byDay[d].booked++;if(s.meeting)byDay[d].held++;
+ });
+ const days=Object.keys(byDay).sort().reverse();
+ const dayRows=days.length?days.map(d=>`<div class="result"><h3>${esc(d)}</h3><div class="meta">Calls ${byDay[d].calls} · Connections ${byDay[d].connections} · Booked ${byDay[d].booked} · Held ${byDay[d].held}</div></div>`).join(''):
+   `<div class="result"><h3>No activity</h3><div class="meta">No Amanda activity matched ${esc(b.label.toLowerCase())}.</div></div>`;
+ $('drawerTitle').textContent='Amanda Trend View';
+ $('drawerSummary').textContent=b.label+' · live RM activity';
+ $('drawerResults').innerHTML=`
+ <div class="result"><h3>Performance Funnel</h3><div class="meta">Call attempts <b>${calls.length}</b> → Agent connections <b>${connections.length}</b> → Meetings booked <b>${booked.length}</b> → Meetings held <b>${held.length}</b></div></div>
+ <div class="result"><h3>Conversion</h3><div class="meta">Contact rate <b>${dFmtPct(connections.length,calls.length)}</b> · Booking rate <b>${dFmtPct(booked.length,connections.length)}</b></div></div>
+ <div class="result"><h3>Daily Activity</h3><div class="meta">Click Today / This Week / This Month before opening Trend View to change the period.</div></div>${dayRows}`;
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
+}
+function bindAmandaTrend(){
+ const card=$('amandaTrendCard');if(!card)return;
+ const launch=e=>{
+   if(e){e.preventDefault();e.stopPropagation();}
+   openAmandaTrend();
+ };
+ card.addEventListener('click',launch);
+ card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){launch(e)}});
+}
+
+async function directorLiveStartup(){
+ bindAmandaTrend();
+ bindDirectorNavigation();
+ let initialRange='month';try{initialRange=localStorage.getItem('director_range_v2')||'month'}catch(_){} window.__directorSelectedRange=initialRange;
+ const initial=location.hash.replace('#','');
+ showView(['growth','relationships','execution','feedback','impact','priorities'].includes(initial)?initial:'overview');
+ // Paint the selected range first without calling live loaders prematurely.
+ document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===initialRange));
+ renderWhoNeeds(initialRange);
+ window.__directorLiveReady=true;
+ ['cold','warm','connections','ctouches','booked','held','followups','campaigns'].forEach(x=>dPaintCard(x,'Loading…',dBounds(initialRange).label,'Syncing RM activity'));
+ const sync=$('dirSyncNow');
+ if(sync)sync.addEventListener('click',async()=>{
+   sync.disabled=true;sync.textContent='Syncing…';
+   const k=window.__directorSelectedRange||initialRange;await Promise.allSettled([loadDirectorSharedPowerBi(true),loadAmandaExecutionLive(k)]);
+   sync.disabled=false;sync.textContent='Sync Now';
+ });
+ await Promise.allSettled([loadDirectorSharedPowerBi(true),loadAmandaExecutionLive(initialRange)]);
+}
+window.addEventListener('error',e=>{
+ const st=$('dirPowerBiStatus');if(st)st.textContent='Director startup error · '+(e.message||'Unknown error');
+});
+window.addEventListener('unhandledrejection',e=>{
+ const st=$('dirPowerBiStatus');if(st)st.textContent='Director data error · '+((e.reason&&e.reason.message)||e.reason||'Unknown error');
+});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',directorLiveStartup);
+else directorLiveStartup();
+
 
 </script></body></html>
