@@ -54,6 +54,22 @@
 <section class="view" id="view-relationships"><div class="viewHead"><h2>Relationships</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="atRisk"><div class="label">At Risk</div><div class="big">4</div><div class="hint">Who + why + next action</div></div><div class="card click" data-drill="health"><div class="label">Relationship Health</div><div class="big">82%</div><div class="hint">112 healthy · 20 watch · 4 at risk</div></div><div class="card click" data-drill="feedbackRisk"><div class="label">Experience Risk</div><div class="big">2</div><div class="hint">Relationships affected by feedback</div></div></div><div class="section"><div class="grid two"><div class="card click" data-drill="atRisk"><div class="label">Protect Now</div><div class="minirow"><b>Low engagement</b><span class="pill risk">2</span></div><div class="minirow"><b>Negative feedback</b><span class="pill risk">1</span></div><div class="minirow"><b>Production decline</b><span class="pill watch">1</span></div></div><div class="card click" data-drill="health"><div class="label">Health Mix</div><div class="minirow"><b>Healthy</b><span class="pill good">112</span></div><div class="minirow"><b>Watch</b><span class="pill watch">20</span></div><div class="minirow"><b>At Risk</b><span class="pill risk">4</span></div></div></div></div></section>
 <section class="view" id="view-execution"><div class="viewHead"><h2>Amanda Execution</h2><button class="backBtn" data-view="overview">← Overview</button></div>
 <div class="card execHero"><div class="label">RM EXECUTION MADE SIMPLE <span id="amandaLiveBadge" style="margin-left:8px;font-weight:600">· LIVE RM DATA</span></div><div class="execFlow"><span class="execStep">DO THE WORK</span><span class="execArrow">→</span><span class="execStep">LOG THE WORK</span><span class="execArrow">→</span><span class="execStep">SEE WHAT’S NEXT</span></div><p class="meta">Cadence is the repeatable work. This page separates effort from engagement so you can see whether Amanda is doing the activity, reaching agents, booking meetings and moving relationships forward.</p></div>
+<div class="section" id="amandaTodayCoach">
+<div class="card" style="border-color:#d9cfee">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px">
+<div><div class="label">COACH TODAY · LIVE RM DATA</div><h3 style="margin:4px 0 3px">What is Amanda doing today?</h3><p class="meta" style="margin:0">Use this for same-day coaching. These numbers stay on Today even when the larger view is set to This Week or This Month.</p></div>
+<button class="btn" type="button" id="amandaTodayRefresh">Refresh Today</button>
+</div>
+<div class="statusGrid" style="margin-top:10px">
+<div class="statusCard" data-amanda="todayCalls" id="amandaToday-calls"><div class="label">Calls Today</div><div class="big">Loading…</div><div class="goal">Every call attempt</div><div class="status">Click for exact records</div></div>
+<div class="statusCard" data-amanda="todayConnections" id="amandaToday-connections"><div class="label">Connections Today</div><div class="big">Loading…</div><div class="goal">Actual back-and-forth</div><div class="status">Click for exact agents</div></div>
+<div class="statusCard" data-amanda="todayBooked" id="amandaToday-booked"><div class="label">Booked Today</div><div class="big">Loading…</div><div class="goal">Meetings scheduled today</div><div class="status">Click for exact records</div></div>
+<div class="statusCard" data-amanda="todayHeld" id="amandaToday-held"><div class="label">Held Today</div><div class="big">Loading…</div><div class="goal">Amanda attended</div><div class="status">Click for exact meetings</div></div>
+<div class="statusCard" data-amanda="todayDue" id="amandaToday-due"><div class="label">Follow-Ups Due</div><div class="big">Loading…</div><div class="goal">Due / overdue now</div><div class="status">Click for exact agents</div></div>
+</div>
+<div id="amandaTodayFunnel" class="minirow" style="margin-top:12px"><b>Today’s Funnel</b><span>Loading today’s activity…</span></div>
+<div id="amandaCoachNow" class="minirow" data-amanda="coachNow" style="margin-top:8px"><b>Coach Now</b><span>Waiting for today’s activity…</span></div>
+</div></div>
 <div class="section"><h3>Cadence / Execution</h3><div class="statusGrid">
 <div class="statusCard" data-amanda="cold" id="amandaCard-cold"><div class="label">Cold Calls</div><div class="big">Data connection needed</div><div class="goal">Weekly goal: 235</div><div class="status">Track: calls actually logged</div></div>
 <div class="statusCard" data-amanda="warm" id="amandaCard-warm"><div class="label">Warm Calls</div><div class="big">Data connection needed</div><div class="goal">Weekly goal: 60</div><div class="status">Track: calls actually logged</div></div>
@@ -220,7 +236,7 @@ function setRange(k){
  $('mCalls').textContent=d.calls;$('mConnections').textContent=d.connections;$('mHeld').textContent=d.held;
  renderWhoNeeds(k);
  if(window.__directorLiveReady){
-   loadAmandaExecutionLive(k);
+   Promise.resolve(loadAmandaExecutionLive(k)).finally(()=>loadAmandaTodayCoach());
    loadDirectorSharedPowerBi(false);
  }
  try{localStorage.setItem('director_range_v2',k)}catch(_){}
@@ -254,10 +270,10 @@ function tileLabel(el){
  return (t.textContent||'Director Detail').replace(/\s+/g,' ').trim().slice(0,90);
 }
 function openFunctionalTile(el){
- const label=tileLabel(el),drawer=$('drawer');if(!drawer)return;
+ const label=tileLabel(el),drawer=$('drawerBack');if(!drawer)return;
  $('drawerTitle').textContent=label;$('drawerSummary').textContent='Director detail';
  $('drawerResults').innerHTML=`<div class="result"><h3>${esc(label)}</h3><div class="meta">No underlying records are connected to this tile yet. When DirectorRM is connected to live RM data, this will show the exact agents, activities, outcomes and next actions behind the metric.</div></div>`;
- closeAllOverlays();drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');
+ closeAllOverlays();drawer.classList.add('open');document.body.style.overflow='hidden';
 }
 function activateLikeButton(el,fn){
  if(el.dataset.directBound==='1')return;
@@ -403,6 +419,55 @@ function dPaintDiag(key,left,right){
 function dPace(actual,goal){return goal<=0?'':actual>=goal?'On track':actual>=goal*.8?'Watch':'Behind'}
 function dFmtPct(n,d){return d?Math.round(n/d*100)+'%':'—'}
 
+
+function dTodayPaint(id,value,status){
+ const el=$(id);if(!el)return;
+ const big=el.querySelector('.big'),st=el.querySelector('.status');
+ if(big)big.textContent=value;if(st&&status)st.textContent=status;
+}
+async function loadAmandaTodayCoach(){
+ const date=dLocalDate(new Date());
+ try{
+   const [rows,due]=await Promise.all([
+     dSb('amanda_activities?select=*&act_date=eq.'+encodeURIComponent(date)+'&order=created_at.desc&limit=3000'),
+     dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+encodeURIComponent(date)+'&order=follow_up_date.asc&limit=1000')
+   ]);
+   const all=(rows||[]).filter(a=>dCreditsAmanda(a));
+   const dueAmanda=(due||[]).filter(a=>dCreditsAmanda(a));
+   const calls=all.filter(a=>dSignals(a).callAttempt);
+   const connections=all.filter(a=>dSignals(a).agentConnection);
+   const booked=all.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
+   const held=all.filter(a=>dSignals(a).meeting);
+   dTodayPaint('amandaToday-calls',calls.length,'Click for exact call attempts');
+   dTodayPaint('amandaToday-connections',connections.length,'Click for exact agents');
+   dTodayPaint('amandaToday-booked',booked.length,'Click for exact bookings');
+   dTodayPaint('amandaToday-held',held.length,'Click for exact meetings');
+   dTodayPaint('amandaToday-due',dueAmanda.length,'Due or overdue as of today');
+   const funnel=$('amandaTodayFunnel');if(funnel)funnel.querySelector('span').textContent=
+      calls.length+' calls → '+connections.length+' connected → '+booked.length+' booked → '+held.length+' held';
+   let coach='Execution looks active today. Review outcomes and next steps.';
+   if(calls.length<10)coach='Start with effort: call activity is still light today.';
+   else if(connections.length===0)coach='Effort is happening, but contact is the weak point today.';
+   else if(booked.length===0)coach='Amanda is connecting. Coach the meeting ask / next-step conversion today.';
+   else if(dueAmanda.length>0)coach='Execution is moving. Clear '+dueAmanda.length+' due/overdue follow-up'+(dueAmanda.length===1?'':'s')+' before day end.';
+   const cn=$('amandaCoachNow');if(cn)cn.querySelector('span').textContent=coach;
+   amandaLive.details=amandaLive.details||{};
+   Object.assign(amandaLive.details,{
+     todayCalls:calls.map(dRow),
+     todayConnections:connections.map(dRow),
+     todayBooked:booked.map(dRow),
+     todayHeld:held.map(dRow),
+     todayDue:dueAmanda.map(a=>[a.agent_name||'Unknown',a.act_type||'Follow-up','Due '+(a.follow_up_date||date),dCleanNotes(a.notes||'').slice(0,250)]),
+     coachNow:[['Today’s funnel','Manager diagnosis',calls.length+' calls · '+connections.length+' connected · '+booked.length+' booked · '+held.length+' held',coach]]
+   });
+ }catch(e){
+   console.error('Amanda Today coach load failed',e);
+   ['calls','connections','booked','held','due'].forEach(x=>dTodayPaint('amandaToday-'+x,'Could not load','Refresh Today'));
+   const cn=$('amandaCoachNow');if(cn)cn.querySelector('span').textContent='Today’s RM activity could not load.';
+ }
+}
+window.loadAmandaTodayCoach=loadAmandaTodayCoach;
+
 async function loadAmandaExecutionLive(k){
  k=k||localStorage.getItem('director_range_v2')||'week';const b=dBounds(k);
  amandaLive.loaded=false;amandaLive.period=k;
@@ -474,6 +539,12 @@ async function loadAmandaExecutionLive(k){
 window.loadAmandaExecutionLive=loadAmandaExecutionLive;
 
 const AMANDA_DETAILS={
+ todayCalls:{title:'Calls Today',goal:'Same-day execution',meaning:'Every Amanda call attempt logged today. Voicemail/no answer still counts as effort.',inspect:'Review exact call records and whether they produced a connection.',coach:'Use this to coach execution today, not at month end.'},
+ todayConnections:{title:'Connections Today',goal:'Same-day engagement',meaning:'Actual back-and-forth Amanda had with agents today.',inspect:'Review who connected, method, outcome and next step.',coach:'If calls are happening but connections are low, coach timing, targeting and opening today.'},
+ todayBooked:{title:'Meetings Booked Today',goal:'Same-day booking',meaning:'Meetings Amanda successfully scheduled today.',inspect:'Review exact agents and the outreach that led to the booking.',coach:'If connections are happening but bookings are not, coach the meeting ask today.'},
+ todayHeld:{title:'Meetings Held Today',goal:'Same-day completed meetings',meaning:'Meetings Amanda actually attended today.',inspect:'Review exact meeting, outcome, notes and next step.',coach:'Use the meeting outcome to coach follow-through while the conversation is fresh.'},
+ todayDue:{title:'Follow-Ups Due Today',goal:'No silent overdue work',meaning:'Amanda follow-ups due or overdue as of today.',inspect:'Start with the oldest due relationship work and exact next step.',coach:'Clear urgent relationship follow-up before avoidable backlog grows.'},
+ coachNow:{title:'Coach Now',goal:'First weak point today',meaning:'A same-day manager read of effort → contact → booking → show.',inspect:'Use today’s exact activity before deciding what Amanda needs from you.',coach:'Coach the first weak point you can actually see in today’s funnel.'},
  cold:{title:'Cold Calls',goal:'Weekly goal: 235',meaning:'Every cold call attempt counts as effort, even when it reaches voicemail.',inspect:'Review total calls logged, voicemails/no answers, phone connections and follow-up texts.',coach:'If volume is behind pace, the first coaching question is execution: were the calls made and logged?'},
  warm:{title:'Warm Calls',goal:'Weekly goal: 60',meaning:'Warm relationship calls should be logged separately from cold prospecting.',inspect:'Review who was called, whether Amanda connected, outcome and next step.',coach:'Look for consistency and whether warm calls are creating useful relationship movement.'},
  connections:{title:'Agent Connections',goal:'Weekly goal: 35',meaning:'A real back-and-forth with the agent. Phone conversations count. Genuine two-way text conversations count. Voicemail or an unanswered text does not.',inspect:'Review connected agents and contact method. For call contact rate, use phone connections ÷ total calls.',coach:'If call volume is strong but connections are weak, coach targeting, timing, persistence and the opening.'},
@@ -503,7 +574,7 @@ function openAmandaDetail(key){
  <div class="result"><h3>What this means</h3><div class="meta">${esc(d.meaning)}</div></div>
  <div class="result"><h3>What you should inspect</h3><div class="meta">${esc(d.inspect)}</div></div>
  <div class="result"><h3>Your manager move</h3><div class="meta">${esc(d.coach)}</div><div class="actions"><button class="primary" id="coachFromAmanda">+ Add Coaching Note</button></div></div>`;
- closeAllOverlays();safeClass('drawer','add','open');$('drawer').setAttribute('aria-hidden','false');
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
  setTimeout(()=>{const b=$('coachFromAmanda');if(b)b.addEventListener('click',()=>{closeAllOverlays();openCoachPrefill('Coach',d.title+' — ');});},0);
 }
 function openCoachPrefill(type,prefix=''){
@@ -516,6 +587,8 @@ function openCoachPrefill(type,prefix=''){
 function bindAmandaManager(){
  document.querySelectorAll('#view-execution [data-amanda]').forEach(el=>activateLikeButton(el,()=>openAmandaDetail(el.dataset.amanda)));
  document.querySelectorAll('#view-execution [data-coach-type]').forEach(el=>activateLikeButton(el,()=>openCoachPrefill(el.dataset.coachType)));
+ const refresh=$('amandaTodayRefresh');
+ if(refresh&&!refresh.dataset.bound){refresh.dataset.bound='1';refresh.addEventListener('click',async()=>{refresh.disabled=true;refresh.textContent='Refreshing…';await loadAmandaTodayCoach();refresh.disabled=false;refresh.textContent='Refresh Today';});}
 }
 
 function bindDirectorNavigation(){
@@ -578,7 +651,7 @@ async function directorLiveStartup(){
    const k=window.__directorSelectedRange||initialRange;await Promise.allSettled([loadDirectorSharedPowerBi(true),loadAmandaExecutionLive(k)]);
    sync.disabled=false;sync.textContent='Sync Now';
  });
- await Promise.allSettled([loadDirectorSharedPowerBi(true),loadAmandaExecutionLive(initialRange)]);
+ await Promise.allSettled([loadDirectorSharedPowerBi(true),loadAmandaExecutionLive(initialRange)]); await loadAmandaTodayCoach();
 }
 window.addEventListener('error',e=>{
  const st=$('dirPowerBiStatus');if(st)st.textContent='Director startup error · '+(e.message||'Unknown error');
