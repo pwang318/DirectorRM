@@ -1,1 +1,1173 @@
  
+ <!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Director View · Relationship Growth Command Center</title>
+<style>
+:root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
+.whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.whoHead h2{margin:3px 0 4px;font-size:18px;font-weight:600}
+.whoHead p{margin:0;color:var(--muted);font-size:12px}
+.whoCount{font-size:28px;font-weight:650;color:var(--navy);text-align:right}
+.whoPreview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.whoPerson{border:1px solid var(--line);border-radius:11px;padding:10px;background:#fbfcfe}
+.whoPerson b{display:block;font-size:12px;font-weight:600}
+.whoPerson span{display:block;font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}
+.modules{grid-template-columns:repeat(3,1fr);margin-top:18px}.module{padding:20px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between}.moduleTop{display:flex;justify-content:space-between;gap:12px}.moduleIcon{width:38px;height:38px;border-radius:11px;background:var(--soft);display:grid;place-items:center;color:var(--blue);font-weight:650}.module h2{font-size:18px;font-weight:600;margin:16px 0 5px}.module p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}.moduleStats{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px}.moduleStats span{font-size:11px;color:var(--muted)}.moduleStats b{color:var(--ink);font-weight:600}.arrow{color:var(--blue);font-size:13px;font-weight:600}.view{display:none}.view.active{display:block}.viewHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 15px}.viewHead h2{font-size:21px;font-weight:600;margin:0}.backBtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;cursor:pointer;color:var(--navy);font-size:12px}.two{grid-template-columns:1.45fr 1fr}.three{grid-template-columns:repeat(3,1fr)}.five{grid-template-columns:repeat(5,1fr)}.section{margin-top:15px}.section h3{font-size:16px;font-weight:600;margin:0 0 10px}.minirow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.minirow:last-child{border:0}.minirow b{font-size:12px;font-weight:550}.minirow span{font-size:12px;color:var(--muted)}.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:550}.risk{background:#fff0f1;color:#9d333c}.watch{background:#fff6df;color:#8b6500}.good{background:#eaf8f1;color:#176b4b}.chart{height:210px;display:flex;align-items:flex-end;gap:12px;padding:20px 5px 4px}.bar{flex:1;border-radius:8px 8px 3px 3px;background:linear-gradient(#8aacf0,#3974e8);min-height:20px;position:relative;cursor:pointer}.bar span{position:absolute;bottom:-23px;width:100%;text-align:center;font-size:10px;color:var(--muted)}.linefake{height:210px}.linefake svg{width:100%;height:100%}.savedPreview{margin-top:10px}.savedItem{border:1px solid var(--line);border-radius:11px;padding:11px;margin:8px 0;font-size:12px}.meta{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}.drawerBack{position:fixed;inset:0;background:#10213d66;display:none;z-index:30}.drawerBack.open{display:block}.drawer{position:absolute;right:0;top:0;height:100%;width:min(680px,94vw);background:#fff;box-shadow:-12px 0 40px #10213d33;overflow:auto}.drawerHead{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:19px 21px;display:flex;justify-content:space-between;z-index:2}.drawerHead h2{margin:0;font-size:20px;font-weight:600}.close{border:1px solid var(--line);background:#fff;border-radius:9px;width:36px;height:36px;cursor:pointer}.drawerBody{padding:20px 22px}.summary{background:var(--soft);border-radius:12px;padding:13px;margin-bottom:14px;font-size:12px}.result{border:1px solid var(--line);border-radius:13px;padding:14px;margin:10px 0}.resultTop{display:flex;justify-content:space-between;gap:12px}.result h3{font-size:14px;font-weight:600;margin:0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.actions button{border:1px solid #cad5e6;background:#fff;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px}.actions button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.modalBack{position:fixed;inset:0;background:#10213d70;display:none;align-items:center;justify-content:center;padding:18px;z-index:40}.modalBack.open{display:flex}.modal{background:#fff;border-radius:18px;width:min(780px,96vw);max-height:92vh;overflow:auto}.modalHead{position:sticky;top:0;background:#fff;padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modalHead h2{margin:0;font-size:19px;font-weight:600}.modalBody{padding:20px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:550;color:#4e5b70}.field input,.field select,.field textarea{width:100%;border:1px solid #d7deea;border-radius:10px;padding:10px 11px;font-size:13px;background:#fff}.field textarea{min-height:90px;resize:vertical}.formActions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}.btn{border:1px solid #cad5e6;background:#fff;border-radius:9px;padding:9px 13px;cursor:pointer;font-size:12px}.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#172235;color:#fff;padding:10px 15px;border-radius:10px;display:none;z-index:50;font-size:12px}.toast.show{display:block}.footer{margin:24px 0;color:var(--muted);font-size:10px;text-align:center}
+
+.execHero{padding:18px 20px;margin-bottom:14px}.execFlow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}.execStep{font-size:12px;font-weight:600;color:var(--navy);background:var(--soft);padding:8px 11px;border-radius:10px}.execArrow{color:#9aa6b8}.statusGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.statusCard{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}.statusCard .goal{font-size:10px;color:var(--muted);margin-top:5px}.statusCard .status{font-size:11px;font-weight:600;margin-top:8px}.needList{display:grid;gap:9px;margin-top:10px}.needItem{border:1px solid var(--line);border-radius:11px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.needItem b{font-size:12px;font-weight:600}.needItem span{font-size:11px;color:var(--muted)}.managerGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.managerBox{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fbfcfe}.managerBox h4{margin:0 0 5px;font-size:13px}.managerBox p{margin:0;font-size:11px;color:var(--muted);line-height:1.45}.dataNeeded{color:var(--amber);font-size:11px;font-weight:600}.coachList{margin-top:10px}.coachItem{border-top:1px solid var(--line);padding:9px 0;font-size:11px}.coachItem:first-child{border-top:0}
+@media(max-width:1100px){.app{grid-template-columns:1fr}.side{height:auto;position:static}.nav{grid-template-columns:repeat(4,1fr)}.kpis{grid-template-columns:repeat(3,1fr)}.modules{grid-template-columns:repeat(2,1fr)}.two,.three,.five{grid-template-columns:1fr 1fr}.statusGrid{grid-template-columns:repeat(2,1fr)}.managerGrid{grid-template-columns:1fr}}@media(max-width:680px){.main{padding:16px}.side{padding:16px}.nav{grid-template-columns:repeat(2,1fr)}.kpis,.modules,.two,.three,.five,.statusGrid,.managerGrid{grid-template-columns:1fr}.top{display:block}.controlbar{margin-top:12px}.formGrid{grid-template-columns:1fr}.field.full{grid-column:auto}.whoPreview{grid-template-columns:1fr}}
+
+[data-global-click="1"]{transition:transform .12s ease,box-shadow .12s ease}
+[data-global-click="1"]:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(15,23,42,.10)}
+[data-global-click="1"]:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+
+
+.module[data-view],[data-drill]{cursor:pointer}
+.module[data-view] h2,.module[data-view] .moduleTop,.module[data-view] .moduleStats{pointer-events:none}
+.module[data-view]:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,23,42,.12)}
+.module[data-view]:focus-visible,[data-drill]:focus-visible{outline:2px solid #2563eb;outline-offset:3px}
+
+#view-execution .statusCard[data-amanda],#view-execution .needItem[data-amanda],#view-execution .managerBox[data-coach-type],#view-execution .minirow[data-amanda]{cursor:pointer;transition:.14s transform,.14s box-shadow,.14s border-color}
+#view-execution .statusCard[data-amanda]:hover,#view-execution .needItem[data-amanda]:hover,#view-execution .managerBox[data-coach-type]:hover,#view-execution .minirow[data-amanda]:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(15,23,42,.10);border-color:#b9cbea}
+#view-execution [data-amanda]:focus-visible,#view-execution [data-coach-type]:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+</style></head><body>
+<div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Overview</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
+<main class="main"><div class="top"><div><h1>Relationship Growth Command Center</h1><p>Grow the right relationships. Protect the book. Turn agent feedback into action.<div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+<span id="dirPowerBiStatus" style="font-size:10px;color:#667085">Waiting to sync shared tracker data…</span>
+<button id="dirSyncNow" type="button" style="border:1px solid #d7dfeb;background:#fff;border-radius:8px;padding:5px 9px;font-size:10px;cursor:pointer">Sync Now</button>
+</div></p></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership"><span id="leadershipAttentionCount">0</span> NEED LEADERSHIP ↗</button></div></div>
+
+<section class="view active" id="view-overview"><div class="grid kpis"><div class="card click" data-drill="active"><div class="label">Road to 200</div><div class="big" id="kpiActive">Loading…</div><div class="delta" id="kpiActiveDelta" data-live-delta="active">Latest shared Power BI</div><div class="hint">See active roster</div></div><div class="card click" data-drill="channel"><div class="label">Channel</div><div class="big"><span id="dirChannelCount">—</span></div><div class="delta" data-live-delta="channel">Latest shared Power BI</div></div><div class="card click" data-drill="tierA"><div class="label">A</div><div class="big"><span id="dirACount">—</span></div><div class="delta" data-live-delta="tierA">Latest shared Power BI</div></div><div class="card click" data-drill="tierB"><div class="label">B</div><div class="big"><span id="dirBCount">—</span></div><div class="delta" data-live-delta="tierB">Latest shared Power BI</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="kpiAtRisk">—</div><div class="delta down">A, B and Channel only</div></div><div class="card click" data-drill="feedback"><div class="label">Agent Voice</div><div class="big" id="feedbackCount">7</div><div class="delta" id="repeatMini">2 repeat issues</div></div></div>
+<div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
+<div class="whoHead"><div><div class="label">MY ACCOUNTS NEEDING ATTENTION</div><h2 id="whoTitle">My Accounts Needing Attention</h2><p id="whoSubtitle">Only your Director-owned A, B, and Channel relationships. Amanda’s C-agent work is under Amanda Execution.</p></div><div><div class="whoCount" id="whoCount">8</div><div class="hint">your priorities ↗</div></div></div>
+<div class="whoPreview" id="whoPreview"></div>
+<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;border-top:1px solid var(--line);padding-top:13px">
+<button class="btn primary" type="button" data-export-attention="director">Export My A/B/Channel List (<span id="exportDirectorCount">0</span>)</button>
+<span class="meta" style="align-self:center">CSV includes tier, owner, reason, due date, last meaningful contact, phone, and email.</span>
+</div>
+</div>
+<div class="grid modules" id="overviewModules">
+<div class="module" data-view="growth"><div><div class="moduleTop"><div class="moduleIcon">↗</div><span class="arrow">OPEN →</span></div><h2>Growth</h2><p>Road to 200, Channel/A/B movement and the strongest advancement opportunities.</p></div><div class="moduleStats"><span><b id="mGrowthOpps">—</b> opportunities</span><span><b id="mChannel">—</b> Channel</span></div></div>
+<div class="module" data-view="relationships"><div><div class="moduleTop"><div class="moduleIcon">◎</div><span class="arrow">OPEN →</span></div><h2>My Relationships</h2><p>Your permanent A/B/Channel roster, risks, upcoming follow-ups and ownership exceptions.</p></div><div class="moduleStats"><span><b id="mDirectorAccounts">—</b> my accounts</span><span><b id="mAtRisk">—</b> at risk</span><span><b id="mWatch">—</b> watch</span></div></div>
+<div class="module" data-view="execution"><div><div class="moduleTop"><div class="moduleIcon">✓</div><span class="arrow">OPEN →</span></div><h2>Amanda Execution</h2><p>C-agent attention, calls, connections, meetings and measurable relationship advancement.</p></div><div class="moduleStats"><span><b id="mAmandaAttention">—</b> C agents need attention</span><span><b id="mCalls">168</b> calls</span><span><b id="mHeld">9</b> held</span></div></div>
+<div class="module" data-view="feedback"><div><div class="moduleTop"><div class="moduleIcon">!</div><span class="arrow">OPEN →</span></div><h2>Agent Feedback & Experience</h2><p>LP feedback, repeat patterns, management routing and relationship impact.</p></div><div class="moduleStats"><span><b id="mFeedback">0</b> records</span><span><b id="mRepeat">0</b> repeat</span><span><b id="mFeedbackRisk">0</b> at risk</span></div></div>
+<div class="module" data-view="impact"><div><div class="moduleTop"><div class="moduleIcon">★</div><span class="arrow">OPEN →</span></div><h2>Director Impact</h2><p>Your interventions, strategic relationships, escalations, logged work and outcomes.</p></div><div class="moduleStats"><span><b id="mProtected">0</b> protected</span><span><b id="mStrategic">0</b> strategic</span><span><b id="mRouted">0</b> routed</span></div></div>
+<div class="module" data-view="priorities"><div><div class="moduleTop"><div class="moduleIcon">→</div><span class="arrow">OPEN →</span></div><h2>Priorities</h2><p>My focus, leadership needs, current wins and the 30 / 60 / 90 outlook.</p></div><div class="moduleStats"><span><b id="mFocus">0</b> focus</span><span><b id="mLeadership">0</b> leadership</span><span><b id="mWins">0</b> wins</span></div></div>
+</div></section>
+
+<section class="view" id="view-growth"><div class="viewHead"><h2>Growth</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid two"><div class="card click" data-drill="active"><div class="label">Current Shared Roster</div><div class="big" id="growthActiveCount">Loading…</div><div class="delta up">Live from the latest LP Power BI upload</div></div><div class="card"><div class="label">Tier Growth · click a bar</div><div class="chart"><div class="bar" data-drill="channel" style="height:25%"><span>Channel</span></div><div class="bar" data-drill="tierA" style="height:78%"><span>A</span></div><div class="bar" data-drill="tierB" style="height:88%"><span>B</span></div><div class="bar" data-drill="growthOpps" style="height:48%"><span>Opps</span></div></div></div></div><div class="section"><h3>Growth Opportunities</h3><div class="grid three"><div class="card click" data-drill="growthOpps"><div class="label">All Opportunities</div><div class="big" id="growthAllCount">—</div><div class="hint">See agents + next move</div></div><div class="card click" data-drill="tierB"><div class="label">B → A Candidates</div><div class="big" id="growthBCount">—</div></div><div class="card click" data-drill="channel"><div class="label">Channel Relationships</div><div class="big" id="growthChannelCount">—</div></div></div></div></section>
+<section class="view" id="view-relationships"><div class="viewHead"><h2>My Relationships</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="directorAccounts"><div class="label">My Accounts</div><div class="big" id="directorAccountsCount">—</div><div class="hint">Permanent A, B and Channel roster</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="relationshipRiskCount">—</div><div class="hint">Exact agents, reason and next action</div></div><div class="card click" data-drill="health"><div class="label">My Relationship Health</div><div class="big" id="relationshipHealthPercent">—</div><div class="hint" id="relationshipHealthHint">Loading your account health…</div></div></div><div class="section"><h3>Do Not Lose Track</h3><div class="grid three"><div class="card click" data-drill="upcoming7"><div class="label">Due Within 7 Days</div><div class="big" id="relationshipUpcoming7Count">—</div><div class="hint">Exact upcoming follow-ups</div></div><div class="card click" data-drill="needsOwnership"><div class="label">Needs Ownership</div><div class="big" id="needsOwnershipCount">—</div><div class="hint">Missing or unsupported tier</div></div><div class="card click" data-drill="recentlyMoved"><div class="label">Recently Moved</div><div class="big" id="recentlyMovedCount">—</div><div class="hint">Tier or lane changed</div></div></div></div><div class="section"><div class="grid two"><div class="card click" data-drill="atRisk"><div class="label">Protect Now</div><div class="minirow"><b>Your current risk signals</b><span class="pill risk" id="protectNowCount">—</span></div><div class="meta">A, B and Channel overdue follow-ups, competitor risk and recovery flags only.</div></div><div class="card click" data-drill="health"><div class="label">Health Mix</div><div class="minirow"><b>Healthy</b><span class="pill good" id="healthHealthyCount">—</span></div><div class="minirow"><b>Watch</b><span class="pill watch" id="healthWatchCount">—</span></div><div class="minirow"><b>At Risk</b><span class="pill risk" id="healthRiskCount">—</span></div></div></div></div></section>
+<section class="view" id="view-execution"><div class="viewHead"><h2>Amanda Execution</h2><button class="backBtn" data-view="overview">← Overview</button></div>
+<div class="card execHero"><div class="label">RM EXECUTION MADE SIMPLE <span id="amandaLiveBadge" style="margin-left:8px;font-weight:600">· LIVE RM DATA</span></div><div class="execFlow"><span class="execStep">DO THE WORK</span><span class="execArrow">→</span><span class="execStep">LOG THE WORK</span><span class="execArrow">→</span><span class="execStep">SEE WHAT’S NEXT</span></div><p class="meta">Cadence is the repeatable work. This page separates effort from engagement so you can see whether Amanda is doing the activity, reaching agents, booking meetings and moving relationships forward.</p></div>
+<div class="section"><div class="card click" data-drill="amandaAttention"><div style="display:flex;justify-content:space-between;gap:14px;align-items:center"><div><div class="label">AMANDA'S C-AGENT ATTENTION LIST</div><h3 style="margin:5px 0 2px">C Agents Amanda Needs to Handle</h3><p class="meta" style="margin:0">Overdue follow-ups and C agents past the 30-day meaningful-contact cadence. These records do not enter your Director queue.</p></div><div><div class="big" id="amandaAttentionCount">—</div><div class="hint">click for exact agents ↗</div></div></div><div style="margin-top:13px"><button class="btn primary" type="button" data-export-attention="amanda">Export Amanda C List (<span id="exportAmandaCount">0</span>)</button></div></div></div>
+<div class="section"><div class="card click" data-drill="amandaProspects"><div style="display:flex;justify-content:space-between;gap:14px;align-items:center"><div><div class="label">AMANDA'S PROSPECTING LANE</div><h3 style="margin:5px 0 2px">New, Cold and Reconnect Agents</h3><p class="meta" style="margin:0">Active non-retained prospects without a relationship tier stay with Amanda instead of cluttering your Director account list.</p></div><div><div class="big" id="amandaProspectsCount">—</div><div class="hint">click for exact agents ↗</div></div></div></div></div>
+<div class="section" id="amandaTodayCoach">
+<div class="card" style="border-color:#d9cfee">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px">
+<div><div class="label">COACH TODAY · LIVE RM DATA</div><h3 style="margin:4px 0 3px">What is Amanda doing today?</h3><p class="meta" style="margin:0">Use this for same-day coaching. These numbers stay on Today even when the larger view is set to This Week or This Month.</p></div>
+<button class="btn" type="button" id="amandaTodayRefresh">Refresh Today</button>
+</div>
+<div class="statusGrid" style="margin-top:10px">
+<div class="statusCard" data-amanda="todayCalls" id="amandaToday-calls"><div class="label">Calls Today</div><div class="big">Loading…</div><div class="goal">Every call attempt</div><div class="status">Click for exact records</div></div>
+<div class="statusCard" data-amanda="todayConnections" id="amandaToday-connections"><div class="label">Connections Today</div><div class="big">Loading…</div><div class="goal">Actual back-and-forth</div><div class="status">Click for exact agents</div></div>
+<div class="statusCard" data-amanda="todayBooked" id="amandaToday-booked"><div class="label">Booked Today</div><div class="big">Loading…</div><div class="goal">Meetings scheduled today</div><div class="status">Click for exact records</div></div>
+<div class="statusCard" data-amanda="todayHeld" id="amandaToday-held"><div class="label">Held Today</div><div class="big">Loading…</div><div class="goal">Amanda attended</div><div class="status">Click for exact meetings</div></div>
+<div class="statusCard" data-amanda="todayDue" id="amandaToday-due"><div class="label">Follow-Ups Due</div><div class="big">Loading…</div><div class="goal">Due / overdue now</div><div class="status">Click for exact agents</div></div>
+</div>
+<div id="amandaTodayFunnel" class="minirow" style="margin-top:12px"><b>Today’s Funnel</b><span>Loading today’s activity…</span></div>
+<div id="amandaCoachNow" class="minirow" data-amanda="coachNow" style="margin-top:8px"><b>Coach Now</b><span>Waiting for today’s activity…</span></div>
+</div></div>
+<div class="section"><h3>Cadence / Execution</h3><div class="statusGrid">
+<div class="statusCard" data-amanda="cold" id="amandaCard-cold"><div class="label">Cold Calls</div><div class="big">Data connection needed</div><div class="goal">Weekly goal: 235</div><div class="status">Track: calls actually logged</div></div>
+<div class="statusCard" data-amanda="warm" id="amandaCard-warm"><div class="label">Warm Calls</div><div class="big">Data connection needed</div><div class="goal">Weekly goal: 60</div><div class="status">Track: calls actually logged</div></div>
+<div class="statusCard" data-amanda="connections" id="amandaCard-connections"><div class="label">Agent Connections</div><div class="big">Data connection needed</div><div class="goal">Weekly goal: 35 live connections</div><div class="status">Phone conversation or genuine two-way text</div></div>
+<div class="statusCard" data-amanda="ctouches" id="amandaCard-ctouches"><div class="label">C-Agent Touches</div><div class="big">Data connection needed</div><div class="goal">Weekly goal: 40</div><div class="status">Track completed relationship touches</div></div>
+<div class="statusCard" data-amanda="booked" id="amandaCard-booked"><div class="label">Meetings Booked</div><div class="big">Data connection needed</div><div class="goal">Weekly target: 8–10</div><div class="status">Booked is separate from held</div></div>
+<div class="statusCard" data-amanda="held" id="amandaCard-held"><div class="label">Meetings Held</div><div class="big">Data connection needed</div><div class="goal">Weekly target: 3</div><div class="status">Completed meetings only</div></div>
+<div class="statusCard" data-amanda="followups" id="amandaCard-followups"><div class="label">Follow-Ups</div><div class="big">Data connection needed</div><div class="goal">Completed vs overdue</div><div class="status">No silent overdue work</div></div>
+<div class="statusCard" data-amanda="campaigns" id="amandaCard-campaigns"><div class="label">New Realtor Campaigns</div><div class="big">Data connection needed</div><div class="goal">Weeks 1–4</div><div class="status">On track vs overdue</div></div>
+</div></div>
+<div class="section"><div class="grid two"><div class="card"><div class="label">Amanda Needs to Do Next</div><div class="needList"><div class="needItem" data-amanda="pace" id="amandaNeed-pace"><div><b>Calls / touches behind pace</b><br><span>Show the exact gap once RM data is connected.</span></div><span class="dataNeeded">Data connection needed</span></div><div class="needItem" data-amanda="due" id="amandaNeed-due"><div><b>Follow-ups due or overdue</b><br><span>Names and due dates will appear here from RM activity.</span></div><span class="dataNeeded">Data connection needed</span></div><div class="needItem" data-amanda="campaignDue" id="amandaNeed-campaignDue"><div><b>Campaign touches due</b><br><span>Weeks 1–4 New Realtor Meeting cadence.</span></div><span class="dataNeeded">Data connection needed</span></div><div class="needItem" data-amanda="missingNotes" id="amandaNeed-missingNotes"><div><b>Meetings missing outcomes / notes</b><br><span>Make the work visible and complete.</span></div><span class="dataNeeded">Data connection needed</span></div></div></div>
+<div class="card"><div class="label">Manager Diagnosis</div><div class="minirow" data-amanda="effort" id="amandaDiag-effort"><b>Effort</b><span>Are the calls/touches happening?</span></div><div class="minirow" data-amanda="contact" id="amandaDiag-contact"><b>Contact</b><span>Are agents actually connecting?</span></div><div class="minirow" data-amanda="booking" id="amandaDiag-booking"><b>Booking</b><span>Are connections becoming meetings?</span></div><div class="minirow" data-amanda="show" id="amandaDiag-show"><b>Show</b><span>Are booked meetings being held?</span></div><div class="minirow" data-amanda="conversion" id="amandaDiag-conversion"><b>Conversion</b><span>Are relationships advancing?</span></div><p class="meta">Once RM data is connected, this should identify the first weak point instead of making you interpret a pile of numbers.</p></div></div></div>
+<div class="section"><h3>Coach / Recognize / Follow Up</h3><div class="managerGrid"><div class="managerBox" data-coach-type="Coach"><h4>Coach This</h4><p>Use when execution or conversion is off pace. Document the expectation and the next check-in.</p></div><div class="managerBox" data-coach-type="Recognize"><h4>Recognize This</h4><p>Capture what Amanda is doing well so management is not only about misses.</p></div><div class="managerBox" data-coach-type="Follow Up"><h4>Follow Up With Amanda</h4><p>Set a date so coaching does not disappear after the conversation.</p></div></div></div>
+<div class="section"><div class="card"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><div><div class="label">Manager Notes / Coaching Log</div><p class="meta">Private to this browser in this standalone Director page.</p></div><button class="btn primary" id="addCoachBtn">+ Add Coaching Note</button></div><div id="coachSavedPreview" class="coachList"></div></div></div>
+<div class="section"><div class="card" id="amandaTrendCard" data-amanda-trend="1" role="button" tabindex="0" style="cursor:pointer"><div class="label"><span id="amandaTrendOpen" role="button" tabindex="0" style="cursor:pointer">Trend View ↗</span></div><p class="meta">This Week vs Last Week and This Month vs Last Month for calls, connections, booking rate, held meetings and advancement.</p><div id="amandaTrendLive" class="dataNeeded">Loading RM activity…</div></div></div>
+</section>
+<section class="view" id="view-feedback"><div class="viewHead"><h2>Agent Feedback & Experience</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="feedback"><div class="label">Feedback Received</div><div class="big" id="feedbackCountDetail">0</div></div><div class="card click" data-drill="repeat"><div class="label">Repeat Issues</div><div class="big" id="repeatCount">0</div><div class="delta down">Pattern detected</div></div><div class="card click" data-drill="feedbackRisk"><div class="label">Relationships at Risk</div><div class="big" id="relationshipFeedbackRiskCount">0</div></div></div><div class="section"><div class="grid two"><div class="card"><div class="label">How this protects your lane</div><p class="meta">Feedback is documented, routed to the appropriate leader, and monitored for relationship impact. LP remediation remains with LP leadership.</p></div><div class="card"><div class="label">Recent Saved Feedback</div><div id="feedbackSavedPreview" class="savedPreview"></div></div></div></div></section>
+<section class="view" id="view-impact"><div class="viewHead"><h2>Director Impact</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="protected"><div class="label">At-Risk Protected</div><div class="big" id="impactProtectedCount">0</div></div><div class="card click" data-drill="strategic"><div class="label">Strategic / Builder</div><div class="big" id="impactStrategicCount">0</div></div><div class="card click" data-drill="escalations"><div class="label">Experience Items Routed</div><div class="big" id="impactRoutedCount">0</div></div></div><div class="section"><div class="card"><div class="label">Recent Director Work Logged</div><div id="workSavedPreview" class="savedPreview"></div></div></div></section>
+<section class="view" id="view-priorities"><div class="viewHead"><h2>Priorities</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="whoNeeds"><div class="label">My Accounts Needing Attention</div><div class="big" id="priorityFocusCount">0</div><div class="hint">A, B and Channel only</div></div><div class="card click" data-drill="leadership"><div class="label">Needs Leadership</div><div class="big" id="priorityLeadershipCount">0</div></div><div class="card click" data-drill="wins"><div class="label">Wins</div><div class="big" id="priorityWinsCount">0</div></div></div><div class="section"><h3>Upcoming Follow-Ups</h3><div class="grid three"><div class="card click" data-drill="upcoming7"><div class="label">Next 7 Days</div><div class="big" id="directorUpcoming7Count">—</div></div><div class="card click" data-drill="upcoming14"><div class="label">Next 14 Days</div><div class="big" id="directorUpcoming14Count">—</div></div><div class="card click" data-drill="upcoming30"><div class="label">Next 30 Days</div><div class="big" id="directorUpcoming30Count">—</div></div></div></div></section>
+<div class="footer">Director Command Center · LP and RM records refresh from the shared tracker source · Director notes remain private to this browser</div></main></div>
+
+<div class="drawerBack" id="drawerBack"><div class="drawer"><div class="drawerHead"><h2 id="drawerTitle">Details</h2><button class="close" id="closeDrawer">×</button></div><div class="drawerBody"><div class="summary" id="drawerSummary"></div><div id="drawerResults"></div></div></div></div>
+<div class="modalBack" id="workModal"><div class="modal"><div class="modalHead"><h2>Log My Work</h2><button class="close" data-close="workModal">×</button></div><div class="modalBody"><form id="workForm"><div class="formGrid"><div class="field"><label>Agent / Relationship</label><input name="agent" required placeholder="Agent or relationship name"></div><div class="field"><label>Work Type</label><select name="type" required><option value="">Choose…</option><option>A/B/Channel Relationship Touch</option><option>Strategic Meeting</option><option>Builder / Strategic Partner</option><option>At-Risk Intervention</option><option>Escalation</option><option>Warm Introduction</option><option>Growth Opportunity</option><option>Leadership / Process Work</option><option>Other Director Activity</option></select></div><div class="field"><label>Outcome</label><select name="outcome"><option>Completed</option><option>Follow-up Needed</option><option>Relationship Protected</option><option>Relationship Advanced</option><option>Routed to Leadership</option><option>Monitoring</option></select></div><div class="field"><label>Follow-up Date</label><input name="followup" type="date"></div><div class="field full"><label>What I did / Notes</label><textarea name="notes" required></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="workModal">Cancel</button><button class="btn primary" type="submit">Save Director Work</button></div></form></div></div></div>
+<div class="modalBack" id="feedbackModal"><div class="modal"><div class="modalHead"><h2>Agent Feedback & Experience</h2><button class="close" data-close="feedbackModal">×</button></div><div class="modalBody"><form id="feedbackForm"><div class="formGrid"><div class="field"><label>Agent</label><input name="agent" required placeholder="Agent name"></div><div class="field"><label>LP Involved</label><select name="lp" required><option value="">Choose LP…</option><option>Osgood McMahon</option><option>Gavin Dill</option><option>Karen De La Riva</option><option>Said Saleh</option><option>Kevin</option><option>Other / Not Listed</option></select></div><div class="field"><label>Feedback Type</label><select name="category" required><option value="">Choose…</option><option>Communication</option><option>Responsiveness</option><option>Tone / Experience</option><option>Follow-through</option><option>Knowledge / Guidance</option><option>Closing / Process</option><option>Other</option></select></div><div class="field"><label>Relationship Impact</label><select name="impact"><option>None</option><option>Low</option><option>Medium</option><option>High / At Risk</option></select></div><div class="field"><label>Repeat Issue?</label><select name="repeat"><option>No</option><option>Yes</option></select></div><div class="field"><label>Shared with Management?</label><select name="sharedMgmt" id="sharedMgmt"><option>No</option><option>Yes</option></select></div><div class="field" id="sharedWithField" style="display:none"><label>Shared With</label><input name="sharedWith"></div><div class="field" id="sharedDateField" style="display:none"><label>Date Shared</label><input name="sharedDate" type="date"></div><div class="field"><label>My Action</label><select name="action"><option>Documented</option><option>Spoke with Agent</option><option>Shared with Management</option><option>Followed Up</option><option>Other</option></select></div><div class="field"><label>Status</label><select name="status"><option>New</option><option>Routed</option><option>Monitoring</option><option>Resolved</option><option>Repeated</option></select></div><div class="field"><label>Follow-up Date</label><input name="followup" type="date"></div><div class="field full"><label>Agent Feedback</label><textarea name="feedback" required placeholder="Factual summary of what the agent reported"></textarea></div><div class="field full"><label>Outcome / Notes</label><textarea name="notes"></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="feedbackModal">Cancel</button><button class="btn primary" type="submit">Save Agent Feedback</button></div></form></div></div></div>
+<div class="modalBack" id="coachModal"><div class="modal"><div class="modalHead"><h2>Manager Coaching Note</h2><button class="close" data-close="coachModal">×</button></div><div class="modalBody"><form id="coachForm"><div class="formGrid"><div class="field"><label>Type</label><select name="type" required><option>Coach</option><option>Recognize</option><option>Follow Up</option></select></div><div class="field"><label>Follow-up Date</label><input name="followup" type="date"></div><div class="field full"><label>What we discussed / expectation</label><textarea name="note" required placeholder="Example: Reviewed call cadence. Expectation is to make and log the required calls consistently."></textarea></div><div class="field full"><label>What I want to see next</label><textarea name="next"></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="coachModal">Cancel</button><button class="btn primary" type="submit">Save Coaching Note</button></div></form></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  if (root) root.DirectorData = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  const SYSTEM_ACTIVITY = /^(?:Tuesday Call Plan Snapshot|Tuesday Contact Classification|Funded Unit Snapshot|Transaction Snapshot|Transaction Contact Override|Data Sync|Power BI Sync|Power BI Agent Snapshot|Portfolio Profile|Tier Migration|LP Tuesday File Update)$/i;
+
+  function text(value) {
+    return String(value == null ? '' : value).trim();
+  }
+
+  function keyName(value) {
+    return text(value).toLowerCase().replace(/\s+/g, ' ');
+  }
+
+  function bool(value) {
+    return value === true || /^(?:true|yes|1)$/i.test(text(value));
+  }
+
+  function dateMs(value) {
+    const valueMs = Date.parse(value || '');
+    return Number.isFinite(valueMs) ? valueMs : 0;
+  }
+
+  function dayMs(value) {
+    if (!value) return 0;
+    const match = text(value).match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return match ? Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])) : dateMs(value);
+  }
+
+  function daysBetween(older, newer) {
+    const start = dayMs(older);
+    const end = dayMs(newer);
+    return start && end ? Math.floor((end - start) / 86400000) : null;
+  }
+
+  function cleanTrackingUrl(rawUrl) {
+    const url = new URL(rawUrl, 'https://director.local');
+    [...url.searchParams.keys()].forEach(name => {
+      if (/^utm_/i.test(name) || /chatgpt/i.test(name)) url.searchParams.delete(name);
+    });
+    const query = url.searchParams.toString();
+    return url.pathname + (query ? '?' + query : '') + url.hash;
+  }
+
+  function mergeProfiles(rows) {
+    const byName = new Map();
+    (Array.isArray(rows) ? rows : []).forEach(row => {
+      const nameKey = keyName(row && (row.agent_name || row.display_name));
+      if (!nameKey) return;
+      const prior = byName.get(nameKey) || {};
+      const first = dateMs(row.updated_at) >= dateMs(prior.updated_at) ? row : prior;
+      const second = first === row ? prior : row;
+      const merged = {...second, ...first};
+      Object.keys(second || {}).forEach(field => {
+        if (merged[field] == null || merged[field] === '') merged[field] = second[field];
+      });
+      merged.agent_name = text(merged.agent_name || merged.display_name).replace(/\s+/g, ' ');
+      byName.set(nameKey, merged);
+    });
+    return [...byName.values()];
+  }
+
+  function latestPowerBiSnapshot(rows) {
+    const all = Array.isArray(rows) ? rows : [];
+    const candidates = all.filter(row => keyName(row && row.agent_name) && ['A', 'B', 'C'].includes(text(row && row.powerbi_level).toUpperCase()) && dateMs(row && row.powerbi_last_seen_at));
+    const latest = candidates.reduce((max, row) => Math.max(max, dateMs(row.powerbi_last_seen_at)), 0);
+    if (!latest) return {stamp: null, rows: [], counts: {active: 0, A: 0, B: 0, C: 0}};
+    const byName = new Map();
+    candidates.forEach(row => {
+      const seen = dateMs(row && row.powerbi_last_seen_at);
+      const level = text(row && row.powerbi_level).toUpperCase();
+      const name = keyName(row && row.agent_name);
+      if (!name || !['A', 'B', 'C'].includes(level) || Math.abs(latest - seen) >= 120000) return;
+      const previous = byName.get(name);
+      if (!previous || seen > dateMs(previous.powerbi_last_seen_at)) byName.set(name, row);
+    });
+    const snapshotRows = [...byName.values()];
+    const counts = {active: snapshotRows.length, A: 0, B: 0, C: 0};
+    snapshotRows.forEach(row => counts[text(row.powerbi_level).toUpperCase()]++);
+    return {stamp: new Date(latest).toISOString(), rows: snapshotRows, counts};
+  }
+
+  function isSystemActivity(activity) {
+    return SYSTEM_ACTIVITY.test(text(activity && activity.act_type)) || /\[TXN_TRIGGER\]/i.test(text(activity && activity.notes)) || /^__/.test(text(activity && activity.agent_name));
+  }
+
+  function profileRow(profile, label, detail) {
+    return [profile.agent_name, label, detail || '', text(profile.next_growth_opportunity || profile.recovery_plan || profile.nurture_reason)];
+  }
+
+  function activityRow(activity, label) {
+    return [text(activity.agent_name) || 'Unassigned', label || text(activity.act_type) || 'Activity', text(activity.act_date || activity.follow_up_date), text(activity.outcome || activity.notes)];
+  }
+
+  function accountTier(profile) {
+    return (text(profile && profile.tier) || text(profile && profile.powerbi_level)).toUpperCase();
+  }
+
+  function isDirectorOwned(profile) {
+    return ['A', 'B', 'CHANNEL'].includes(accountTier(profile));
+  }
+
+  function isAmandaOwned(profile) {
+    return accountTier(profile) === 'C';
+  }
+
+  function buildDashboard(input) {
+    input = input || {};
+    const nowIso = input.now || new Date().toISOString();
+    const today = dayMs(nowIso);
+    const mergedProfiles = mergeProfiles(input.profiles);
+    const activities = (Array.isArray(input.activities) ? input.activities : []).filter(activity => !isSystemActivity(activity));
+    const snapshot = latestPowerBiSnapshot(input.profiles);
+    const snapshotTierByName = new Map(snapshot.rows.map(row => [keyName(row.agent_name), text(row.powerbi_level).toUpperCase()]));
+    const profiles = mergedProfiles.map(profile => {
+      const latestLevel = snapshotTierByName.get(keyName(profile.agent_name));
+      if (!latestLevel || accountTier(profile) === 'CHANNEL') return profile;
+      return {...profile, tier: latestLevel, powerbi_level: latestLevel};
+    });
+    const snapshotNames = new Set(snapshot.rows.map(row => keyName(row.agent_name)));
+    const byProfile = new Map(profiles.map(profile => [keyName(profile.agent_name), profile]));
+    const snapshotProfiles = snapshot.rows.map(row => ({
+      ...(byProfile.get(keyName(row.agent_name)) || row),
+      powerbi_level: row.powerbi_level,
+      powerbi_last_seen_at: row.powerbi_last_seen_at
+    }));
+    const snapshotCounts = {active: snapshotProfiles.length, A: 0, B: 0, C: 0, Channel: 0};
+    snapshotProfiles.forEach(profile => {
+      const powerBiLevel = text(profile.powerbi_level).toUpperCase();
+      if (Object.prototype.hasOwnProperty.call(snapshotCounts, powerBiLevel)) snapshotCounts[powerBiLevel]++;
+      if (accountTier(profile) === 'CHANNEL') snapshotCounts.Channel++;
+    });
+    const actionable = profiles.filter(profile => !bool(profile.do_not_contact) && text(profile.relationship_status).toLowerCase() !== 'inactive');
+    const channel = snapshotProfiles.filter(profile => accountTier(profile) === 'CHANNEL');
+    const overdue = activities.filter(activity => {
+      const due = dayMs(activity.follow_up_date);
+      return due && due < today && !/completed|done|resolved/i.test(text(activity.outcome));
+    });
+
+    const riskReasons = new Map();
+    actionable.forEach(profile => {
+      const reasons = [];
+      if (bool(profile.competitor_risk_flag)) reasons.push('Competitor risk');
+      if (/risk|recover|concern/i.test(text(profile.relationship_status) + ' ' + text(profile.recovery_plan))) reasons.push('Relationship risk');
+      const followup = dayMs(profile.next_rm_followup);
+      if (followup && followup < today) reasons.push('Follow-up overdue');
+      const staleDays = daysBetween(profile.last_meaningful_contact_date, nowIso);
+      if (text(profile.tier).toUpperCase() === 'C' && staleDays != null && staleDays >= 30) reasons.push(staleDays + ' days since meaningful contact');
+      if (reasons.length) riskReasons.set(keyName(profile.agent_name), reasons);
+    });
+    overdue.forEach(activity => {
+      const name = keyName(activity.agent_name);
+      if (!name || !byProfile.has(name) || !actionable.some(profile => keyName(profile.agent_name) === name)) return;
+      const reasons = riskReasons.get(name) || [];
+      const reason = 'Activity follow-up overdue' + (activity.follow_up_date ? ' · due ' + activity.follow_up_date : '');
+      if (!reasons.some(item => /^Activity follow-up overdue/.test(item))) reasons.push(reason);
+      riskReasons.set(name, reasons);
+    });
+    const allAtRisk = actionable.filter(profile => riskReasons.has(keyName(profile.agent_name)));
+    const directorAccounts = actionable.filter(isDirectorOwned);
+    const amandaProspects = actionable.filter(profile => !accountTier(profile) && (profile.retained === false || text(profile.retained).toLowerCase() === 'false'));
+    const amandaProspectNames = new Set(amandaProspects.map(profile => keyName(profile.agent_name)));
+    const needsOwnership = actionable.filter(profile => !isDirectorOwned(profile) && !isAmandaOwned(profile) && !amandaProspectNames.has(keyName(profile.agent_name)));
+    const atRisk = allAtRisk.filter(isDirectorOwned);
+    const amandaAttention = allAtRisk.filter(isAmandaOwned);
+    const growth = actionable.filter(isDirectorOwned).filter(profile => {
+      const tier = text(profile.tier).toUpperCase();
+      return bool(profile.high_potential_flag) || !!text(profile.next_growth_opportunity) || (snapshotNames.has(keyName(profile.agent_name)) && (tier === 'A' || tier === 'B'));
+    });
+    const watch = directorAccounts.filter(profile => {
+      if (riskReasons.has(keyName(profile.agent_name))) return false;
+      const staleDays = daysBetween(profile.last_meaning_contact_date || profile.last_meaningful_contact_date, nowIso);
+      return staleDays != null && staleDays >= 21;
+    });
+    const healthyCount = Math.max(0, directorAccounts.length - atRisk.length - watch.length);
+    const healthyPercent = directorAccounts.length ? Math.round(healthyCount / directorAccounts.length * 100) : 0;
+
+    const calls = activities.filter(activity => /call/i.test(text(activity.act_type)));
+    const connections = activities.filter(activity => /talk-to|connection/i.test(text(activity.act_type)) || /connected|meaningful conversation|reached|meeting scheduled/i.test(text(activity.outcome)));
+    const booked = activities.filter(activity => /meeting scheduled|booked/i.test(text(activity.outcome)));
+    const held = activities.filter(activity => /meeting|break bread/i.test(text(activity.act_type)) && !/scheduled|booked|cancel|no.show/i.test(text(activity.outcome)));
+    const whoNeedsProfiles = [];
+    const whoNeedsNames = new Set();
+    atRisk.concat(growth).forEach(profile => {
+      const name = keyName(profile.agent_name);
+      if (!whoNeedsNames.has(name)) {
+        whoNeedsNames.add(name);
+        whoNeedsProfiles.push(profile);
+      }
+    });
+    const overdueByName = new Map();
+    overdue.forEach(activity => {
+      const name = keyName(activity.agent_name);
+      const due = text(activity.follow_up_date);
+      if (name && due && (!overdueByName.has(name) || due < overdueByName.get(name))) overdueByName.set(name, due);
+    });
+    const attentionExport = profile => {
+      const name = keyName(profile.agent_name);
+      const tier = (text(profile.tier) || text(profile.powerbi_level) || 'Unassigned').toUpperCase();
+      return {
+        agent: profile.agent_name,
+        tier,
+        owner: tier === 'C' ? 'Amanda' : ['A', 'B', 'CHANNEL'].includes(tier) ? 'Director' : 'Needs Ownership',
+        reason: (riskReasons.get(name) || []).join(' · '),
+        lastMeaningfulContact: text(profile.last_meaningful_contact_date),
+        nextRmFollowup: text(profile.next_rm_followup) || text(overdueByName.get(name)),
+        phone: text(profile.phone),
+        email: text(profile.email),
+        relationshipStatus: text(profile.relationship_status)
+      };
+    };
+    const upcoming = days => directorAccounts.filter(profile => {
+      const due = dayMs(profile.next_rm_followup);
+      return due >= today && due <= today + days * 86400000;
+    }).sort((left, right) => dayMs(left.next_rm_followup) - dayMs(right.next_rm_followup));
+
+    const historyByName = new Map();
+    (Array.isArray(input.profiles) ? input.profiles : []).forEach(profile => {
+      const name = keyName(profile && profile.agent_name);
+      const tier = accountTier(profile);
+      if (!name || !tier) return;
+      const rows = historyByName.get(name) || [];
+      rows.push(profile);
+      historyByName.set(name, rows);
+    });
+    const recentlyMoved = [];
+    historyByName.forEach(rows => {
+      rows.sort((left, right) => dateMs(right.updated_at || right.powerbi_last_seen_at) - dateMs(left.updated_at || left.powerbi_last_seen_at));
+      const latest = rows[0];
+      const latestTier = accountTier(latest);
+      const prior = rows.slice(1).find(row => accountTier(row) && accountTier(row) !== latestTier);
+      if (!prior) return;
+      const changedAt = text(latest.updated_at || latest.powerbi_last_seen_at).slice(0, 10);
+      recentlyMoved.push([text(latest.agent_name), 'Ownership changed', accountTier(prior) + ' → ' + latestTier + (changedAt ? ' · updated ' + changedAt : ''), 'Confirm owner and next action']);
+    });
+
+    const latest = Math.max(
+      dateMs(input.receipt && input.receipt.imported_at),
+      ...profiles.map(profile => dateMs(profile.updated_at || profile.powerbi_last_seen_at)),
+      ...activities.map(activity => dateMs(activity.created_at || activity.edited_at || activity.act_date))
+    );
+
+    return {
+      metrics: {
+        powerBi: snapshotCounts,
+        atRisk: atRisk.length,
+        directorAccounts: directorAccounts.length,
+        amandaAttention: amandaAttention.length,
+        amandaProspects: amandaProspects.length,
+        needsOwnership: needsOwnership.length,
+        growthOpportunities: growth.length,
+        relationshipHealth: {healthy: healthyCount, watch: watch.length, atRisk: atRisk.length, percent: healthyPercent},
+        execution: {activities: activities.length, calls: calls.length, connections: connections.length, booked: booked.length, held: held.length, overdue: overdue.length}
+      },
+      drills: {
+        active: snapshotProfiles.map(profile => profileRow(profile, accountTier(profile) || 'Active', 'Latest shared Power BI snapshot')),
+        channel: channel.map(profile => profileRow(profile, 'Channel', 'Current shared profile')),
+        tierA: snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'A').map(profile => profileRow(profile, 'A', 'Latest shared Power BI snapshot')),
+        tierB: snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'B').map(profile => profileRow(profile, 'B', 'Latest shared Power BI snapshot')),
+        directorAccounts: directorAccounts.map(profile => profileRow(profile, accountTier(profile), text(profile.next_rm_followup) ? 'Next follow-up ' + profile.next_rm_followup : 'No follow-up currently due')),
+        atRisk: atRisk.map(profile => profileRow(profile, 'Needs attention', riskReasons.get(keyName(profile.agent_name)).join(' · '))),
+        amandaAttention: amandaAttention.map(profile => profileRow(profile, 'Amanda · C agent', riskReasons.get(keyName(profile.agent_name)).join(' · '))),
+        amandaProspects: amandaProspects.map(profile => profileRow(profile, 'Amanda · prospect', 'New, cold or reconnect relationship not yet retained')),
+        needsOwnership: needsOwnership.map(profile => profileRow(profile, 'Needs ownership', 'Tier or owner is missing or unsupported')),
+        recentlyMoved,
+        upcoming7: upcoming(7).map(profile => profileRow(profile, accountTier(profile), 'Next follow-up ' + profile.next_rm_followup)),
+        upcoming14: upcoming(14).map(profile => profileRow(profile, accountTier(profile), 'Next follow-up ' + profile.next_rm_followup)),
+        upcoming30: upcoming(30).map(profile => profileRow(profile, accountTier(profile), 'Next follow-up ' + profile.next_rm_followup)),
+        growthOpps: growth.map(profile => profileRow(profile, 'Growth opportunity', text(profile.next_growth_opportunity) || (bool(profile.high_potential_flag) ? 'High-potential relationship' : text(profile.tier).toUpperCase() + ' advancement candidate'))),
+        whoNeeds: whoNeedsProfiles.slice(0, 12).map(profile => riskReasons.has(keyName(profile.agent_name))
+          ? profileRow(profile, 'Protect relationship', riskReasons.get(keyName(profile.agent_name)).join(' · '))
+          : profileRow(profile, 'Growth opportunity', text(profile.next_growth_opportunity) || 'High-potential relationship')),
+        health: directorAccounts.map(profile => profileRow(profile, riskReasons.has(keyName(profile.agent_name)) ? 'At risk' : watch.includes(profile) ? 'Watch' : 'Healthy', text(profile.last_meaningful_contact_date) ? 'Last meaningful contact ' + profile.last_meaningful_contact_date : 'No meaningful-contact date recorded')),
+        calls: calls.map(activity => activityRow(activity, 'Call attempt')),
+        connections: connections.map(activity => activityRow(activity, 'Agent connection')),
+        booked: booked.map(activity => activityRow(activity, 'Meeting booked')),
+        held: held.map(activity => activityRow(activity, 'Meeting held')),
+        followups: overdue.map(activity => activityRow(activity, 'Follow-up overdue'))
+      },
+      exports: {
+        amandaAttention: amandaAttention.map(attentionExport),
+        directorAttention: atRisk.map(attentionExport)
+      },
+      freshness: {
+        latest: latest ? new Date(latest).toISOString() : null,
+        powerBi: snapshot.stamp,
+        profiles: profiles.length,
+        activities: activities.length
+      }
+    };
+  }
+
+  return {cleanTrackingUrl, buildDashboard, latestPowerBiSnapshot, isSystemActivity};
+});
+
+</script>
+<script>
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  if (root) root.DirectorPage = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  function setText(document, id, value) {
+    const node = document && document.getElementById(id);
+    if (node) node.textContent = String(value);
+  }
+
+  function applyDashboard(document, dashboard, demoData) {
+    const metrics = dashboard.metrics;
+    const powerBi = metrics.powerBi;
+    const health = metrics.relationshipHealth;
+
+    setText(document, 'kpiActive', powerBi.active + ' / 200');
+    setText(document, 'dirChannelCount', powerBi.Channel);
+    setText(document, 'dirACount', powerBi.A);
+    setText(document, 'dirBCount', powerBi.B);
+    setText(document, 'kpiAtRisk', metrics.atRisk);
+    setText(document, 'mGrowthOpps', metrics.growthOpportunities);
+    setText(document, 'mChannel', powerBi.Channel);
+    setText(document, 'mAtRisk', metrics.atRisk);
+    setText(document, 'mHealthPercent', health.percent + '%');
+    setText(document, 'mWatch', health.watch);
+    setText(document, 'growthAllCount', metrics.growthOpportunities);
+    setText(document, 'growthActiveCount', powerBi.active + ' / 200');
+    setText(document, 'growthBCount', (dashboard.drills.tierB || []).length);
+    setText(document, 'growthChannelCount', powerBi.Channel);
+    setText(document, 'relationshipRiskCount', metrics.atRisk);
+    setText(document, 'relationshipHealthPercent', health.percent + '%');
+    setText(document, 'relationshipHealthHint', health.healthy + ' healthy · ' + health.watch + ' watch · ' + health.atRisk + ' at risk');
+    setText(document, 'healthHealthyCount', health.healthy);
+    setText(document, 'healthWatchCount', health.watch);
+    setText(document, 'healthRiskCount', health.atRisk);
+    setText(document, 'protectNowCount', metrics.atRisk);
+    setText(document, 'directorAccountsCount', metrics.directorAccounts || 0);
+    setText(document, 'mDirectorAccounts', metrics.directorAccounts || 0);
+    setText(document, 'directorUpcoming7Count', (dashboard.drills.upcoming7 || []).length);
+    setText(document, 'relationshipUpcoming7Count', (dashboard.drills.upcoming7 || []).length);
+    setText(document, 'directorUpcoming14Count', (dashboard.drills.upcoming14 || []).length);
+    setText(document, 'directorUpcoming30Count', (dashboard.drills.upcoming30 || []).length);
+    setText(document, 'needsOwnershipCount', (dashboard.drills.needsOwnership || []).length);
+    setText(document, 'recentlyMovedCount', (dashboard.drills.recentlyMoved || []).length);
+    setText(document, 'amandaAttentionCount', (dashboard.drills.amandaAttention || []).length);
+    setText(document, 'amandaProspectsCount', (dashboard.drills.amandaProspects || []).length);
+    setText(document, 'mAmandaAttention', metrics.amandaAttention || 0);
+    setText(document, 'exportAmandaCount', ((dashboard.exports && dashboard.exports.amandaAttention) || []).length);
+    setText(document, 'exportDirectorCount', ((dashboard.exports && dashboard.exports.directorAttention) || []).length);
+
+    Object.keys(dashboard.drills || {}).forEach(key => {
+      if (demoData && demoData[key]) demoData[key].rows = dashboard.drills[key];
+    });
+
+    const stamp = dashboard.freshness && dashboard.freshness.latest;
+    const freshness = stamp ? new Date(stamp).toLocaleString() : 'No shared update timestamp';
+    setText(document, 'dirPowerBiStatus', 'Shared LP + RM data: ' + freshness + ' · ' + powerBi.active + ' active · auto-refreshes every minute');
+  }
+
+  function mergeWhoNeeds(sharedRows, localRows) {
+    const output = [];
+    const seen = new Set();
+    (sharedRows || []).concat(localRows || []).forEach(row => {
+      const key = String(row && row[0] || '').trim().toLowerCase().replace(/\s+/g, ' ');
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      output.push(row);
+    });
+    return output;
+  }
+
+  function viewUrl(rawUrl, viewName) {
+    const url = new URL(rawUrl, 'https://director.local');
+    url.hash = viewName || 'overview';
+    return url.pathname + url.search + url.hash;
+  }
+
+  function filterCreditedActivities(rows, predicate) {
+    return (Array.isArray(rows) ? rows : []).filter(predicate);
+  }
+
+  function attentionCsv(rows) {
+    const columns = [
+      ['Agent', 'agent'], ['Tier', 'tier'], ['Owner', 'owner'], ['Why Attention', 'reason'],
+      ['Last Meaningful Contact', 'lastMeaningfulContact'], ['Next RM Follow-Up', 'nextRmFollowup'],
+      ['Phone', 'phone'], ['Email', 'email'], ['Relationship Status', 'relationshipStatus']
+    ];
+    const quote = value => {
+      const stringValue = String(value == null ? '' : value);
+      return /[",\r\n]/.test(stringValue) ? '"' + stringValue.replace(/"/g, '""') + '"' : stringValue;
+    };
+    return [columns.map(column => column[0]).join(',')]
+      .concat((rows || []).map(row => columns.map(column => quote(row[column[1]])).join(',')))
+      .join('\r\n');
+  }
+
+  function createRefreshController(options) {
+    const load = options.load;
+    const render = options.render;
+    const cleanUrl = options.cleanUrl;
+    const document = options.document;
+    const windowObject = options.window;
+    const history = options.history;
+    const location = options.location;
+    const schedule = options.setInterval;
+    const unschedule = options.clearInterval;
+    const intervalMs = options.intervalMs || 60000;
+    let intervalId = null;
+    let activeRefresh = null;
+
+    async function refresh() {
+      if (activeRefresh) return activeRefresh;
+      activeRefresh = Promise.resolve(load()).then(result => {
+        render(result);
+        return result;
+      }).finally(() => { activeRefresh = null; });
+      return activeRefresh;
+    }
+
+    async function start() {
+      const cleaned = cleanUrl(location.href);
+      const current = new URL(location.href).pathname + new URL(location.href).search + new URL(location.href).hash;
+      if (cleaned !== current) history.replaceState(null, '', cleaned);
+      if (document && document.addEventListener) {
+        document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' ? refresh() : undefined);
+      }
+      if (windowObject && windowObject.addEventListener) {
+        windowObject.addEventListener('storage', event => /(?:ct|rm|core).*sync/i.test(String(event && event.key || '')) ? refresh() : undefined);
+      }
+      intervalId = schedule(refresh, intervalMs);
+      return refresh();
+    }
+
+    function stop() {
+      if (intervalId != null) unschedule(intervalId);
+      intervalId = null;
+    }
+
+    return {start, stop, refresh};
+  }
+
+  return {applyDashboard, mergeWhoNeeds, viewUrl, filterCreditedActivities, attentionCsv, createRefreshController};
+});
+
+</script>
+<script>
+const demoData={
+whoNeeds:{title:'My Accounts Needing Attention',summary:'Your A, B and Channel risks, growth opportunities and saved Director follow-ups.',rows:[]},
+directorAccounts:{title:'My Permanent Account Roster',summary:'Every active A, B and Channel relationship stays here even when nothing is overdue.',rows:[]},
+amandaAttention:{title:"Amanda's C-Agent Attention List",summary:'C-agent overdue work and relationships past Amanda’s 30-day meaningful-contact cadence.',rows:[]},
+amandaProspects:{title:"Amanda's Prospecting Lane",summary:'Active new, cold and reconnect agents who are not yet retained or tiered.',rows:[]},
+upcoming7:{title:'My Follow-Ups · Next 7 Days',summary:'Your A, B and Channel follow-ups due within 7 days.',rows:[]},
+upcoming14:{title:'My Follow-Ups · Next 14 Days',summary:'Your A, B and Channel follow-ups due within 14 days.',rows:[]},
+upcoming30:{title:'My Follow-Ups · Next 30 Days',summary:'Your A, B and Channel follow-ups due within 30 days.',rows:[]},
+needsOwnership:{title:'Needs Ownership',summary:'Active records with no supported A, B, C or Channel tier. Resolve these so nobody disappears.',rows:[]},
+recentlyMoved:{title:'Recently Moved Accounts',summary:'Accounts whose tier or ownership lane changed. Confirm the owner and next action.',rows:[]},
+active:{title:'Active Relationship Roster',summary:'Live roster is not connected to this standalone Director page yet.',rows:[]},
+channel:{title:'Channel',summary:'Aggregate dashboard count only. Agent-level roster is not connected here yet.',rows:[]},
+tierA:{title:'A Relationships',summary:'Aggregate dashboard count only. Agent-level roster is not connected here yet.',rows:[]},
+tierB:{title:'B Relationships',summary:'Aggregate dashboard count only. Agent-level roster is not connected here yet.',rows:[]},
+atRisk:{title:'At Risk Relationships',summary:'Agent-level at-risk data is not connected to this standalone page yet.',rows:[]},
+feedback:{title:'Agent Feedback & Experience',summary:'Shows only feedback you save in this Director browser.',rows:[]},
+repeat:{title:'Repeat Experience Issues',summary:'Shows only repeat feedback you save in this Director browser.',rows:[]},
+feedbackRisk:{title:'Relationships at Risk from Feedback',summary:'Shows only saved feedback marked High / At Risk.',rows:[]},
+road:{title:'Road to 200 Trend',summary:'Aggregate prototype trend only; not a live roster feed.',rows:[]},
+growthOpps:{title:'Growth Opportunities',summary:'Agent-level growth opportunities are not connected here yet.',rows:[]},
+health:{title:'Relationship Health',summary:'Aggregate prototype metric only; not a live agent-level feed.',rows:[]},
+calls:{title:'Amanda · Calls Made',summary:'Aggregate prototype metric only; detailed RM activity is not connected here yet.',rows:[]},
+connections:{title:'Amanda · Agent Connections',summary:'Aggregate prototype metric only; detailed RM activity is not connected here yet.',rows:[]},
+booked:{title:'Meetings Booked',summary:'Aggregate prototype metric only; detailed RM meetings are not connected here yet.',rows:[]},
+held:{title:'Meetings Held',summary:'Aggregate prototype metric only; detailed RM meetings are not connected here yet.',rows:[]},
+advanced:{title:'Relationships Advanced',summary:'Aggregate prototype metric only; agent-level advancement is not connected here yet.',rows:[]},
+protected:{title:'Director Impact · Protected',summary:'Use Log My Work to create real Director records in this browser.',rows:[]},
+strategic:{title:'Strategic / Builder Relationships',summary:'Use Log My Work to create real strategic relationship records in this browser.',rows:[]},
+escalations:{title:'Experience Items Routed',summary:'Use Agent Feedback or Log My Work to create real routed records in this browser.',rows:[]},
+myFocus:{title:'My Focus',summary:'Priority details are not connected to a live source yet.',rows:[]},
+leadership:{title:'Needs Leadership',summary:'Use Log My Work with outcome Routed to Leadership to create real items.',rows:[]},
+wins:{title:'Wins',summary:'Use Log My Work to document real outcomes.',rows:[]},
+outlook30:{title:'30 Day Outlook',summary:'No fabricated agent-level records are shown.',rows:[]},
+outlook60:{title:'60 Day Outlook',summary:'No fabricated agent-level records are shown.',rows:[]},
+outlook90:{title:'90 Day Outlook',summary:'No fabricated agent-level records are shown.',rows:[]}
+};
+const ranges={today:{active:'136 / 200',delta:'Today',calls:'42',connections:'16',booked:'3',held:'2',advanced:'1'},week:{active:'136 / 200',delta:'↑ 2 this week',calls:'168',connections:'61',booked:'12',held:'9',advanced:'4'},month:{active:'136 / 200',delta:'↑ 6 this month',calls:'168',connections:'61',booked:'12',held:'9',advanced:'4'}};
+const WORK_KEY='director_work_v2',FEEDBACK_KEY='director_feedback_v2',COACH_KEY='director_coaching_v1';
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function safeClass(id,op,cls){const el=$(id);if(el&&el.classList)el.classList[op](cls);return el}
+function showView(name){
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
+ document.querySelectorAll('.nav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+ window.scrollTo(0,0);
+ try{history.replaceState(null,'',DirectorPage.viewUrl(location.href,name))}catch(_){}
+}
+function openDrill(key){
+ syncRealDrills();
+ const d=demoData[key]; if(!d)return;
+ $('drawerTitle').textContent=d.title;
+ $('drawerSummary').textContent=d.summary;
+ $('drawerResults').innerHTML=d.rows.length?d.rows.map((r,i)=>`<div class="result"><div class="resultTop"><div><h3>${esc(r[0])}</h3><div class="meta">${r.slice(1).map(esc).join(' · ')}</div></div><span class="pill ${/risk|repeat|high/i.test(r.join(' '))?'risk':'good'}">${i+1}</span></div><div class="actions"><button class="primary" data-toast="View Relationship · ${esc(r[0])}">View Relationship</button><button data-log-agent="${esc(r[0])}">Log Activity</button></div></div>`).join(''):`<div class="result"><h3>No agent-level records here yet.</h3><div class="meta">${esc(d.summary)}</div></div>`;
+ closeAllOverlays();
+ safeClass('drawerBack','add','open');
+ document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+ safeClass('drawerBack','remove','open');
+ document.body.style.overflow='';
+}
+function toastMsg(msg){
+ const t=$('toast'); t.textContent=msg; t.classList.add('show');
+ clearTimeout(window.__toastTimer);
+ window.__toastTimer=setTimeout(()=>t.classList.remove('show'),1600);
+}
+function saved(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch{return[]}}
+function put(key,a){try{localStorage.setItem(key,JSON.stringify(a))}catch(_){}}
+function closeAllOverlays(){
+ safeClass('drawerBack','remove','open');
+ document.querySelectorAll('.modalBack.open').forEach(m=>m.classList.remove('open'));
+ document.body.style.overflow='';
+}
+function openModal(id){
+ closeAllOverlays();
+ const m=$(id); if(m){m.classList.add('open');document.body.style.overflow='hidden'}
+}
+function closeModal(id){
+ const m=$(id); if(m)m.classList.remove('open');
+ document.body.style.overflow='';
+}
+function openWorkFor(name){
+ closeAllOverlays(); openModal('workModal');
+ const f=document.querySelector('#workForm [name="agent"]'); if(f)f.value=name;
+}
+
+function syncRealDrills(){
+ const f=saved(FEEDBACK_KEY),w=saved(WORK_KEY);
+ demoData.feedback.rows=f.map(x=>[x.agent,x.lp||'LP not listed',x.category||'Feedback',x.status||'New']);
+ demoData.repeat.rows=f.filter(x=>x.repeat==='Yes').map(x=>[x.agent,x.lp||'LP not listed',x.category||'Repeat issue',x.status||'Monitoring']);
+ demoData.feedbackRisk.rows=f.filter(x=>x.impact==='High / At Risk').map(x=>[x.agent,x.lp||'LP not listed','High / At Risk',x.status||'Monitoring']);
+ demoData.protected.rows=w.filter(x=>x.outcome==='Relationship Protected').map(x=>[x.agent,x.type||'Director Work',x.outcome,x.notes||'']);
+ demoData.strategic.rows=w.filter(x=>/Strategic|Builder/i.test(x.type||'')).map(x=>[x.agent,x.type,x.outcome||'',x.notes||'']);
+ demoData.escalations.rows=w.filter(x=>/Escalation/i.test(x.type||'')||x.outcome==='Routed to Leadership').map(x=>[x.agent,x.type||'Director Work',x.outcome||'',x.notes||'']);
+ demoData.leadership.rows=w.filter(x=>x.outcome==='Routed to Leadership').map(x=>[x.agent,x.type||'Director Work',x.notes||'']);
+ demoData.wins.rows=w.filter(x=>/Protected|Advanced|Completed/.test(x.outcome||'')).map(x=>[x.agent,x.type||'Director Work',x.outcome||'']);
+}
+
+function renderSaved(){
+ syncRealDrills();
+ const w=saved(WORK_KEY),f=saved(FEEDBACK_KEY),wp=$('workSavedPreview'),fp=$('feedbackSavedPreview');
+ wp.innerHTML=w.length?w.slice(-5).reverse().map(x=>`<div class="savedItem"><b>${esc(x.agent)}</b> · ${esc(x.type)}<div class="meta">${esc(x.outcome)} · ${esc(x.date)}</div></div>`).join(''):'<div class="meta">No Director work logged in this browser yet.</div>';
+ fp.innerHTML=f.length?f.slice(-5).reverse().map(x=>`<div class="savedItem"><b>${esc(x.agent)}</b> · ${esc(x.lp)}<div class="meta">${esc(x.category)} · ${esc(x.status)} · Shared with management: ${esc(x.sharedMgmt)}${x.repeat==='Yes'?' · Repeat issue':''}</div></div>`).join(''):'<div class="meta">No feedback saved in this browser yet.</div>';
+ const c=saved(COACH_KEY),cp=$('coachSavedPreview');
+ if(cp)cp.innerHTML=c.length?c.slice(-8).reverse().map(x=>`<div class="coachItem"><b>${esc(x.type)}</b> · ${esc(x.date)}${x.followup?' · Follow up '+esc(x.followup):''}<div class="meta">${esc(x.note)}${x.next?' · Next: '+esc(x.next):''}</div></div>`).join(''):'<div class="meta">No coaching notes saved yet.</div>';
+ const total=f.length,rep=f.filter(x=>x.repeat==='Yes').length,risk=f.filter(x=>x.impact==='High / At Risk').length;
+ ['feedbackCount','feedbackCountDetail','mFeedback'].forEach(id=>{const e=$(id);if(e)e.textContent=total});
+ ['repeatCount','mRepeat'].forEach(id=>{const e=$(id);if(e)e.textContent=rep});
+ $('repeatMini').textContent=rep+' repeat issues';
+ dirSetText('relationshipFeedbackRiskCount',risk);
+ dirSetText('relationshipFeedbackRiskSummaryCount',risk);
+ dirSetText('mFeedbackRisk',risk);
+ dirSetText('impactProtectedCount',demoData.protected.rows.length);
+ dirSetText('mProtected',demoData.protected.rows.length);
+ dirSetText('impactStrategicCount',demoData.strategic.rows.length);
+ dirSetText('mStrategic',demoData.strategic.rows.length);
+ dirSetText('impactRoutedCount',demoData.escalations.rows.length);
+ dirSetText('mRouted',demoData.escalations.rows.length);
+ dirSetText('priorityLeadershipCount',demoData.leadership.rows.length);
+ dirSetText('mLeadership',demoData.leadership.rows.length);
+ dirSetText('leadershipAttentionCount',demoData.leadership.rows.length);
+ dirSetText('priorityWinsCount',demoData.wins.rows.length);
+ dirSetText('mWins',demoData.wins.rows.length);
+}
+function saveForm(form,key){
+ const o=Object.fromEntries(new FormData(form).entries()); o.date=new Date().toLocaleDateString();
+ const a=saved(key);a.push(o);put(key,a);form.reset();renderSaved();
+ closeModal(key===WORK_KEY?'workModal':key===FEEDBACK_KEY?'feedbackModal':'coachModal');
+ const activeRange=document.querySelector('[data-range].active');renderWhoNeeds(activeRange?activeRange.dataset.range:'month');
+ toastMsg(key===WORK_KEY?'Director work saved':key===FEEDBACK_KEY?'Agent feedback saved':'Coaching note saved');
+}
+function parseLocalDate(v){
+ if(!v)return null; const p=v.split('-').map(Number);
+ if(p.length!==3||p.some(Number.isNaN))return null;
+ return new Date(p[0],p[1]-1,p[2],12,0,0,0);
+}
+function buildWhoNeedsFromSaved(k){
+ const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ const weekEnd=new Date(today);weekEnd.setDate(weekEnd.getDate()+7);
+ const monthEnd=new Date(today);monthEnd.setMonth(monthEnd.getMonth()+1);
+ const items=[];
+ saved(WORK_KEY).forEach(x=>{const due=parseLocalDate(x.followup);if(due&&x.agent)items.push([x.agent,x.type||'Director Follow-up',x.outcome||'Follow-up',x.notes||'',due])});
+ saved(FEEDBACK_KEY).forEach(x=>{const due=parseLocalDate(x.followup);if(due&&x.agent)items.push([x.agent,'Agent Feedback',`${x.status||'Follow-up'}${x.lp?' · '+x.lp:''}`,x.feedback||'',due])});
+ return items.filter(r=>{const due=new Date(r[4].getFullYear(),r[4].getMonth(),r[4].getDate());if(k==='today')return due<=today;if(k==='week')return due<=weekEnd;return due<=monthEnd})
+ .sort((a,b)=>a[4]-b[4]).map(r=>[r[0],r[1],`Due ${r[4].toLocaleDateString()} · ${r[2]}`,r[3]]);
+}
+function renderWhoNeeds(k){
+ const localRows=buildWhoNeedsFromSaved(k),sharedRows=(window.__directorDashboard&&window.__directorDashboard.drills&&window.__directorDashboard.drills.whoNeeds)||[];
+ const rows=window.DirectorPage?DirectorPage.mergeWhoNeeds(sharedRows,localRows):localRows;demoData.whoNeeds.rows=rows;
+ const label=k==='today'?'Today':k==='week'?'This Week':'This Month';
+ $('whoTitle').textContent='My Accounts Needing Attention · '+label;$('whoCount').textContent=rows.length;
+ $('whoPreview').innerHTML=rows.length?rows.slice(0,3).map(r=>`<div class="whoPerson"><b>${esc(r[0])}</b><span>${esc(r[1])} · ${esc(r[2])}</span></div>`).join(''):`<div class="whoPerson" style="grid-column:1/-1"><b>No shared or Director follow-ups need attention ${label.toLowerCase()}.</b><span>New LP uploads, RM updates, and saved Director follow-ups appear here automatically.</span></div>`;
+}
+function downloadAttentionExport(owner){
+ const dashboard=window.__directorDashboard,group=owner==='amanda'?'amandaAttention':'directorAttention';
+ const rows=(dashboard&&dashboard.exports&&dashboard.exports[group])||[];
+ if(!rows.length){toastMsg(owner==='amanda'?'No Amanda-owned C risks to export':'No Director-owned A/B/Channel risks to export');return}
+ const csv='\ufeff'+DirectorPage.attentionCsv(rows),blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');
+ link.href=url;link.download=(owner==='amanda'?'Amanda_C_Agents_Need_Attention_':'Director_ABChannel_Need_Attention_')+dLocalDate(new Date())+'.csv';
+ document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),0);
+ toastMsg(rows.length+' attention record'+(rows.length===1?'':'s')+' exported');
+}
+function setRange(k){
+ window.__directorSelectedRange=k;
+ const d=ranges[k]||ranges.month;
+ document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===k));
+ $('kpiActiveDelta').textContent='Latest shared Power BI · '+(k==='today'?'Today':k==='week'?'This week':'This month')+' view';
+ renderWhoNeeds(k);
+ if(window.__directorLiveReady){
+   Promise.resolve(loadAmandaExecutionLive(k)).finally(()=>loadAmandaTodayCoach());
+ }
+ try{localStorage.setItem('director_range_v2',k)}catch(_){}
+}
+document.addEventListener('click',e=>{
+ const close=e.target.closest('[data-close]');
+ if(close){e.preventDefault();e.stopPropagation();closeModal(close.dataset.close);return}
+ if(e.target.id==='closeDrawer'){e.preventDefault();e.stopPropagation();closeDrawer();return}
+ const toast=e.target.closest('[data-toast]');if(toast){toastMsg(toast.dataset.toast);return}
+ const log=e.target.closest('[data-log-agent]');if(log){openWorkFor(log.dataset.logAgent);return}
+ const exportButton=e.target.closest('[data-export-attention]');if(exportButton){e.preventDefault();e.stopPropagation();downloadAttentionExport(exportButton.dataset.exportAttention);return}
+ const d=e.target.closest('[data-drill]');if(d){openDrill(d.dataset.drill);return}
+ const v=e.target.closest('[data-view]');if(v){e.preventDefault();showView(v.dataset.view);return}
+ const r=e.target.closest('[data-range]');if(r){setRange(r.dataset.range);return}
+});
+$('logWorkBtn').addEventListener('click',()=>openModal('workModal'));
+$('addFeedbackBtn').addEventListener('click',()=>openModal('feedbackModal'));
+$('addCoachBtn').addEventListener('click',()=>openModal('coachModal'));
+$('coachForm').addEventListener('submit',e=>{e.preventDefault();saveForm(e.currentTarget,COACH_KEY)});
+$('drawerBack').addEventListener('click',e=>{if(e.target===$('drawerBack'))closeDrawer()});
+$('workForm').addEventListener('submit',e=>{e.preventDefault();saveForm(e.currentTarget,WORK_KEY)});
+$('feedbackForm').addEventListener('submit',e=>{e.preventDefault();saveForm(e.currentTarget,FEEDBACK_KEY)});
+$('sharedMgmt').addEventListener('change',e=>{const yes=e.target.value==='Yes';$('sharedWithField').style.display=yes?'grid':'none';$('sharedDateField').style.display=yes?'grid':'none'});
+document.querySelectorAll('.modalBack').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllOverlays()});
+renderSaved();
+
+/* VNEXT2: explicit Director navigation + tile bindings.
+Root cause: the prior all-tiles patch did not include .module and explicitly skipped data-view tiles. */
+function activateLikeButton(el,fn){
+ if(el.dataset.directBound==='1')return;
+ el.dataset.directBound='1';el.setAttribute('role','button');if(!el.hasAttribute('tabindex'))el.tabIndex=0;el.style.cursor='pointer';
+ const run=e=>{if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;if(e.target.closest('a,button,input,select,textarea,label'))return;if(e.type==='keydown')e.preventDefault();e.preventDefault();e.stopPropagation();fn();};
+ el.addEventListener('click',run);el.addEventListener('keydown',run);
+}
+
+
+/* VLIVE: Director Amanda Execution reads the same Supabase records as RM V410.
+   Read-only. It does not write to or modify Amanda's RM tracker. */
+const DIRECTOR_RM_URL="https://uclucbdkjqyqdvifyptx.supabase.co";
+const DIRECTOR_RM_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjbHVjYmRranF5cWR2aWZ5cHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTUyMTMsImV4cCI6MjA5NjA3MTIxM30.VnqWcFT1WLQwCJxSdEIzIgOvETaOQly2IQxht-9uI7E";
+
+/* VSHARED: one LP/Core Team Power BI upload -> Director shared growth truth.
+   Uses the same powerbi_import_log receipt + latest agent_profiles snapshot pattern as RM V410. */
+let directorPbState={stamp:'',receipt:null,snapshot:null};
+function dirParsePbReceipt(sourceApp,importedAt){
+ const s=String(sourceApp||'');if(!s.startsWith('core-team-tracker'))return null;
+ const out={imported_at:importedAt||null,raw_rows:0,levels:{Channel:0,A:0,B:0,C:0,Blank:0,Other:0}};
+ s.split(';').slice(1).forEach(part=>{const i=part.indexOf('=');if(i<1)return;const k=part.slice(0,i),v=Number(part.slice(i+1))||0;
+  if(k==='raw')out.raw_rows=v;else if(k==='Channel')out.levels.Channel=v;else if(k==='A')out.levels.A=v;else if(k==='B')out.levels.B=v;else if(k==='C')out.levels.C=v;else if(k==='blank')out.levels.Blank=v;else if(k==='other')out.levels.Other=v;
+ });
+ return out;
+}
+function dirLatestPbSnapshot(profiles){
+ const all=Array.isArray(profiles)?profiles:[];let latestMs=0,stamp=null;
+ all.forEach(p=>{const ms=Date.parse(p&&p.powerbi_last_seen_at||'');if(Number.isFinite(ms)&&ms>latestMs){latestMs=ms;stamp=p.powerbi_last_seen_at}});
+ if(!latestMs)return{stamp:null,rows:[],counts:{A:0,B:0,C:0,total:0}};
+ const by=new Map();
+ all.forEach(p=>{const ms=Date.parse(p&&p.powerbi_last_seen_at||''),lvl=String(p&&p.powerbi_level||'').trim().toUpperCase();
+  if(!['A','B','C'].includes(lvl)||!Number.isFinite(ms)||Math.abs(ms-latestMs)>=120000)return;
+  const k=String(p.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ');if(k&&!by.has(k))by.set(k,p);
+ });
+ const rows=[...by.values()],counts={A:0,B:0,C:0,total:0};
+ rows.forEach(p=>{const l=String(p.powerbi_level||'').toUpperCase();if(counts[l]!==undefined){counts[l]++;counts.total++}});
+ return{stamp,rows,counts};
+}
+function dirSetText(id,v){const e=$(id);if(e)e.textContent=v}
+function dirUpdateGrowthDrills(snapshot,receipt){
+ const rows=(snapshot&&snapshot.rows)||[];
+ const level=l=>rows.filter(p=>String(p.powerbi_level||'').toUpperCase()===l).map(p=>[p.agent_name,l,'Latest Power BI snapshot','']);
+ if(demoData){
+   demoData.active.rows=rows.map(p=>[p.agent_name,String(p.powerbi_level||'—'),'Latest Power BI snapshot','']);
+   demoData.tierA.rows=level('A');demoData.tierB.rows=level('B');
+   // Channel is a receipt-level population in the LP import; only show exact profile rows if the profile itself says Channel.
+   demoData.channel.rows=rows.filter(p=>String(p.tier||'').toUpperCase()==='CHANNEL').map(p=>[p.agent_name,'Channel','Latest shared profile','']);
+ }
+}
+async function loadDirectorSharedPowerBi(force){
+ const st=$('dirPowerBiStatus');if(st)st.textContent='Syncing latest LP Power BI data…';
+ try{
+  const [logs,profiles]=await Promise.all([
+   dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),
+   dSb('agent_profiles?select=agent_name,tier,powerbi_level,powerbi_last_seen_at,retained,relationship_status,do_not_contact&powerbi_last_seen_at=not.is.null&limit=5000')
+  ]);
+  const row=logs&&logs[0],receipt=row?dirParsePbReceipt(row.source_app,row.imported_at):null,snapshot=dirLatestPbSnapshot(profiles);
+  const receiptMs=Date.parse(receipt&&receipt.imported_at||'')||0,snapMs=Date.parse(snapshot&&snapshot.stamp||'')||0;
+  const useReceipt=!!receipt&&receiptMs>=snapMs;
+  // Counts follow RM V410 authority: newest LP receipt when it is as fresh/newer; otherwise latest verified profile snapshot.
+  const A=useReceipt?Number(receipt.levels.A||0):snapshot.counts.A;
+  const B=useReceipt?Number(receipt.levels.B||0):snapshot.counts.B;
+  const C=useReceipt?Number(receipt.levels.C||0):snapshot.counts.C;
+  const Channel=useReceipt?Number(receipt.levels.Channel||0):rowsChannel(snapshot.rows);
+  // Active partner count follows imported A+B+C population. Channel may overlap A in business semantics, so never double-add it.
+  const active=A+B+C;
+  dirSetText('kpiActive',active+' / 200');dirSetText('dirChannelCount',Channel);dirSetText('dirACount',A);dirSetText('dirBCount',B);
+  const st=$('dirPowerBiStatus');if(st){const dt=receipt&&receipt.imported_at?new Date(receipt.imported_at):snapshot.stamp?new Date(snapshot.stamp):null;st.textContent=(dt?'Latest LP Power BI import: '+dt.toLocaleString():'Latest shared Power BI snapshot')+' · '+active+' active · auto-refreshing';}
+  directorPbState={stamp:(receipt&&receipt.imported_at)||snapshot.stamp||'',receipt,snapshot};dirUpdateGrowthDrills(snapshot,receipt);
+  return directorPbState;
+ }catch(e){console.error('Director shared Power BI load failed',e);const st=$('dirPowerBiStatus');if(st)st.textContent='Shared Power BI data could not refresh · '+(e.message||'Unknown error');return null}
+}
+function rowsChannel(rows){return (rows||[]).filter(p=>String(p.tier||'').trim().toUpperCase()==='CHANNEL').length}
+window.loadDirectorSharedPowerBi=loadDirectorSharedPowerBi;
+
+let amandaLive={loaded:false,period:'week',rows:[],profiles:[],metrics:{},details:{}};
+
+function dLocalDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dBounds(k){
+ const n=new Date(),today=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+ if(k==='today')return{start:dLocalDate(today),end:dLocalDate(today),label:'Today',factor:0.2};
+ if(k==='month'){const s=new Date(today.getFullYear(),today.getMonth(),1),e=new Date(today.getFullYear(),today.getMonth()+1,0);return{start:dLocalDate(s),end:dLocalDate(e),label:'This Month',factor:4.33}}
+ const day=today.getDay(),s=new Date(today);s.setDate(today.getDate()-(day===0?6:day-1));const e=new Date(s);e.setDate(s.getDate()+6);
+ return{start:dLocalDate(s),end:dLocalDate(e),label:'This Week',factor:1};
+}
+async function dSb(path){
+ const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),12000);
+ try{
+   const r=await fetch(DIRECTOR_RM_URL+'/rest/v1/'+path,{signal:ctl.signal,cache:'no-store',headers:{apikey:DIRECTOR_RM_KEY,Authorization:'Bearer '+DIRECTOR_RM_KEY,'Content-Type':'application/json'}});
+   if(!r.ok){let msg='';try{msg=await r.text()}catch(_){}throw new Error('RM data request failed ('+r.status+')'+(msg?' · '+msg.slice(0,160):''));}
+   return await r.json();
+ }catch(e){
+   if(e&&e.name==='AbortError')throw new Error('RM data request timed out');
+   throw e;
+ }finally{clearTimeout(timer)}
+}
+
+let directorRefreshController=null;
+async function loadDirectorUnifiedDashboard(){
+ const since=new Date();since.setDate(since.getDate()-90);
+ const today=dLocalDate(new Date());
+ const [profiles,recentActivities,dueActivities,logs]=await Promise.all([
+   dSb('agent_profiles?select=*&limit=5000'),
+   dSb('amanda_activities?select=*&act_date=gte.'+dLocalDate(since)+'&order=created_at.desc&limit=5000'),
+   dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+today+'&order=follow_up_date.asc&limit=5000').catch(()=>[]),
+   dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&order=imported_at.desc&limit=1').catch(()=>[])
+ ]);
+ const activityMap=new Map();
+ (recentActivities||[]).concat(dueActivities||[]).forEach(activity=>{
+   const key=activity.id||[activity.agent_name,activity.act_type,activity.act_date,activity.created_at].join('|');
+   if(!activityMap.has(key))activityMap.set(key,activity);
+ });
+ const activities=[...activityMap.values()];
+ const dashboard=DirectorData.buildDashboard({profiles,activities,receipt:(logs||[])[0]||null,now:new Date().toISOString()});
+ dashboard.shared={profiles,activities};
+ return dashboard;
+}
+function renderDirectorUnifiedDashboard(dashboard){
+ window.__directorDashboard=dashboard;
+ DirectorPage.applyDashboard(document,dashboard,demoData);
+ const focus=(dashboard.drills.whoNeeds||[]).length;
+ dirSetText('priorityFocusCount',focus);dirSetText('mFocus',focus);
+ renderSaved();
+ renderWhoNeeds(window.__directorSelectedRange||'month');
+}
+window.refreshDirectorData=()=>directorRefreshController?directorRefreshController.refresh():Promise.resolve();
+
+function dZwDecode(s){
+ try{const bits=String(s||'').replace(/\u200B/g,'0').replace(/\u200C/g,'1');let out='';for(let i=0;i+7<bits.length;i+=8)out+=String.fromCharCode(parseInt(bits.slice(i,i+8),2));return decodeURIComponent(escape(atob(out)))}catch(e){return''}
+}
+function dRmMeta(notes){
+ const START="\u2063\u2063\u2063",END="\u2064\u2064\u2064",n=String(notes||''),a=n.lastIndexOf(START);
+ if(a<0)return{rmAttendees:['Amanda']};const b=n.indexOf(END,a+START.length);if(b<0)return{rmAttendees:['Amanda']};
+ try{const o=JSON.parse(dZwDecode(n.slice(a+START.length,b)))||{};let rm=Array.isArray(o.rmAttendees)?o.rmAttendees.filter(x=>x==='Amanda'||x==='Nyny'):[];if(!rm.length)rm=[o.owner||'Amanda'];return{rmAttendees:rm}}catch(e){return{rmAttendees:['Amanda']}}
+}
+function dSystem(a){const t=String(a.act_type||''),n=String(a.notes||'');return /\[TXN_TRIGGER\]/i.test(n)||/^(?:Tuesday Call Plan Snapshot|Tuesday Contact Classification|Funded Unit Snapshot|Transaction Snapshot|Transaction Contact Override|Data Sync|Power BI Sync|Power BI Agent Snapshot|Portfolio Profile|Tier Migration|LP Tuesday File Update)$/i.test(t)||/^__/.test(String(a.agent_name||''))}
+function dAmanda(a){return !dSystem(a)&&dRmMeta(a.notes).rmAttendees.includes('Amanda')&&!/^(Amanda Coaching \/ Development|RM Scorecard Review|RM Portfolio Review|RM Process Improvement|Tracker \/ System Development|RM Training|RM Leadership Escalation Support)$/.test(String(a.act_type||''))&&String(a.agent_name||'').trim().toLowerCase()!=='rm tracker'}
+function dSignals(a){
+ const type=String(a.act_type||'').trim(),out=String(a.outcome||'').trim().toLowerCase(),notes=String(a.notes||''),prefix=notes.slice(0,8);
+ const meetings=new Set(["Partner Meeting","Break Breads","Strategic Partner Meeting","Channel Meeting","Team / Office Presentation","Retention Meeting","New Realtor Meeting"]);
+ const isMeeting=meetings.has(type),vm=/left voicemail|left vm|voicemail/.test(out),no=/no answer|no response|attempted/.test(out);
+ const call=type==="Cold Calls"||/call|outreach|check-in|talk-to|conversation/i.test(type)||/☎/.test(prefix);
+ const text=/📱/.test(prefix)||/text sent|follow-up text|sent text/i.test(out+' '+notes);
+ const positive=/positive|connected|meaningful conversation|talked|spoke|meeting scheduled|buyer opportunity received/.test(out);
+ const connection=isMeeting||(!vm&&!no&&positive),liveCall=call&&!vm&&!no&&positive,twoWayText=text&&connection;
+ const excluded=new Set(['CTC Call','Under Contract Call','Loan Client Contact','Listing Agent Update','Buyer Agent Update','Transaction Update','New Contract','Clear to Close']);
+ const agentConnection=excluded.has(type)?((type==='CTC Call'||type==='Under Contract Call')&&liveCall):connection;
+ return{callAttempt:call,liveCall,agentConnection,twoWayText,meeting:isMeeting,voicemail:vm};
+}
+function dGoal(base,k){return base}
+function dCleanNotes(n){return String(n||'').replace(/[\u2063\u2064\u200B\u200C].*$/s,'').trim()}
+function dRow(a,extra=''){return[a.agent_name||'Unknown',a.act_type||'Activity',(a.act_date||'')+(a.outcome?' · '+a.outcome:'')+(extra?' · '+extra:''),dCleanNotes(a.notes||'').slice(0,300)]}
+function dPaintCard(key,value,goal,status){
+ const el=$('amandaCard-'+key);if(!el)return;
+ const big=el.querySelector('.big'),g=el.querySelector('.goal'),st=el.querySelector('.status');
+ if(big)big.textContent=value;if(g)g.textContent=goal;if(st)st.textContent=status;
+}
+function dPaintNeed(key,title,sub,badge){
+ const el=$('amandaNeed-'+key);if(!el)return;
+ const b=el.querySelector('b'),small=el.querySelector('span:not(.dataNeeded)'),right=el.querySelector('.dataNeeded');
+ if(b)b.textContent=title;if(small)small.textContent=sub;if(right)right.textContent=badge;
+}
+function dPaintDiag(key,left,right){
+ const el=$('amandaDiag-'+key);if(!el)return;
+ const b=el.querySelector('b'),s=el.querySelector('span');if(b)b.textContent=left;if(s)s.textContent=right;
+}
+function dPace(actual,goal){return goal<=0?'':actual>=goal?'On track':actual>=goal*.8?'Watch':'Behind'}
+function dFmtPct(n,d){return d?Math.round(n/d*100)+'%':'—'}
+
+
+function dTodayPaint(id,value,status){
+ const el=$(id);if(!el)return;
+ const big=el.querySelector('.big'),st=el.querySelector('.status');
+ if(big)big.textContent=value;if(st&&status)st.textContent=status;
+}
+async function loadAmandaTodayCoach(){
+ const date=dLocalDate(new Date());
+ try{
+   const [rows,due]=await Promise.all([
+     dSb('amanda_activities?select=*&act_date=eq.'+encodeURIComponent(date)+'&order=created_at.desc&limit=3000'),
+     dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+encodeURIComponent(date)+'&order=follow_up_date.asc&limit=1000')
+   ]);
+   const all=DirectorPage.filterCreditedActivities(rows,dAmanda);
+   const dueAmanda=DirectorPage.filterCreditedActivities(due,dAmanda);
+   const calls=all.filter(a=>dSignals(a).callAttempt);
+   const connections=all.filter(a=>dSignals(a).agentConnection);
+   const booked=all.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
+   const held=all.filter(a=>dSignals(a).meeting);
+   dTodayPaint('amandaToday-calls',calls.length,'Click for exact call attempts');
+   dTodayPaint('amandaToday-connections',connections.length,'Click for exact agents');
+   dTodayPaint('amandaToday-booked',booked.length,'Click for exact bookings');
+   dTodayPaint('amandaToday-held',held.length,'Click for exact meetings');
+   dTodayPaint('amandaToday-due',dueAmanda.length,'Due or overdue as of today');
+   const funnel=$('amandaTodayFunnel');if(funnel)funnel.querySelector('span').textContent=
+      calls.length+' calls → '+connections.length+' connected → '+booked.length+' booked → '+held.length+' held';
+   let coach='Execution looks active today. Review outcomes and next steps.';
+   if(calls.length<10)coach='Start with effort: call activity is still light today.';
+   else if(connections.length===0)coach='Effort is happening, but contact is the weak point today.';
+   else if(booked.length===0)coach='Amanda is connecting. Coach the meeting ask / next-step conversion today.';
+   else if(dueAmanda.length>0)coach='Execution is moving. Clear '+dueAmanda.length+' due/overdue follow-up'+(dueAmanda.length===1?'':'s')+' before day end.';
+   const cn=$('amandaCoachNow');if(cn)cn.querySelector('span').textContent=coach;
+   amandaLive.details=amandaLive.details||{};
+   Object.assign(amandaLive.details,{
+     todayCalls:calls.map(dRow),
+     todayConnections:connections.map(dRow),
+     todayBooked:booked.map(dRow),
+     todayHeld:held.map(dRow),
+     todayDue:dueAmanda.map(a=>[a.agent_name||'Unknown',a.act_type||'Follow-up','Due '+(a.follow_up_date||date),dCleanNotes(a.notes||'').slice(0,250)]),
+     coachNow:[['Today’s funnel','Manager diagnosis',calls.length+' calls · '+connections.length+' connected · '+booked.length+' booked · '+held.length+' held',coach]]
+   });
+ }catch(e){
+   console.error('Amanda Today coach load failed',e);
+   ['calls','connections','booked','held','due'].forEach(x=>dTodayPaint('amandaToday-'+x,'Could not load','Refresh Today'));
+   const cn=$('amandaCoachNow');if(cn)cn.querySelector('span').textContent='Today’s RM activity could not load.';
+ }
+}
+window.loadAmandaTodayCoach=loadAmandaTodayCoach;
+
+async function loadAmandaExecutionLive(k){
+ k=k||localStorage.getItem('director_range_v2')||'week';const b=dBounds(k);
+ amandaLive.loaded=false;amandaLive.period=k;
+ keys=['cold','warm','connections','ctouches','booked','held','followups','campaigns'];
+ keys.forEach(x=>dPaintCard(x,'Loading…',b.label,'Reading RM activity'));
+ try{
+  const lookback=new Date();lookback.setDate(lookback.getDate()-35);const look=dLocalDate(lookback),today=dLocalDate(new Date());
+  const [all,profiles,overdue,campaignActs]=await Promise.all([
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date,created_at&act_date=gte.'+b.start+'&act_date=lte.'+b.end+'&order=act_date.desc&limit=5000'),
+   dSb('agent_profiles?select=agent_name,tier,powerbi_level,relationship_status,retained&limit=5000').catch(()=>[]),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date&follow_up_date=not.is.null&follow_up_date=lte.'+today+'&order=follow_up_date.asc&limit=1000').catch(()=>[]),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date,created_at&act_date=gte.'+look+'&order=act_date.desc&limit=5000').catch(()=>[])
+  ]);
+  const rows=(all||[]).filter(dAmanda),profileMap={};(profiles||[]).forEach(p=>profileMap[String(p.agent_name||'').trim().toLowerCase()]=p);
+  const sig=a=>dSignals(a);
+  const cold=rows.filter(a=>a.act_type==='Cold Calls');
+  const calls=rows.filter(a=>sig(a).callAttempt);
+  const warm=calls.filter(a=>a.act_type!=='Cold Calls');
+  const connections=rows.filter(a=>sig(a).agentConnection);
+  const cTouches=rows.filter(a=>{const p=profileMap[String(a.agent_name||'').trim().toLowerCase()]||{};const tier=String(p.tier||p.powerbi_level||'').toUpperCase();return tier==='C'&&sig(a).agentConnection});
+  const booked=rows.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
+  const held=rows.filter(a=>sig(a).meeting);
+  const followDone=rows.filter(a=>a.act_type==='New Agent Follow-up'&&!/follow-up needed|requires follow-up/i.test(String(a.outcome||'')));
+  const overdueAmanda=(overdue||[]).filter(dAmanda);
+  // Active campaigns = newest New Realtor Meeting per agent in the last 28 days.
+  const ca=(campaignActs||[]).filter(dAmanda),latest={};ca.filter(a=>a.act_type==='New Realtor Meeting').forEach(a=>{const key=String(a.agent_name||'').trim().toLowerCase();if(key&&(!latest[key]||String(a.act_date)>String(latest[key].act_date)||(a.act_date===latest[key].act_date&&String(a.created_at||'')>String(latest[key].created_at||''))))latest[key]=a});
+  const active=Object.values(latest).filter(m=>{const age=(new Date(today+'T12:00:00')-new Date(m.act_date+'T12:00:00'))/86400000;return age>=0&&age<28});
+  const campaignRows=[],campaignOverdue=[];
+  active.forEach(m=>{const age=Math.floor((new Date(today+'T12:00:00')-new Date(m.act_date+'T12:00:00'))/86400000),week=Math.min(4,Math.floor(age/7)+1),key=String(m.agent_name||'').trim().toLowerCase();
+    const after=ca.filter(a=>String(a.agent_name||'').trim().toLowerCase()===key&&a.act_type==='New Agent Follow-up'&&String(a.act_date)>String(m.act_date)).sort((a,b)=>String(a.act_date).localeCompare(String(b.act_date)));
+    const needed=Math.max(0,week),done=after.length,over=done<needed&&age>=1;
+    const row=[m.agent_name,'Week '+week,done+' of '+needed+' expected touches',over?'Follow-up cadence needs attention':'On cadence'];campaignRows.push(row);if(over)campaignOverdue.push(row);
+  });
+  const gc=dGoal(235,k),gw=dGoal(60,k),gcon=dGoal(35,k),gct=dGoal(40,k),gb=dGoal(9,k),gh=dGoal(3,k);
+  dPaintCard('cold',k==='week'?cold.length+' / '+gc:String(cold.length),'Weekly goal: '+gc,(k==='week'?dPace(cold.length,gc)+' · ':'')+'calls actually logged '+b.label.toLowerCase());
+  dPaintCard('warm',k==='week'?warm.length+' / '+gw:String(warm.length),'Weekly goal: '+gw,(k==='week'?dPace(warm.length,gw)+' · ':'')+'non-cold relationship call attempts '+b.label.toLowerCase());
+  dPaintCard('connections',k==='week'?connections.length+' / '+gcon:String(connections.length),'Weekly goal: '+gcon,(k==='week'?dPace(connections.length,gcon)+' · ':'')+'phone conversations + genuine two-way texts/meetings');
+  dPaintCard('ctouches',k==='week'?cTouches.length+' / '+gct:String(cTouches.length),'Weekly goal: '+gct,(k==='week'?dPace(cTouches.length,gct)+' · ':'')+'connected touches with current C-tier agents');
+  dPaintCard('booked',k==='week'?booked.length+' / '+gb:String(booked.length),'Weekly target: 8–10',(k==='week'?dPace(booked.length,gb)+' · ':'')+'booked is separate from held');
+  dPaintCard('held',k==='week'?held.length+' / '+gh:String(held.length),'Weekly target: '+gh,(k==='week'?dPace(held.length,gh)+' · ':'')+'completed meetings '+b.label.toLowerCase());
+  dPaintCard('followups',followDone.length+' done · '+overdueAmanda.length+' overdue',b.label,'Click to see exact due agents');
+  dPaintCard('campaigns',active.length+' active · '+campaignOverdue.length+' need attention','Weeks 1–4','Newest New Realtor Meeting per agent');
+  const workdays=Math.max(1,Math.min(5,new Date().getDay()===0?5:new Date().getDay()));const weeklyExpected=Math.round(235*(workdays/5)),paceGap=Math.max(0,weeklyExpected-(k==='week'?cold.length:0));
+  dPaintNeed('pace','Calls / touches behind pace',k==='week'?(paceGap?paceGap+' cold calls behind expected pace for this point in the week.':'Cold-call pace is on track for this point in the week.'):'Open the Cold Calls tile for the selected-period total.',k==='week'?(paceGap?paceGap+' behind':'On track'):'View');
+  dPaintNeed('due','Follow-ups due or overdue',overdueAmanda.length?overdueAmanda.slice(0,3).map(x=>x.agent_name).join(', ')+(overdueAmanda.length>3?' +'+(overdueAmanda.length-3):''):'No overdue Amanda follow-ups found.',overdueAmanda.length+' overdue');
+  dPaintNeed('campaignDue','Campaign touches due',campaignOverdue.length?campaignOverdue.slice(0,3).map(x=>x[0]+' W'+String(x[1]).replace(/\D/g,'')).join(', '):'Active campaigns are on cadence.',campaignOverdue.length+' need attention');
+  const missing=held.filter(a=>!String(dCleanNotes(a.notes||'')).trim()||!String(a.outcome||'').trim());
+  dPaintNeed('missingNotes','Meetings missing outcomes / notes',missing.length?missing.slice(0,3).map(x=>x.agent_name).join(', '):'No missing meeting outcomes/notes found in this period.',missing.length+' incomplete');
+  const contactRate=dFmtPct(connections.length,calls.length),bookingRate=dFmtPct(booked.length,connections.length);
+  dPaintDiag('effort',k==='week'?'Effort · '+dPace(cold.length,gc):'Effort · '+b.label,cold.length+' cold calls logged · weekly goal '+gc);
+  dPaintDiag('contact','Contact · '+contactRate,connections.length+' connections from '+calls.length+' call attempts');
+  dPaintDiag('booking','Booking · '+bookingRate,booked.length+' booked from '+connections.length+' connections');
+  dPaintDiag('show','Show',held.length+' meetings held in '+b.label.toLowerCase());
+  dPaintDiag('conversion','Conversion',followDone.length+' New Realtor follow-ups completed');
+  const trend=$('amandaTrendLive');if(trend){trend.className='';trend.innerHTML='<div class="minirow"><b>Call attempts</b><span>'+calls.length+'</span></div><div class="minirow"><b>Agent connections</b><span>'+connections.length+' · '+contactRate+' of calls</span></div><div class="minirow"><b>Meeting booking</b><span>'+booked.length+' · '+bookingRate+' of connections</span></div><div class="minirow"><b>Meetings held</b><span>'+held.length+'</span></div>'}
+  amandaLive={loaded:true,period:k,rows,profiles,metrics:{cold:cold.length,warm:warm.length,connections:connections.length,cTouches:cTouches.length,booked:booked.length,held:held.length,followDone:followDone.length,overdue:overdueAmanda.length,activeCampaigns:active.length,campaignOverdue:campaignOverdue.length},details:{
+   cold:cold.map(dRow),warm:warm.map(dRow),connections:connections.map(dRow),ctouches:cTouches.map(dRow),booked:booked.map(dRow),held:held.map(dRow),
+   followups:followDone.map(a=>dRow(a,'Completed')).concat(overdueAmanda.map(a=>[a.agent_name,a.act_type||'Follow-up','Due '+a.follow_up_date,'OVERDUE · '+dCleanNotes(a.notes||'').slice(0,250)])),
+   campaigns:campaignRows,pace:cold.map(dRow),due:overdueAmanda.map(a=>[a.agent_name,a.act_type||'Follow-up','Due '+a.follow_up_date,dCleanNotes(a.notes||'').slice(0,250)]),campaignDue:campaignOverdue,missingNotes:missing.map(dRow),
+   effort:cold.map(dRow),contact:connections.map(dRow),booking:booked.map(dRow),show:held.map(dRow),conversion:followDone.map(dRow)
+  }};
+  dirSetText('mCalls',calls.length);dirSetText('mConnections',connections.length);dirSetText('mHeld',held.length);
+ }catch(e){
+  console.error('Amanda live Director load failed',e);
+  keys.forEach(x=>dPaintCard(x,'Could not load',b.label,'Click for connection details'));
+  const trend=$('amandaTrendLive');if(trend){trend.className='dataNeeded';trend.textContent='RM data could not load: '+(e.message||'Unknown error')+'. Amanda’s RM tracker was not changed.'}
+  amandaLive={loaded:false,period:k,error:e.message||String(e),details:{}};
+ }
+}
+window.loadAmandaExecutionLive=loadAmandaExecutionLive;
+
+const AMANDA_DETAILS={
+ todayCalls:{title:'Calls Today',goal:'Same-day execution',meaning:'Every Amanda call attempt logged today. Voicemail/no answer still counts as effort.',inspect:'Review exact call records and whether they produced a connection.',coach:'Use this to coach execution today, not at month end.'},
+ todayConnections:{title:'Connections Today',goal:'Same-day engagement',meaning:'Actual back-and-forth Amanda had with agents today.',inspect:'Review who connected, method, outcome and next step.',coach:'If calls are happening but connections are low, coach timing, targeting and opening today.'},
+ todayBooked:{title:'Meetings Booked Today',goal:'Same-day booking',meaning:'Meetings Amanda successfully scheduled today.',inspect:'Review exact agents and the outreach that led to the booking.',coach:'If connections are happening but bookings are not, coach the meeting ask today.'},
+ todayHeld:{title:'Meetings Held Today',goal:'Same-day completed meetings',meaning:'Meetings Amanda actually attended today.',inspect:'Review exact meeting, outcome, notes and next step.',coach:'Use the meeting outcome to coach follow-through while the conversation is fresh.'},
+ todayDue:{title:'Follow-Ups Due Today',goal:'No silent overdue work',meaning:'Amanda follow-ups due or overdue as of today.',inspect:'Start with the oldest due relationship work and exact next step.',coach:'Clear urgent relationship follow-up before avoidable backlog grows.'},
+ coachNow:{title:'Coach Now',goal:'First weak point today',meaning:'A same-day manager read of effort → contact → booking → show.',inspect:'Use today’s exact activity before deciding what Amanda needs from you.',coach:'Coach the first weak point you can actually see in today’s funnel.'},
+ cold:{title:'Cold Calls',goal:'Weekly goal: 235',meaning:'Every cold call attempt counts as effort, even when it reaches voicemail.',inspect:'Review total calls logged, voicemails/no answers, phone connections and follow-up texts.',coach:'If volume is behind pace, the first coaching question is execution: were the calls made and logged?'},
+ warm:{title:'Warm Calls',goal:'Weekly goal: 60',meaning:'Warm relationship calls should be logged separately from cold prospecting.',inspect:'Review who was called, whether Amanda connected, outcome and next step.',coach:'Look for consistency and whether warm calls are creating useful relationship movement.'},
+ connections:{title:'Agent Connections',goal:'Weekly goal: 35',meaning:'A real back-and-forth with the agent. Phone conversations count. Genuine two-way text conversations count. Voicemail or an unanswered text does not.',inspect:'Review connected agents and contact method. For call contact rate, use phone connections ÷ total calls.',coach:'If call volume is strong but connections are weak, coach targeting, timing, persistence and the opening.'},
+ ctouches:{title:'C-Agent Touches',goal:'Weekly goal: 40',meaning:'Completed relationship touches with C agents.',inspect:'Review which C agents were touched, last touch, outcome and next cadence date.',coach:'If the same easy contacts are being repeated while others age, coach portfolio coverage.'},
+ booked:{title:'Meetings Booked',goal:'Weekly target: 8–10',meaning:'Meetings successfully scheduled. Booked is not the same as held.',inspect:'Review agent, meeting date, source, and whether it came from cold/warm outreach.',coach:'If connections are healthy but bookings are low, coach the meeting ask and value proposition.'},
+ held:{title:'Meetings Held',goal:'Weekly target: 3',meaning:'Completed meetings only.',inspect:'Review agent, meeting type, notes, outcome and next step.',coach:'If booked meetings are not being held, diagnose show rate, confirmation process and scheduling quality.'},
+ followups:{title:'Follow-Ups',goal:'Completed vs overdue',meaning:'Follow-up work should be completed and logged so nothing silently ages.',inspect:'Review due, overdue and completed follow-ups by agent and due date.',coach:'Coach oldest overdue work first and make the next action specific.'},
+ campaigns:{title:'New Realtor Campaigns',goal:'Weeks 1–4',meaning:'Each New Realtor Meeting launches a four-week conversion cadence.',inspect:'Review each active campaign, current week, completed touch, overdue step and missing notes/contact info.',coach:'Incomplete intake should be visible, but it should not hide the campaign or become a reason not to execute.'},
+ pace:{title:'Calls / Touches Behind Pace',goal:'Execution gap',meaning:'This should answer whether Amanda is on pace for the required weekly activity.',inspect:'Compare actual logged activity with the weekly target and remaining workdays.',coach:'Make the gap concrete: what is left, by when, and what must be logged.'},
+ due:{title:'Follow-Ups Due / Overdue',goal:'No silent overdue work',meaning:'Shows relationship work that needs action now.',inspect:'Review exact agents, due date, last touch and required next step.',coach:'Prioritize overdue relationship work before adding avoidable new backlog.'},
+ campaignDue:{title:'Campaign Touches Due',goal:'Weeks 1–4 on cadence',meaning:'Shows New Realtor conversion steps due now.',inspect:'Review exact campaign week, agent, last completed step and next required touch.',coach:'Cadence means execute the scheduled step and log the result.'},
+ missingNotes:{title:'Missing Outcomes / Notes',goal:'Work visible and complete',meaning:'A completed meeting without an outcome or useful note cannot guide the next move.',inspect:'Review meetings missing outcome, notes, next step or follow-up date.',coach:'The meeting is not operationally complete until the result and next action are logged.'},
+ effort:{title:'Manager Diagnosis · Effort',goal:'Are the calls and touches happening?',meaning:'Start here. If required activity is not happening, conversion analysis comes later.',inspect:'Calls made, warm calls, C touches, follow-ups completed and activity pacing.',coach:'Make the expected activity and logging standard explicit.'},
+ contact:{title:'Manager Diagnosis · Contact',goal:'Are agents actually connecting?',meaning:'Effort and engagement are different. High call volume can coexist with low contact.',inspect:'Phone connections, two-way text conversations, voicemail/no-answer volume and contact rate.',coach:'If effort is there, improve who, when and how Amanda is reaching out.'},
+ booking:{title:'Manager Diagnosis · Booking',goal:'Are connections becoming meetings?',meaning:'Measures whether conversations create a clear next step.',inspect:'Connections → meetings booked and the booking conversion rate.',coach:'Coach the ask, value offered and whether Amanda is confidently proposing a meeting.'},
+ show:{title:'Manager Diagnosis · Show',goal:'Are booked meetings being held?',meaning:'Separates scheduling success from actual completed meetings.',inspect:'Meetings booked vs held, cancellations/no-shows and confirmation process.',coach:'Look for scheduling quality and confirmation/follow-through.'},
+ conversion:{title:'Manager Diagnosis · Conversion',goal:'Are relationships advancing?',meaning:'The final question is whether activity creates stronger, retained or higher-tier relationships.',inspect:'Held meetings, follow-ups, relationship advancement and tier/retention outcomes.',coach:'If execution is strong but relationships do not move, coach meeting quality, follow-up and strategy.'}
+};
+function openAmandaDetail(key){
+ const d=AMANDA_DETAILS[key]; if(!d)return;
+ $('drawerTitle').textContent=d.title;
+ $('drawerSummary').textContent=(amandaLive.loaded?dBounds(amandaLive.period).label+' · live RM records':d.goal);
+ const rows=(amandaLive.details&&amandaLive.details[key])||[];
+ const records=amandaLive.loaded?(rows.length?rows.slice(0,100).map(r=>`<div class="result"><h3>${esc(r[0]||'Record')}</h3><div class="meta"><b>${esc(r[1]||'Activity')}</b> · ${esc(r[2]||'')}</div>${r[3]?`<div class="meta" style="margin-top:5px">${esc(r[3])}</div>`:''}</div>`).join(''):`<div class="result"><h3>No matching records</h3><div class="meta">No Amanda records matched this metric for the selected period.</div></div>`):`<div class="result"><h3>RM connection</h3><div class="meta">${esc(amandaLive.error||'Loading Amanda’s RM activity…')}</div></div>`;
+ $('drawerResults').innerHTML=`
+ <div class="result"><h3>Exact Amanda records</h3><div class="meta">These records come from the same Supabase activity source used by the RM tracker.</div></div>${records}
+ <div class="result"><h3>What this means</h3><div class="meta">${esc(d.meaning)}</div></div>
+ <div class="result"><h3>What you should inspect</h3><div class="meta">${esc(d.inspect)}</div></div>
+ <div class="result"><h3>Your manager move</h3><div class="meta">${esc(d.coach)}</div><div class="actions"><button class="primary" id="coachFromAmanda">+ Add Coaching Note</button></div></div>`;
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
+ setTimeout(()=>{const b=$('coachFromAmanda');if(b)b.addEventListener('click',()=>{closeAllOverlays();openCoachPrefill('Coach',d.title+' — ');});},0);
+}
+function openCoachPrefill(type,prefix=''){
+ openModal('coachModal');
+ const f=$('coachForm'); if(!f)return;
+ f.elements.type.value=type;
+ if(prefix&&!f.elements.note.value)f.elements.note.value=prefix;
+ setTimeout(()=>f.elements.note.focus(),0);
+}
+function bindAmandaManager(){
+ document.querySelectorAll('#view-execution [data-amanda]').forEach(el=>activateLikeButton(el,()=>openAmandaDetail(el.dataset.amanda)));
+ document.querySelectorAll('#view-execution [data-coach-type]').forEach(el=>activateLikeButton(el,()=>openCoachPrefill(el.dataset.coachType)));
+ const refresh=$('amandaTodayRefresh');
+ if(refresh&&!refresh.dataset.bound){refresh.dataset.bound='1';refresh.addEventListener('click',async()=>{refresh.disabled=true;refresh.textContent='Refreshing…';await loadAmandaTodayCoach();refresh.disabled=false;refresh.textContent='Refresh Today';});}
+}
+
+function bindDirectorNavigation(){
+ bindAmandaManager();
+ document.querySelectorAll('.module[data-view], [data-view].module').forEach(el=>activateLikeButton(el,()=>showView(el.dataset.view)));
+ document.querySelectorAll('[data-drill]').forEach(el=>{if(!el.closest('.drawer,.modal'))activateLikeButton(el,()=>openDrill(el.dataset.drill));});
+}
+
+function openAmandaTrend(){
+ const b=dBounds(amandaLive.period||window.__directorSelectedRange||'week');
+ const m=amandaLive.metrics||{}, rows=amandaLive.rows||[];
+ const calls=rows.filter(a=>dSignals(a).callAttempt);
+ const connections=rows.filter(a=>dSignals(a).agentConnection);
+ const booked=rows.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
+ const held=rows.filter(a=>dSignals(a).meeting);
+ const byDay={};
+ rows.forEach(a=>{const d=String(a.act_date||'Unknown');if(!byDay[d])byDay[d]={calls:0,connections:0,booked:0,held:0};
+   const s=dSignals(a);if(s.callAttempt)byDay[d].calls++;if(s.agentConnection)byDay[d].connections++;
+   if(String(a.outcome||'').trim()==='Meeting Scheduled')byDay[d].booked++;if(s.meeting)byDay[d].held++;
+ });
+ const days=Object.keys(byDay).sort().reverse();
+ const dayRows=days.length?days.map(d=>`<div class="result"><h3>${esc(d)}</h3><div class="meta">Calls ${byDay[d].calls} · Connections ${byDay[d].connections} · Booked ${byDay[d].booked} · Held ${byDay[d].held}</div></div>`).join(''):
+   `<div class="result"><h3>No activity</h3><div class="meta">No Amanda activity matched ${esc(b.label.toLowerCase())}.</div></div>`;
+ $('drawerTitle').textContent='Amanda Trend View';
+ $('drawerSummary').textContent=b.label+' · live RM activity';
+ $('drawerResults').innerHTML=`
+ <div class="result"><h3>Performance Funnel</h3><div class="meta">Call attempts <b>${calls.length}</b> → Agent connections <b>${connections.length}</b> → Meetings booked <b>${booked.length}</b> → Meetings held <b>${held.length}</b></div></div>
+ <div class="result"><h3>Conversion</h3><div class="meta">Contact rate <b>${dFmtPct(connections.length,calls.length)}</b> · Booking rate <b>${dFmtPct(booked.length,connections.length)}</b></div></div>
+ <div class="result"><h3>Daily Activity</h3><div class="meta">Click Today / This Week / This Month before opening Trend View to change the period.</div></div>${dayRows}`;
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
+}
+function bindAmandaTrend(){
+ const card=$('amandaTrendCard');if(!card)return;
+ const launch=e=>{
+   if(e){e.preventDefault();e.stopPropagation();}
+   openAmandaTrend();
+ };
+ card.addEventListener('click',launch);
+ card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){launch(e)}});
+}
+
+async function directorLiveStartup(){
+ bindAmandaTrend();
+ bindDirectorNavigation();
+ let initialRange='month';try{initialRange=localStorage.getItem('director_range_v2')||'month'}catch(_){} window.__directorSelectedRange=initialRange;
+ const initial=location.hash.replace('#','');
+ showView(['growth','relationships','execution','feedback','impact','priorities'].includes(initial)?initial:'overview');
+ // Paint the selected range first without calling live loaders prematurely.
+ document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===initialRange));
+ renderWhoNeeds(initialRange);
+ window.__directorLiveReady=true;
+ ['cold','warm','connections','ctouches','booked','held','followups','campaigns'].forEach(x=>dPaintCard(x,'Loading…',dBounds(initialRange).label,'Syncing RM activity'));
+ directorRefreshController=DirectorPage.createRefreshController({
+   load:async()=>{
+     const dashboardPromise=loadDirectorUnifiedDashboard();
+     await Promise.allSettled([loadAmandaExecutionLive(window.__directorSelectedRange||initialRange),loadAmandaTodayCoach()]);
+     return dashboardPromise;
+   },
+   render:renderDirectorUnifiedDashboard,
+   cleanUrl:DirectorData.cleanTrackingUrl,
+   document,window,history,location,setInterval,clearInterval,
+   intervalMs:60000
+ });
+ const sync=$('dirSyncNow');
+ if(sync)sync.addEventListener('click',async()=>{
+   sync.disabled=true;sync.textContent='Syncing…';
+   await directorRefreshController.refresh();
+   sync.disabled=false;sync.textContent='Sync Now';
+ });
+ await directorRefreshController.start();
+}
+window.addEventListener('error',e=>{
+ const st=$('dirPowerBiStatus');if(st)st.textContent='Director startup error · '+(e.message||'Unknown error');
+});
+window.addEventListener('unhandledrejection',e=>{
+ const st=$('dirPowerBiStatus');if(st)st.textContent='Director data error · '+((e.reason&&e.reason.message)||e.reason||'Unknown error');
+});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',directorLiveStartup);
+else directorLiveStartup();
+
+
+</script></body></html>
