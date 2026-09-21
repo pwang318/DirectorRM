@@ -54,6 +54,10 @@
 .field input,.field select,.field textarea{border-color:#d8d1c7}
 .toast{background:#405648}
 [data-global-click="1"]:focus-visible,.module[data-view]:focus-visible,[data-drill]:focus-visible,#view-execution [data-amanda]:focus-visible,#view-execution [data-coach-type]:focus-visible{outline-color:#6f8f78}
+/* VDRILL: keep every tile detail drawer attached to the visible viewport. */
+.drawerBack{width:100vw;height:100dvh;overflow:hidden}
+.drawer{position:fixed;right:0;top:0;bottom:0;height:100dvh;max-width:100vw;overscroll-behavior:contain}
+@media(max-width:680px){.drawer{width:100vw;max-width:100vw}.drawerBody{padding:16px}.drawerHead{padding:15px 16px}}
 </style></head><body>
 <div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Overview</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
 <main class="main"><div class="top"><div><h1>Relationship Growth Command Center</h1><p>Grow the right relationships. Protect the book. Turn agent feedback into action.<div style="display:flex;align-items:center;gap:8px;margin-top:4px">
@@ -748,17 +752,25 @@ const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function safeClass(id,op,cls){const el=$(id);if(el&&el.classList)el.classList[op](cls);return el}
 function showView(name){
+ closeAllOverlays();
  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
  document.querySelectorAll('.nav [data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
  window.scrollTo(0,0);
  try{history.replaceState(null,'',DirectorPage.viewUrl(location.href,name))}catch(_){}
 }
-function openDrill(key){
+function currentDrillData(key){
  syncRealDrills();
- const d=demoData[key]; if(!d)return;
+ const base=demoData[key];if(!base)return null;
+ const localOrMerged=new Set(['whoNeeds','feedback','repeat','feedbackRisk','protected','strategic','escalations','leadership','wins']);
+ const live=window.__directorDashboard&&window.__directorDashboard.drills&&window.__directorDashboard.drills[key];
+ const rows=!localOrMerged.has(key)&&Array.isArray(live)?live:base.rows;
+ return{...base,rows:Array.isArray(rows)?rows:[]};
+}
+function openDrill(key){
+ const d=currentDrillData(key); if(!d)return;
  $('drawerTitle').textContent=d.title;
- $('drawerSummary').textContent=d.summary;
- $('drawerResults').innerHTML=d.rows.length?d.rows.map((r,i)=>`<div class="result"><div class="resultTop"><div><h3>${esc(r[0])}</h3><div class="meta">${r.slice(1).map(esc).join(' · ')}</div></div><span class="pill ${/risk|repeat|high/i.test(r.join(' '))?'risk':'good'}">${i+1}</span></div><div class="actions"><button class="primary" data-toast="View Relationship · ${esc(r[0])}">View Relationship</button><button data-log-agent="${esc(r[0])}">Log Activity</button></div></div>`).join(''):`<div class="result"><h3>No agent-level records here yet.</h3><div class="meta">${esc(d.summary)}</div></div>`;
+ $('drawerSummary').textContent=d.rows.length+' matching record'+(d.rows.length===1?'':'s')+' · '+d.summary;
+ $('drawerResults').innerHTML=d.rows.length?d.rows.map((r,i)=>`<div class="result"><div class="resultTop"><div><h3>${esc(r[0])}</h3><div class="meta">${r.slice(1).map(esc).join(' · ')}</div></div><span class="pill ${/risk|repeat|high/i.test(r.join(' '))?'risk':'good'}">${i+1}</span></div><div class="actions"><button class="primary" data-toast="View Relationship · ${esc(r[0])}">View Relationship</button><button data-log-agent="${esc(r[0])}">Log Activity</button></div></div>`).join(''):`<div class="result"><h3>0 matching records</h3><div class="meta">${esc(d.summary)} The tile is working; there are no records in this category right now.</div></div>`;
  closeAllOverlays();
  safeClass('drawerBack','add','open');
  document.body.style.overflow='hidden';
@@ -1046,6 +1058,8 @@ function rowsChannel(rows){return (rows||[]).filter(p=>String(p.tier||'').trim()
 window.loadDirectorSharedPowerBi=loadDirectorSharedPowerBi;
 
 let amandaLive={loaded:false,period:'week',rows:[],profiles:[],metrics:{},details:{}};
+function mergeAmandaDetails(current,next){return{...(current||{}),...(next||{})}}
+function amandaDetailPeriodLabel(key,period){return /^today/i.test(String(key||''))||key==='coachNow'?'Today':dBounds(period||'week').label}
 
 function dLocalDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function dBounds(k){
@@ -1108,6 +1122,19 @@ function dRmMeta(notes){
 }
 function dSystem(a){const t=String(a.act_type||''),n=String(a.notes||'');return /\[TXN_TRIGGER\]/i.test(n)||/^(?:Tuesday Call Plan Snapshot|Tuesday Contact Classification|Funded Unit Snapshot|Transaction Snapshot|Transaction Contact Override|Data Sync|Power BI Sync|Power BI Agent Snapshot|Portfolio Profile|Tier Migration|LP Tuesday File Update)$/i.test(t)||/^__/.test(String(a.agent_name||''))}
 function dAmanda(a){return !dSystem(a)&&dRmMeta(a.notes).rmAttendees.includes('Amanda')&&!/^(Amanda Coaching \/ Development|RM Scorecard Review|RM Portfolio Review|RM Process Improvement|Tracker \/ System Development|RM Training|RM Leadership Escalation Support)$/.test(String(a.act_type||''))&&String(a.agent_name||'').trim().toLowerCase()!=='rm tracker'}
+function dAmandaRelationshipAllowed(name,profile,ownerRows){
+ const norm=value=>String(value||'').trim().toLowerCase().replace(/\s+/g,' '),key=norm(name),p=profile||{};
+ const directorNames=new Set(['brian zinn','ingrid correia','lyndsay myers','micah myers','morgan stone']);
+ const directorGroups=['rockford','sam cooper team','thrive'];
+ const relationshipType=norm(p.relationship_type),tier=String(p.tier||p.powerbi_level||'').trim().toUpperCase();
+ const organization=[p.brokerage,p.team,p.company,p.organization,p.email,p.activity_notes].map(norm).join(' | ');
+ if(!key||directorNames.has(key)||directorGroups.some(group=>organization.includes(group))||relationshipType==='strategic_partner'||['CHANNEL','A','B'].includes(tier))return false;
+ const rms=(Array.isArray(ownerRows)?ownerRows:[]).filter(row=>row&&norm(row.agent_name)===key).map(row=>norm(row.rm));
+ if(rms.includes('nyny'))return false;
+ if(rms.includes('amanda'))return true;
+ return tier==='C'||tier==='';
+}
+function dProfileByName(rows){const out={};(Array.isArray(rows)?rows:[]).forEach(p=>{const key=String(p&&p.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ');if(key)out[key]=p});return out}
 function dSignals(a){
  const type=String(a.act_type||'').trim(),out=String(a.outcome||'').trim().toLowerCase(),notes=String(a.notes||''),prefix=notes.slice(0,8);
  const meetings=new Set(["Partner Meeting","Break Breads","Strategic Partner Meeting","Channel Meeting","Team / Office Presentation","Retention Meeting","New Realtor Meeting"]);
@@ -1149,12 +1176,15 @@ function dTodayPaint(id,value,status){
 async function loadAmandaTodayCoach(){
  const date=dLocalDate(new Date());
  try{
-   const [rows,due]=await Promise.all([
+   const [rows,due,profiles,owners]=await Promise.all([
      dSb('amanda_activities?select=*&act_date=eq.'+encodeURIComponent(date)+'&order=created_at.desc&limit=3000'),
-     dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+encodeURIComponent(date)+'&order=follow_up_date.asc&limit=1000')
+     dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+encodeURIComponent(date)+'&order=follow_up_date.asc&limit=1000'),
+     dSb('agent_profiles?select=*&limit=5000').catch(()=>[]),
+     dSb('agent_assignments?select=agent_name,rm&limit=5000').catch(()=>[])
    ]);
+   const profilesByName=dProfileByName(profiles);
    const all=DirectorPage.filterCreditedActivities(rows,dAmanda);
-   const dueAmanda=DirectorPage.filterCreditedActivities(due,dAmanda);
+   const dueAmanda=DirectorPage.filterCreditedActivities(due,dAmanda).filter(a=>dAmandaRelationshipAllowed(a.agent_name,{...(profilesByName[String(a.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ')]||{}),activity_notes:a.notes},owners));
    const calls=all.filter(a=>dSignals(a).callAttempt);
    const connections=all.filter(a=>dSignals(a).agentConnection);
    const booked=all.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
@@ -1196,11 +1226,12 @@ async function loadAmandaExecutionLive(k){
  keys.forEach(x=>dPaintCard(x,'Loading…',b.label,'Reading RM activity'));
  try{
   const lookback=new Date();lookback.setDate(lookback.getDate()-35);const look=dLocalDate(lookback),today=dLocalDate(new Date());
-  const [all,profiles,overdue,campaignActs]=await Promise.all([
+  const [all,profiles,overdue,campaignActs,owners]=await Promise.all([
    dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date,created_at&act_date=gte.'+b.start+'&act_date=lte.'+b.end+'&order=act_date.desc&limit=5000'),
-   dSb('agent_profiles?select=agent_name,tier,powerbi_level,relationship_status,retained&limit=5000').catch(()=>[]),
+   dSb('agent_profiles?select=*&limit=5000').catch(()=>[]),
    dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date&follow_up_date=not.is.null&follow_up_date=lte.'+today+'&order=follow_up_date.asc&limit=1000').catch(()=>[]),
-   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date,created_at&act_date=gte.'+look+'&order=act_date.desc&limit=5000').catch(()=>[])
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date,created_at&act_date=gte.'+look+'&order=act_date.desc&limit=5000').catch(()=>[]),
+   dSb('agent_assignments?select=agent_name,rm&limit=5000').catch(()=>[])
   ]);
   const rows=(all||[]).filter(dAmanda),profileMap={};(profiles||[]).forEach(p=>profileMap[String(p.agent_name||'').trim().toLowerCase()]=p);
   const sig=a=>dSignals(a);
@@ -1212,7 +1243,7 @@ async function loadAmandaExecutionLive(k){
   const booked=rows.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
   const held=rows.filter(a=>sig(a).meeting);
   const followDone=rows.filter(a=>a.act_type==='New Agent Follow-up'&&!/follow-up needed|requires follow-up/i.test(String(a.outcome||'')));
-  const overdueAmanda=(overdue||[]).filter(dAmanda);
+  const overdueAmanda=(overdue||[]).filter(dAmanda).filter(a=>dAmandaRelationshipAllowed(a.agent_name,{...(profileMap[String(a.agent_name||'').trim().toLowerCase()]||{}),activity_notes:a.notes},owners));
   // Active campaigns = newest New Realtor Meeting per agent in the last 28 days.
   const ca=(campaignActs||[]).filter(dAmanda),latest={};ca.filter(a=>a.act_type==='New Realtor Meeting').forEach(a=>{const key=String(a.agent_name||'').trim().toLowerCase();if(key&&(!latest[key]||String(a.act_date)>String(latest[key].act_date)||(a.act_date===latest[key].act_date&&String(a.created_at||'')>String(latest[key].created_at||''))))latest[key]=a});
   const active=Object.values(latest).filter(m=>{const age=(new Date(today+'T12:00:00')-new Date(m.act_date+'T12:00:00'))/86400000;return age>=0&&age<28});
@@ -1244,18 +1275,18 @@ async function loadAmandaExecutionLive(k){
   dPaintDiag('show','Show',held.length+' meetings held in '+b.label.toLowerCase());
   dPaintDiag('conversion','Conversion',followDone.length+' New Realtor follow-ups completed');
   const trend=$('amandaTrendLive');if(trend){trend.className='';trend.innerHTML='<div class="minirow"><b>Call attempts</b><span>'+calls.length+'</span></div><div class="minirow"><b>Agent connections</b><span>'+connections.length+' · '+contactRate+' of calls</span></div><div class="minirow"><b>Meeting booking</b><span>'+booked.length+' · '+bookingRate+' of connections</span></div><div class="minirow"><b>Meetings held</b><span>'+held.length+'</span></div>'}
-  amandaLive={loaded:true,period:k,rows,profiles,metrics:{cold:cold.length,warm:warm.length,connections:connections.length,cTouches:cTouches.length,booked:booked.length,held:held.length,followDone:followDone.length,overdue:overdueAmanda.length,activeCampaigns:active.length,campaignOverdue:campaignOverdue.length},details:{
+  amandaLive={loaded:true,period:k,rows,profiles,metrics:{cold:cold.length,warm:warm.length,connections:connections.length,cTouches:cTouches.length,booked:booked.length,held:held.length,followDone:followDone.length,overdue:overdueAmanda.length,activeCampaigns:active.length,campaignOverdue:campaignOverdue.length},details:mergeAmandaDetails(amandaLive.details,{
    cold:cold.map(dRow),warm:warm.map(dRow),connections:connections.map(dRow),ctouches:cTouches.map(dRow),booked:booked.map(dRow),held:held.map(dRow),
    followups:followDone.map(a=>dRow(a,'Completed')).concat(overdueAmanda.map(a=>[a.agent_name,a.act_type||'Follow-up','Due '+a.follow_up_date,'OVERDUE · '+dCleanNotes(a.notes||'').slice(0,250)])),
    campaigns:campaignRows,pace:cold.map(dRow),due:overdueAmanda.map(a=>[a.agent_name,a.act_type||'Follow-up','Due '+a.follow_up_date,dCleanNotes(a.notes||'').slice(0,250)]),campaignDue:campaignOverdue,missingNotes:missing.map(dRow),
    effort:cold.map(dRow),contact:connections.map(dRow),booking:booked.map(dRow),show:held.map(dRow),conversion:followDone.map(dRow)
-  }};
+  })};
   dirSetText('mCalls',calls.length);dirSetText('mConnections',connections.length);dirSetText('mHeld',held.length);
  }catch(e){
   console.error('Amanda live Director load failed',e);
   keys.forEach(x=>dPaintCard(x,'Could not load',b.label,'Click for connection details'));
   const trend=$('amandaTrendLive');if(trend){trend.className='dataNeeded';trend.textContent='RM data could not load: '+(e.message||'Unknown error')+'. Amanda’s RM tracker was not changed.'}
-  amandaLive={loaded:false,period:k,error:e.message||String(e),details:{}};
+  amandaLive={loaded:false,period:k,error:e.message||String(e),details:mergeAmandaDetails(amandaLive.details,{})};
  }
 }
 window.loadAmandaExecutionLive=loadAmandaExecutionLive;
@@ -1288,7 +1319,8 @@ const AMANDA_DETAILS={
 function openAmandaDetail(key){
  const d=AMANDA_DETAILS[key]; if(!d)return;
  $('drawerTitle').textContent=d.title;
- $('drawerSummary').textContent=(amandaLive.loaded?dBounds(amandaLive.period).label+' · live RM records':d.goal);
+ const periodLabel=amandaDetailPeriodLabel(key,amandaLive.period);
+ $('drawerSummary').textContent=(amandaLive.loaded?periodLabel+' · live RM records':d.goal);
  const rows=(amandaLive.details&&amandaLive.details[key])||[];
  const records=amandaLive.loaded?(rows.length?rows.slice(0,100).map(r=>`<div class="result"><h3>${esc(r[0]||'Record')}</h3><div class="meta"><b>${esc(r[1]||'Activity')}</b> · ${esc(r[2]||'')}</div>${r[3]?`<div class="meta" style="margin-top:5px">${esc(r[3])}</div>`:''}</div>`).join(''):`<div class="result"><h3>No matching records</h3><div class="meta">No Amanda records matched this metric for the selected period.</div></div>`):`<div class="result"><h3>RM connection</h3><div class="meta">${esc(amandaLive.error||'Loading Amanda’s RM activity…')}</div></div>`;
  $('drawerResults').innerHTML=`
