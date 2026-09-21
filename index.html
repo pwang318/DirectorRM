@@ -1,5 +1,4 @@
- 
- <!doctype html>
+  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Director View · Relationship Growth Command Center</title>
 <style>
@@ -185,7 +184,77 @@
     return (Array.isArray(workItems) ? workItems : []).slice().reverse();
   }
 
-  return {normalizeAgent, filterResolvedAttention, ensureActivityIds, removeActivity, newestFirst};
+  function addDays(isoDate, days) {
+    const parts = String(isoDate || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!parts) return '';
+    const date = new Date(Date.UTC(Number(parts[1]), Number(parts[2]) - 1, Number(parts[3])));
+    date.setUTCDate(date.getUTCDate() + days);
+    return date.toISOString().slice(0, 10);
+  }
+
+  function suggestFollowUp(input) {
+    input = input || {};
+    const type = String(input.type || '').trim();
+    const outcome = String(input.outcome || '').trim();
+    const tier = String(input.tier || '').trim().toUpperCase();
+    let days = null;
+    let reason = '';
+    if (/At-Risk Intervention|Escalation/i.test(type) || /Routed to Leadership/i.test(outcome)) {
+      days = 3; reason = 'urgent intervention';
+    } else if (/Follow-up Needed/i.test(outcome) || /Warm Introduction/i.test(type)) {
+      days = 7; reason = /Warm Introduction/i.test(type) ? 'confirm the introduction connected' : 'open follow-up';
+    } else if (/Growth Opportunity/i.test(type) || /Monitoring/i.test(outcome)) {
+      days = 14; reason = 'active opportunity';
+    } else if (/Strategic Meeting|Builder \/ Strategic Partner/i.test(type)) {
+      days = 30; reason = 'strategic relationship cadence';
+    } else if (/A\/B\/Channel Relationship Touch/i.test(type)) {
+      if (tier === 'A') { days = 21; reason = 'A-agent cadence'; }
+      else if (tier === 'B') { days = 45; reason = 'B-agent cadence'; }
+      else if (tier === 'CHANNEL') { days = 30; reason = 'Channel cadence'; }
+      else { days = 30; reason = 'relationship cadence'; }
+    }
+    if (days == null) return null;
+    const date = addDays(input.baseDate, days);
+    return date ? {date, days, reason, tier} : null;
+  }
+
+  function isFollowUpDue(followUpDate, today) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(String(followUpDate || '')) && String(followUpDate) <= String(today || '');
+  }
+
+  function definitionSections() {
+    return [
+      {title: 'Work Types', items: [
+        {term: 'A/B/Channel Relationship Touch', definition: 'A meaningful call, meeting or check-in with one of your owned relationships.'},
+        {term: 'Strategic Meeting', definition: 'A planned business, goal-setting or relationship-growth conversation.'},
+        {term: 'Builder / Strategic Partner', definition: 'Work with a builder, title partner or other strategic business relationship.'},
+        {term: 'At-Risk Intervention', definition: 'Action taken to stabilize a relationship showing warning signs or dissatisfaction.'},
+        {term: 'Escalation', definition: 'An issue that needs leadership involvement or action beyond routine follow-up.'},
+        {term: 'Warm Introduction', definition: 'Connecting an agent to an LP, partner or resource and confirming the handoff.'},
+        {term: 'Growth Opportunity', definition: 'Activity tied to referrals, new business or deepening the relationship.'},
+        {term: 'Leadership / Process Work', definition: 'Management, training or process improvement that is not an agent touch.'},
+        {term: 'Other Director Activity', definition: 'Director work that does not fit another category.'}
+      ]},
+      {title: 'Outcomes', items: [
+        {term: 'Completed', definition: 'The activity is finished and no immediate unresolved action remains.'},
+        {term: 'Follow-up Needed', definition: 'A next step is still open. The tracker suggests 7 days unless you change it.'},
+        {term: 'Relationship Protected', definition: 'A concern was addressed and the relationship was stabilized.'},
+        {term: 'Relationship Advanced', definition: 'The relationship or opportunity moved meaningfully forward.'},
+        {term: 'Routed to Leadership', definition: 'The item was escalated to the appropriate leader for action.'},
+        {term: 'Monitoring', definition: 'No immediate action is required, but the situation should be checked again.'}
+      ]},
+      {title: 'Automatic Follow-Ups', items: [
+        {term: 'Urgent', definition: '3 days · At-risk work, escalations or leadership routing'},
+        {term: 'Follow-up Needed / Warm Introduction', definition: '7 days · Close the open loop or confirm the handoff'},
+        {term: 'Growth Opportunity / Monitoring', definition: '14 days · Maintain momentum or reassess'},
+        {term: 'A Agent', definition: '21 days · Protect a high-value relationship without over-contacting'},
+        {term: 'Channel / Strategic Partner', definition: '30 days · Maintain the strategic relationship'},
+        {term: 'B Agent', definition: '45 days · Stay intentional while matching the relationship level'}
+      ]}
+    ];
+  }
+
+  return {normalizeAgent, filterResolvedAttention, ensureActivityIds, removeActivity, newestFirst, suggestFollowUp, isFollowUpDue, definitionSections};
 });
 </script>
 <script>
@@ -721,6 +790,40 @@ function closeModal(id){
 function openWorkFor(name){
  closeAllOverlays(); openModal('workModal');
  const f=document.querySelector('#workForm [name="agent"]'); if(f)f.value=name;
+ updateWorkSuggestion();
+}
+
+function workAgentTier(name){
+ const key=DirectorActivity.normalizeAgent(name),dashboard=window.__directorDashboard||{},drills=dashboard.drills||{};
+ if(!key)return'';
+ if((drills.tierA||[]).some(row=>DirectorActivity.normalizeAgent(row&&row[0])===key))return'A';
+ if((drills.tierB||[]).some(row=>DirectorActivity.normalizeAgent(row&&row[0])===key))return'B';
+ if((drills.channel||[]).some(row=>DirectorActivity.normalizeAgent(row&&row[0])===key))return'CHANNEL';
+ const profiles=(dashboard.shared&&dashboard.shared.profiles)||[];
+ const profile=profiles.find(row=>DirectorActivity.normalizeAgent(row&&row.agent_name)===key);
+ return String(profile&&(profile.powerbi_level||profile.tier)||'').trim().toUpperCase();
+}
+function updateWorkSuggestion(){
+ const form=$('workForm');if(!form)return;
+ const agent=form.elements.agent,type=form.elements.type,outcome=form.elements.outcome,follow=form.elements.followup,hint=$('workFollowupHint');
+ const tier=workAgentTier(agent.value),suggestion=DirectorActivity.suggestFollowUp({agent:agent.value,tier,type:type.value,outcome:outcome.value,baseDate:dLocalDate(new Date())});
+ const priorAuto=follow.dataset.autoValue||'';
+ if(!suggestion){
+   if(!follow.dataset.manual&&follow.value===priorAuto)follow.value='';
+   follow.dataset.autoValue='';
+   if(hint)hint.textContent='Choose a work type and agent. The date will be suggested automatically when a cadence applies.';
+   return;
+ }
+ if(!follow.dataset.manual||!follow.value||follow.value===priorAuto){follow.value=suggestion.date;follow.dataset.manual='';}
+ follow.dataset.autoValue=suggestion.date;
+ if(hint)hint.textContent='Suggested automatically: '+suggestion.days+' days · '+suggestion.reason+(tier?' · '+tier+' relationship':'')+'. You can change this date.';
+}
+function prepareWorkFormHelpers(){
+ const form=$('workForm'),follow=form&&form.elements.followup;if(!form||!follow)return;
+ if(!$('workFollowupHint')){const hint=document.createElement('div');hint.id='workFollowupHint';hint.className='meta';hint.style.marginTop='6px';follow.insertAdjacentElement('afterend',hint)}
+ ['agent','type','outcome'].forEach(name=>form.elements[name].addEventListener(name==='agent'?'input':'change',updateWorkSuggestion));
+ follow.addEventListener('input',()=>{follow.dataset.manual='1';const hint=$('workFollowupHint');if(hint)hint.textContent='Custom follow-up date selected. The automatic suggestion will not overwrite it.'});
+ updateWorkSuggestion();
 }
 
 function syncRealDrills(){
@@ -766,6 +869,7 @@ function saveForm(form,key){
  const o=Object.fromEntries(new FormData(form).entries()); o.date=new Date().toLocaleDateString();
  if(key===WORK_KEY){o.id='director-work-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);o.createdAt=new Date().toISOString()}
  const a=saved(key);a.push(o);put(key,a);form.reset();renderSaved();
+ if(key===WORK_KEY){const follow=form.elements.followup;if(follow){follow.dataset.manual='';follow.dataset.autoValue=''}updateWorkSuggestion()}
  closeModal(key===WORK_KEY?'workModal':key===FEEDBACK_KEY?'feedbackModal':'coachModal');
  const activeRange=document.querySelector('[data-range].active');renderWhoNeeds(activeRange?activeRange.dataset.range:'month');
  toastMsg(key===WORK_KEY?'Director work saved':key===FEEDBACK_KEY?'Agent feedback saved':'Coaching note saved');
@@ -777,12 +881,10 @@ function parseLocalDate(v){
 }
 function buildWhoNeedsFromSaved(k){
  const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
- const weekEnd=new Date(today);weekEnd.setDate(weekEnd.getDate()+7);
- const monthEnd=new Date(today);monthEnd.setMonth(monthEnd.getMonth()+1);
  const items=[];
  saved(WORK_KEY).forEach(x=>{const due=parseLocalDate(x.followup);if(due&&x.agent)items.push([x.agent,x.type||'Director Follow-up',x.outcome||'Follow-up',x.notes||'',due])});
  saved(FEEDBACK_KEY).forEach(x=>{const due=parseLocalDate(x.followup);if(due&&x.agent)items.push([x.agent,'Agent Feedback',`${x.status||'Follow-up'}${x.lp?' · '+x.lp:''}`,x.feedback||'',due])});
- return items.filter(r=>{const due=new Date(r[4].getFullYear(),r[4].getMonth(),r[4].getDate());if(k==='today')return due<=today;if(k==='week')return due<=weekEnd;return due<=monthEnd})
+ return items.filter(r=>DirectorActivity.isFollowUpDue(dLocalDate(r[4]),dLocalDate(today)))
  .sort((a,b)=>a[4]-b[4]).map(r=>[r[0],r[1],`Due ${r[4].toLocaleDateString()} · ${r[2]}`,r[3]]);
 }
 function renderWhoNeeds(k){
@@ -800,6 +902,18 @@ function openMyActivity(){
  $('drawerSummary').textContent=work.length?work.length+' Director activit'+(work.length===1?'y':'ies')+' logged. Newest entries appear first.':'No Director activity has been logged in this browser yet.';
  $('drawerResults').innerHTML=work.length?DirectorActivity.newestFirst(work).map(x=>`<div class="result"><div class="resultTop"><div><h3>${esc(x.agent||'Unassigned')}</h3><div class="meta">${esc(x.type||'Director Activity')} · ${esc(x.outcome||'')}</div></div><span class="pill good">${esc(x.date||'')}</span></div>${x.notes?`<div class="meta">${esc(x.notes)}</div>`:''}${x.followup?`<div class="meta"><b>Follow-up:</b> ${esc(x.followup)}</div>`:''}<div class="actions"><button data-log-agent="${esc(x.agent||'')}">Log Another</button><button data-delete-work="${esc(x.id)}" style="color:#9f3540;border-color:#efc6ca">Delete</button></div></div>`).join(''):'<div class="result"><h3>No activity yet.</h3><div class="meta">Use Log My Work and every saved entry will appear here.</div></div>';
  closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
+}
+function openDefinitions(){
+ const sections=DirectorActivity.definitionSections();
+ $('drawerTitle').textContent='Definitions & Cadence';
+ $('drawerSummary').textContent='Use this reference when logging work so the activity, outcome and follow-up timing match what actually happened.';
+ $('drawerResults').innerHTML=sections.map(section=>`<div class="result" style="padding:18px"><h3 style="font-size:16px;margin-bottom:10px">${esc(section.title)}</h3>${section.items.map(item=>`<div class="minirow" style="align-items:flex-start"><b style="max-width:43%">${esc(item.term)}</b><span style="max-width:55%;text-align:right">${esc(item.definition)}</span></div>`).join('')}</div>`).join('');
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
+}
+function addDefinitionsButton(){
+ if($('definitionsBtn'))return;
+ const button=document.createElement('button');button.id='definitionsBtn';button.type='button';button.textContent='Definitions & Cadence';
+ $('myActivityBtn').insertAdjacentElement('afterend',button);button.addEventListener('click',openDefinitions);
 }
 function deleteWorkActivity(id){
  const current=DirectorActivity.ensureActivityIds(saved(WORK_KEY)),target=current.find(x=>String(x.id)===String(id));
@@ -840,7 +954,7 @@ document.addEventListener('click',e=>{
  const v=e.target.closest('[data-view]');if(v){e.preventDefault();showView(v.dataset.view);return}
  const r=e.target.closest('[data-range]');if(r){setRange(r.dataset.range);return}
 });
-$('logWorkBtn').addEventListener('click',()=>openModal('workModal'));
+$('logWorkBtn').addEventListener('click',()=>{openModal('workModal');updateWorkSuggestion()});
 $('myActivityBtn').addEventListener('click',openMyActivity);
 $('addFeedbackBtn').addEventListener('click',()=>openModal('feedbackModal'));
 $('addCoachBtn').addEventListener('click',()=>openModal('coachModal'));
@@ -851,6 +965,8 @@ $('feedbackForm').addEventListener('submit',e=>{e.preventDefault();saveForm(e.cu
 $('sharedMgmt').addEventListener('change',e=>{const yes=e.target.value==='Yes';$('sharedWithField').style.display=yes?'grid':'none';$('sharedDateField').style.display=yes?'grid':'none'});
 document.querySelectorAll('.modalBack').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllOverlays()});
+addDefinitionsButton();
+prepareWorkFormHelpers();
 renderSaved();
 
 /* VNEXT2: explicit Director navigation + tile bindings.
@@ -978,6 +1094,7 @@ function renderDirectorUnifiedDashboard(dashboard){
  dirSetText('priorityFocusCount',focus);dirSetText('mFocus',focus);
  renderSaved();
  renderWhoNeeds(window.__directorSelectedRange||'month');
+ if($('workModal')&&$('workModal').classList.contains('open'))updateWorkSuggestion();
 }
 window.refreshDirectorData=()=>directorRefreshController?directorRefreshController.refresh():Promise.resolve();
 
