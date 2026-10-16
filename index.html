@@ -1,4 +1,4 @@
- 
+  
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Director View · Relationship Growth Command Center</title>
@@ -32,60 +32,222 @@
 #view-execution .statusCard[data-amanda]:hover,#view-execution .needItem[data-amanda]:hover,#view-execution .managerBox[data-coach-type]:hover,#view-execution .minirow[data-amanda]:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(15,23,42,.10);border-color:#b9cbea}
 #view-execution [data-amanda]:focus-visible,#view-execution [data-coach-type]:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
 
-/* Warm cream + sage Director palette */
-:root{--navy:#526a5a;--blue:#b85f54;--ink:#314039;--muted:#718077;--line:#e7ded3;--bg:#fbf7f1;--card:#fff;--green:#5f876a;--amber:#a86f3e;--red:#b95450;--soft:#f1f6ef;--sage-soft:#dde8dc;--blush:#f8e7e2}
-.side{background:var(--sage-soft);color:var(--ink);border-right:1px solid #cbd9c9}
-.brand{color:#3f5848;font-weight:650}
-.trackerSwitch a{border-color:#b9cbb7;color:#496051;font-weight:550}
-.trackerSwitch a.current{background:#fff;color:var(--navy);box-shadow:0 3px 10px #526a5a12}
-.quickActions button{border-color:#b9cbb7;background:#fff;color:var(--navy);font-weight:600}
-.quickActions button+button{background:#edf4eb;color:#405648}
-.nav button{color:#405648;font-weight:500}
-.nav button:hover,.nav button.active{background:#fff;color:#3d5546;box-shadow:0 3px 10px #526a5a10}
-.side small{color:#66786d}
-.attentionBtn{border-color:#e8b9b0;background:var(--blush);color:#994d48}
-.card,.module{box-shadow:0 3px 14px #526a5a0a}
-.click:hover,.module:hover{box-shadow:0 9px 24px #526a5a15;border-color:#b8c9b8}
-.hint{color:#7c8a81}
-.bar{background:linear-gradient(#bfd1ba,#6f9479)}
-.drawerBack{background:#40564855}
-.drawer{box-shadow:-12px 0 40px #4056482b}
-.modalBack{background:#40564866}
-.actions button,.btn{border-color:#c9d5c8}
-.field label{color:#56665c}
-.field input,.field select,.field textarea{border-color:#d8d1c7}
-.toast{background:#405648}
-[data-global-click="1"]:focus-visible,.module[data-view]:focus-visible,[data-drill]:focus-visible,#view-execution [data-amanda]:focus-visible,#view-execution [data-coach-type]:focus-visible{outline-color:#6f8f78}
+/* Calm confidence palette: ocean blue + lavender + sunrise warmth */
+:root{--navy:#173d59;--blue:#268399;--ink:#19384a;--muted:#657f8c;--line:#dce9ed;--bg:#f1f7fa;--card:#fff;--green:#25836e;--amber:#9c6a15;--red:#b75a57;--soft:#dff1f4;--sage-soft:#e9eafa;--blush:#fff0e3}
+.side{background:var(--sage-soft);color:var(--ink);border-right:1px solid #d7dced}
+.brand{color:#30486d;font-weight:650}
+.trackerSwitch a{border-color:#c9cde1;color:#435677;font-weight:550}
+.trackerSwitch a.current{background:#fff;color:var(--navy);box-shadow:0 3px 10px #183e5b12}
+.quickActions button{border-color:#c9d9dc;background:#fff;color:var(--navy);font-weight:600}
+.quickActions button+button{background:#f0f3fc;color:#3f5072}
+.nav button{color:#435677;font-weight:500}
+.nav button:hover,.nav button.active{background:#fff;color:#287b91;box-shadow:0 3px 10px #50699a12}
+.side small{color:#657795}
+.attentionBtn{border-color:#efd1b5;background:#fff4e9;color:#946121}
+.card,.module{box-shadow:0 3px 14px #183e5b0a}
+.click:hover,.module:hover{box-shadow:0 9px 24px #183e5b15;border-color:#b7d5d9}
+.hint{color:#758a91}
+.bar{background:linear-gradient(#a8cdd0,#438c96)}
+.drawerBack{background:#183e5b55}
+.drawer{box-shadow:-12px 0 40px #183e5b2b}
+.modalBack{background:#183e5b66}
+.actions button,.btn{border-color:#c9d9dc}
+.field label{color:#566d75}
+.field input,.field select,.field textarea{border-color:#d5e2e4}
+.toast{background:#183e5b}
+[data-global-click="1"]:focus-visible,.module[data-view]:focus-visible,[data-drill]:focus-visible,#view-execution [data-amanda]:focus-visible,#view-execution [data-coach-type]:focus-visible{outline-color:#6ea9ae}
+.module:nth-child(3n + 2) .moduleIcon{background:#ecebfa;color:#7778b8}
+.module:nth-child(3n) .moduleIcon{background:#fff0e5;color:#b87552}
+
 /* VDRILL: keep every tile detail drawer attached to the visible viewport. */
 .drawerBack{width:100vw;height:100dvh;overflow:hidden}
 .drawer{position:fixed;right:0;top:0;bottom:0;height:100dvh;max-width:100vw;overscroll-behavior:contain}
 @media(max-width:680px){.drawer{width:100vw;max-width:100vw}.drawerBody{padding:16px}.drawerHead{padding:15px 16px}}
+
+/* Director workbench */
+.workbench{display:grid;grid-template-columns:minmax(280px,.9fr) minmax(380px,1.35fr);gap:14px;margin-bottom:16px}
+.workbenchCard{padding:18px 19px}
+.workbenchCard h2{font-size:17px;margin:4px 0 5px;font-weight:650}
+.workbenchIntro{font-size:12px;color:var(--muted);line-height:1.45;margin:0 0 12px}
+.directorSearch{width:100%;border:1px solid #cbd5e1;border-radius:11px;padding:11px 12px;background:#fff;color:var(--ink);font-size:13px}
+.directorSearch:focus{outline:2px solid #bcd0ff;border-color:var(--blue)}
+.searchResults{display:grid;gap:7px;margin-top:9px;max-height:310px;overflow:auto}
+.searchHint,.queueEmpty{border:1px dashed var(--line);border-radius:10px;padding:12px;color:var(--muted);font-size:11px}
+.quickResult,.queueItem{border:1px solid var(--line);border-radius:11px;padding:10px 11px;display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fff}
+.quickResult strong,.queueItem strong{font-size:12px;display:block;font-weight:650}
+.quickResult small,.queueItem small{font-size:10px;color:var(--muted);display:block;margin-top:3px;line-height:1.4}
+.quickResultActions{display:flex;gap:6px;flex-shrink:0}
+.quickResultActions button{border:1px solid #cad5e6;background:#fff;padding:7px 9px;border-radius:8px;cursor:pointer;font-size:10px}
+.quickResultActions button:first-child{background:var(--navy);color:#fff;border-color:var(--navy)}
+.queueList{display:grid;gap:7px;margin-top:11px;max-height:360px;overflow:auto}
+.queueTag{font-size:9px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;color:#8b6500;background:#fff6df;border-radius:999px;padding:4px 7px;white-space:nowrap}
+.workbenchLinks{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.workbenchLinks button{border:1px solid var(--line);background:#f9fbff;color:var(--navy);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:10px;font-weight:600}
+@media(max-width:900px){.workbench{grid-template-columns:1fr}}
+.leadCheckinList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.leadCheckinCard{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.leadCheckinCard strong{display:block;font-size:12px;font-weight:650}
+.leadCheckinCard small{display:block;font-size:10px;color:var(--muted);line-height:1.4;margin-top:3px}
+.leadCheckinCard .quickResultActions{flex-shrink:0}
+@media(max-width:680px){.leadCheckinList{grid-template-columns:1fr}.leadCheckinCard{align-items:flex-start}}
+@media(max-width:680px){.workbenchCard{padding:15px}.quickResult,.queueItem{align-items:flex-start}.queueList{max-height:420px}}
+.directorWeekBoard{margin-top:14px}.directorWeekHead{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.directorMeetingList{display:grid;gap:8px;margin-top:11px}.directorMeeting{border:1px solid var(--line);border-radius:11px;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}.directorMeeting strong{font-size:12px}.directorMeeting p{font-size:11px;color:var(--muted);margin:5px 0 0;line-height:1.45}.meetingTiming{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;border-radius:999px;padding:4px 7px;background:#eaf1ff;color:#315cad;margin-right:5px}.meetingTiming.overdue{background:#fff0f1;color:#9d333c}.meetingTiming.today{background:#fff6df;color:#8b6500}.meetingActions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.meetingComplete{border:1px solid #cad5e6;background:#fff;border-radius:8px;padding:7px 9px;cursor:pointer;font-size:10px;white-space:nowrap}@media(max-width:680px){.directorWeekHead{display:block}.directorWeekHead .btn{margin-top:8px}.directorMeeting{grid-template-columns:1fr}.meetingActions{justify-content:flex-start}}
+.marketBrief{margin-top:14px}.marketTalkTrack{border-left:3px solid var(--blue);background:#f6f8fc;border-radius:0 9px 9px 0;padding:11px 13px;font-size:12px;line-height:1.55;color:#26354b}.marketBrief .workbenchLinks{align-items:center}.marketBrief .workbenchLinks a{font-size:10px;color:var(--blue);font-weight:650;text-decoration:none}.marketBrief .workbenchLinks a:hover{text-decoration:underline}
+.syncStatusRow span{color:var(--muted)!important}.searchShortcut{margin:7px 0 -2px}.searchShortcut kbd{display:inline-block;border:1px solid #d5e2e4;border-bottom-width:2px;border-radius:5px;padding:1px 5px;background:#fff;color:#4d6872;font:inherit;font-size:10px}.workbenchCard{box-shadow:0 5px 20px #183e5b0c}.workbenchCard h2{letter-spacing:-.015em}.workbenchLinks button:hover,.meetingComplete:hover,.btn:hover{border-color:#b7d5d9;background:#f2f8f8}.leadGapTag{color:#805a2a;background:#fff2df}.queueItem{min-height:60px}.directorSearch:focus-visible,.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible,.btn:focus-visible,.workbenchLinks button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* Partner Studio refresh: prominent top navigation, open canvas, warm action cues */
+.app{display:block;min-height:100vh;background:var(--bg)}
+.side{display:grid;grid-template-columns:auto auto minmax(280px,1fr);grid-template-areas:"brand switch actions" "nav nav nav";align-items:center;gap:9px 18px;position:sticky;top:0;z-index:20;height:auto;min-height:0;padding:13px clamp(16px,3vw,36px) 10px;background:var(--navy);color:#fff;border:0;box-shadow:0 5px 20px #173d5924}
+.brand{grid-area:brand;color:#fff;font-size:17px;letter-spacing:-.02em;margin:0;white-space:nowrap}
+.trackerSwitch{grid-area:switch;display:flex;gap:5px;margin:0}
+.trackerSwitch a{min-height:32px;padding:0 9px;border-radius:9px;border-color:#ffffff3d;color:#e1eff2;font-size:10px;white-space:nowrap}
+.trackerSwitch a.current{background:#e8eafa;color:#253d62;box-shadow:0 2px 9px #0c2c4426}
+.quickActions{grid-area:actions;display:flex;justify-content:flex-end;gap:7px;margin:0}
+.quickActions button{padding:8px 10px;border-radius:9px;border-color:#ffffff52;background:#fff;color:#173d59;font-size:10px;white-space:nowrap}
+.quickActions button:first-child{background:#f4c96b;border-color:#f4c96b;color:#23465a}
+.quickActions button+button{background:#ffffff14;color:#fff;border-color:#ffffff36}
+.nav{grid-area:nav;display:flex;gap:5px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#8caab5 transparent;padding:0 0 2px}
+.nav button{flex:0 0 auto;padding:9px 12px;border-radius:9px;color:#dce9ed;font-size:11px}
+.nav button:hover,.nav button.active{background:#e9eafa;color:#243b60;box-shadow:0 3px 10px #0c2c4418}
+.side small{display:none}
+.main{max-width:none;background:var(--bg);padding:24px clamp(16px,3vw,38px) 36px}
+.top{border-radius:18px;background:linear-gradient(115deg,#173d59 0%,#216d7e 70%,#318b94 100%);padding:21px 23px;margin-bottom:17px;align-items:center;box-shadow:0 10px 28px #173d591f}
+.top h1{color:#fff;font-size:26px;font-weight:700;letter-spacing:-.035em}
+.top p{color:#d9edf0;margin-top:6px}
+.syncStatusRow span{color:#e3f1f3!important}
+.syncStatusRow button{border-color:#ffffff66!important;background:#ffffff18!important;color:#fff!important}
+.range{background:#ffffff18;border-color:#ffffff40}
+.range button{color:#e2eff1}
+.range button.active{background:#f4c96b;color:#274459}
+.attentionBtn{border-color:#f4c96b;background:#fff3d7;color:#725116;font-weight:750}
+.workbenchCard{border-color:#dce9ed;background:#fff}
+.directorSearch{border-color:#cddfe4}
+.directorSearch:focus{outline-color:#9acbd0;border-color:var(--blue)}
+.workbenchLinks button{background:#f6f8fd;border-color:#dde0f0;color:#31496c}
+.workbenchLinks button:hover{background:#eceefa;border-color:#c7cbe6}
+.directorScore{margin:0 0 16px;padding:18px 20px;border:1px solid #d8e3df;background:linear-gradient(120deg,#f5faf7 0%,#f7f7fc 60%,#fff9f0 100%);box-shadow:0 6px 22px #244a3610}
+.directorScoreHead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.directorScoreHead h2{margin:4px 0;font-size:20px;letter-spacing:-.02em}.directorScoreTotal{min-width:128px;text-align:right;font-size:28px;font-weight:700;color:#284e46}.directorScoreTotal small{display:block;font-size:10px;font-weight:550;color:var(--muted)}.directorScoreGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.directorScoreMetric{border:1px solid #e0e8e3;background:#ffffffd9;border-radius:11px;padding:11px 12px}.directorScoreMetricTop{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:11px;font-weight:600}.directorScoreMetricTop b{font-size:14px;color:#315b4d}.directorScoreMetric small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.directorScoreTrack{height:5px;background:#e9efeb;border-radius:9px;margin-top:8px;overflow:hidden}.directorScoreTrack i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#78a995,#8e9dd1)}.directorScoreFoot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:10px}.directorScoreStatus{font-weight:650;color:#436e5c}.directorScoreStatus.behind{color:#9b6f35}.directorScoreRoadmap{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.directorScoreRoadmap span{border:1px solid #e0e7e2;border-radius:999px;padding:5px 8px;background:#ffffffad;color:#5d6b63;font-size:9px}.directorScoreRoadmap span.current{border-color:#9db9aa;color:#315b4d;background:#edf5ef;font-weight:650}
+@media(max-width:680px){.directorScore{padding:15px}.directorScoreGrid{grid-template-columns:1fr}.directorScoreHead h2{font-size:18px}.directorScoreTotal{font-size:24px;min-width:95px}}
+#overviewModules .module:nth-child(3n + 1) .moduleIcon{background:#dff1f4;color:#268399}
+#overviewModules .module:nth-child(3n + 2) .moduleIcon{background:#e9eafa;color:#7477b4}
+#overviewModules .module:nth-child(3n) .moduleIcon{background:#fff0e3;color:#ae7044}
+#overviewModules .module{border-color:#dce9ed;box-shadow:0 6px 22px #173d590b}
+#overviewModules .module:hover{border-color:#aecfd5;box-shadow:0 12px 28px #173d5918}
+@media(max-width:1050px){.side{grid-template-columns:auto 1fr;grid-template-areas:"brand switch" "actions actions" "nav nav";gap:8px 12px}.quickActions{justify-content:flex-start}}
+@media(max-width:680px){.side{padding:10px 12px;gap:7px;position:sticky}.brand{font-size:15px}.trackerSwitch{justify-self:end}.trackerSwitch a{padding:0 7px;font-size:9px}.quickActions{overflow-x:auto}.quickActions button{font-size:9px;padding:7px 9px}.nav button{font-size:10px;padding:8px 10px}.main{padding:13px 12px 26px}.top{display:grid;padding:17px;border-radius:14px}.top h1{font-size:22px}.controlbar{margin-top:8px}}
+
+/* Director visual refresh 2026: calm clarity + momentum */
+:root{--navy:#164b49;--blue:#287f79;--ink:#203b3a;--muted:#6d8580;--line:#dce9e3;--bg:#f3f8f5;--card:#fff;--green:#32866e;--amber:#ad741d;--red:#b45556;--soft:#e5f3ed;--sage-soft:#e9f2ed;--blush:#fff2df}
+body{background:var(--bg);color:var(--ink)}
+.side{background:linear-gradient(105deg,#164b49 0%,#226b65 72%,#398981 100%);box-shadow:0 6px 20px #164b4922}
+.trackerSwitch a.current{background:#fff2d9;color:#604b24}
+.quickActions button:first-child{background:#f2c875;border-color:#f2c875;color:#31433a}
+.quickActions button+button{background:#ffffff17;color:#f3fbf8}
+.nav button:hover,.nav button.active{background:#e2f2e9;color:#164b49}
+.main{background:linear-gradient(180deg,#f3f8f5 0,#f7f9f7 40%,#f6f8f5 100%)}
+.top{background:linear-gradient(112deg,#164b49 0%,#287f79 64%,#65a694 100%);border:1px solid #ffffff38;box-shadow:0 12px 28px #164b4920;position:relative;overflow:hidden}
+.top:after{content:"";position:absolute;width:240px;height:240px;right:22%;top:-168px;border:1px solid #ffffff2d;border-radius:50%;box-shadow:0 0 0 26px #ffffff0c,0 0 0 52px #ffffff08;pointer-events:none}
+.top h1{font-size:28px;letter-spacing:-.04em}.top p{font-size:13px;color:#e2f1ec}
+.range{background:#ffffff18;border-color:#ffffff45}.range button{color:#eff8f3}.range button.active{background:#f2c875;color:#31433a}
+.attentionBtn{background:#fff1d2;border-color:#f2c875;color:#6d501b}
+.card,.module{border-color:#dfebe5;box-shadow:0 5px 18px #234a3810;border-radius:16px}
+.click:hover,.module:hover{border-color:#9bc9b8;box-shadow:0 12px 24px #1b5d4a18}
+.directorScore{position:relative;margin:0 0 17px;padding:22px 23px 20px;border:1px solid #cfe1d8;border-top:4px solid #e6b95f;background:linear-gradient(120deg,#fff 0%,#f5fbf7 58%,#f6f5fc 100%);box-shadow:0 10px 28px #214f3b12}
+.directorScore:before{content:"";position:absolute;right:0;top:0;width:18%;height:4px;background:linear-gradient(90deg,#e6b95f,#8bb9a7);border-radius:0 14px 0 0}
+.directorScoreHead h2{font-size:22px;color:#174c46}.directorScoreHead .label{color:#55796b;letter-spacing:.09em}
+.directorScoreTotal{background:#164b49;color:#fff;border-radius:14px;padding:11px 15px;min-width:142px;text-align:center;box-shadow:0 6px 16px #164b4925}.directorScoreTotal small{color:#d3e9e0}
+.directorScoreMetric{background:#fff;border-color:#dce9e3;border-radius:13px;padding:13px 14px;box-shadow:0 3px 10px #244f3a08}.directorScoreMetricTop b{color:#1b6558}.directorScoreTrack{height:7px;background:#e8efeb}.directorScoreTrack i{background:linear-gradient(90deg,#46a389,#e4b85b)}
+.directorScoreStatus{background:#e6f4ea;padding:5px 9px;border-radius:999px}.directorScoreStatus.behind{background:#fff2dc}.directorScoreRoadmap span{background:#fff;border-color:#dce9e3}.directorScoreRoadmap span.current{background:#e4f2e9;border-color:#8ebba3;color:#185247}
+.whoNeeds,.workbenchCard{border-color:#dce9e3;box-shadow:0 7px 22px #214f3b0c}.workbenchCard h2,.whoHead h2{color:#214b45}
+.directorSearch:focus{outline-color:#a7d3c0;border-color:#328b76}
+.quickResultActions button:first-child{background:#1b625a;border-color:#1b625a}
+.queueTag{color:#76541a;background:#fff2d4}.workbenchLinks button:hover,.meetingComplete:hover,.btn:hover{border-color:#98c8b6;background:#eaf5ee}
+.moduleIcon{background:#e4f2eb;color:#267d68}.module:nth-child(3n + 2) .moduleIcon{background:#eeebfa;color:#7978b4}.module:nth-child(3n) .moduleIcon{background:#fff0df;color:#a96b3f}
+[data-global-click="1"]:focus-visible,.module[data-view]:focus-visible,[data-drill]:focus-visible{outline:2px solid #e5b654;outline-offset:3px}
+.toast{background:#164b49}
+@media(max-width:680px){.top{background:linear-gradient(145deg,#164b49,#287f79 72%,#65a694)}.directorScore{padding:16px}.directorScoreTotal{min-width:106px;padding:9px 10px}}
+
+
+/* Director overview simplification: signal first, reference details on demand */
+#overviewKpis{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:14px}
+#overviewKpis .card[data-drill="channel"],#overviewKpis .card[data-drill="tierA"],#overviewKpis .card[data-drill="tierB"]{display:none}
+.workbench{grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);margin-bottom:14px}
+.workbenchCard:nth-child(2){order:-1}
+#directorActionQueue{max-height:270px}
+.overviewDetails{margin-top:12px;border:1px solid #dce9e3;border-radius:14px;background:#fff;box-shadow:0 3px 12px #214f3b08;overflow:hidden}
+.overviewDetails>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 17px;color:#214b45;font-size:13px;font-weight:700}
+.overviewDetails>summary::-webkit-details-marker{display:none}
+.overviewDetails>summary:after{content:"+";display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:8px;background:#eaf5ee;color:#1b625a;font-size:17px;font-weight:500}
+.overviewDetails[open]>summary:after{content:"−"}
+.detailsHint{margin-left:auto;color:#71877f;font-size:11px;font-weight:500}
+.overviewDetailsBody{padding:0 14px 14px;border-top:1px solid #edf2ee}
+.overviewDetailsBody>.whoNeeds,.overviewDetailsBody>.directorWeekBoard,.overviewDetailsBody>.marketBrief{margin-top:12px}
+.overviewDetailsBody>.whoNeeds{box-shadow:none}
+.overviewDetailsBody>.directorWeekBoard,.overviewDetailsBody>.marketBrief{margin-bottom:0}
+.overviewDetailsBody>#overviewModules{margin-top:12px}
+@media(max-width:760px){#overviewKpis{grid-template-columns:1fr}.workbench{grid-template-columns:1fr}.workbenchCard:nth-child(2){order:-1}.overviewDetails>summary{padding:13px}.detailsHint{display:none}}
+
+
+/* Director Impact: evidence-based score checkpoints and Daniel-ready reporting */
+.directorTrendPanel{padding:20px 22px;margin:0 0 16px;border-top:3px solid #e6b95f}
+.trendPanelHead,.trendReportHead{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.trendPanelHead h3{font-size:21px;margin:5px 0 4px;color:#174c46}
+.trendPanelHead .meta{max-width:690px}
+.trendCapture{display:flex;align-items:end;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.trendCapture label{font-size:11px;color:var(--muted);display:grid;gap:5px}
+.trendCapture select{border:1px solid var(--line);border-radius:9px;padding:9px;background:#fff;color:var(--ink)}
+.trendLiveStatus{margin:13px 0 7px;padding:9px 12px;border-radius:9px;background:#f1f7f3;color:#3c6f5b;font-size:11px}
+.trendSummary{font-size:12px;font-weight:650;color:#285f50;margin:8px 0 12px}
+.trendGrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(240px,.8fr);gap:14px;align-items:stretch}
+.trendChart,.trendHistory{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px}
+.trendChart svg{display:block;width:100%;height:200px;overflow:visible}
+.trendChart svg line{stroke:#e5ece7;stroke-width:1}.trendChart svg text{fill:#71877f;font:10px Arial,sans-serif}
+.trendHistory>.label{margin:3px 0 9px}.scoreHistoryRow{padding:8px 0;border-bottom:1px solid #eef2ef;display:grid;gap:3px}.scoreHistoryRow:last-child{border-bottom:0}.scoreHistoryRow strong{font-size:11px;color:#254b43}.scoreHistoryRow span{font-size:10px;color:var(--muted)}
+.trendEmpty{min-height:100px;display:grid;place-items:center;text-align:center;padding:18px;color:var(--muted);font-size:11px}
+.trendNoteHead{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin:18px 0 9px}
+.trendNotesGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}.trendNotesGrid .field{gap:5px}.trendNotesGrid label{font-size:11px;font-weight:650;color:#355b50}.trendNotesGrid textarea{min-height:66px;resize:vertical;border:1px solid var(--line);border-radius:9px;padding:9px 10px;font-size:11px;line-height:1.45}
+.trendReportHead{margin:17px 0 8px;align-items:center}.trendReportActions{display:flex;gap:7px;flex-wrap:wrap}.trendReportActions .btn,.trendCapture .btn,.trendBackup .btn{font-size:10px;padding:8px 10px}
+.directorBriefOutput{width:100%;min-height:230px;resize:vertical;border:1px solid var(--line);border-radius:11px;padding:13px;background:#fbfdfb;color:#28443d;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}
+.trendBackup{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px}.trendBackup .meta{margin-right:auto}.importLabel{cursor:pointer}
+@media(max-width:760px){.directorTrendPanel{padding:15px}.trendPanelHead,.trendReportHead{display:grid}.trendCapture{justify-content:flex-start}.trendGrid{grid-template-columns:1fr}.trendNotesGrid{grid-template-columns:1fr}.trendNoteHead{display:grid;gap:3px}.trendReportActions{justify-content:flex-start}}
+
 </style></head><body>
-<div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Overview</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
-<main class="main"><div class="top"><div><h1>Relationship Growth Command Center</h1><p>Grow the right relationships. Protect the book. Turn agent feedback into action.<div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+<div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Today</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
+<main class="main"><div class="top"><div><h1>Director Command Center</h1><p>Start with the people and opportunities that need you most.</p><div class="syncStatusRow" style="display:flex;align-items:center;gap:8px;margin-top:4px">
 <span id="dirPowerBiStatus" style="font-size:10px;color:#667085">Waiting to sync shared tracker data…</span>
 <button id="dirSyncNow" type="button" style="border:1px solid #d7dfeb;background:#fff;border-radius:8px;padding:5px 9px;font-size:10px;cursor:pointer">Sync Now</button>
-</div></p></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership"><span id="leadershipAttentionCount">0</span> NEED LEADERSHIP ↗</button></div></div>
+</div></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership"><span id="leadershipAttentionCount">0</span> NEED LEADERSHIP ↗</button></div></div>
 
-<section class="view active" id="view-overview"><div class="grid kpis"><div class="card click" data-drill="active"><div class="label">Road to 200</div><div class="big" id="kpiActive">Loading…</div><div class="delta" id="kpiActiveDelta" data-live-delta="active">Latest shared Power BI</div><div class="hint">See active roster</div></div><div class="card click" data-drill="channel"><div class="label">Channel</div><div class="big"><span id="dirChannelCount">—</span></div><div class="delta" data-live-delta="channel">Latest shared Power BI</div></div><div class="card click" data-drill="tierA"><div class="label">A</div><div class="big"><span id="dirACount">—</span></div><div class="delta" data-live-delta="tierA">Latest shared Power BI</div></div><div class="card click" data-drill="tierB"><div class="label">B</div><div class="big"><span id="dirBCount">—</span></div><div class="delta" data-live-delta="tierB">Latest shared Power BI</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="kpiAtRisk">—</div><div class="delta down">A, B, Channel and Builder</div></div><div class="card click" data-drill="feedback"><div class="label">Agent Voice</div><div class="big" id="feedbackCount">7</div><div class="delta" id="repeatMini">2 repeat issues</div></div></div>
-<div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
-<div class="whoHead"><div><div class="label">MY ACCOUNTS NEEDING ATTENTION</div><h2 id="whoTitle">My Accounts Needing Attention</h2><p id="whoSubtitle">Your Director-owned A, B, Channel, Builder, Strategic, and confirmed Nyny-owned C relationships.</p></div><div><div class="whoCount" id="whoCount">8</div><div class="hint">your priorities ↗</div></div></div>
+<section class="view active" id="view-overview">
+<div class="card directorScore" id="directorWeightedScore"><div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD</div><h2>Progress toward year-end</h2><div class="meta">Loading live counts against this month’s tier targets…</div></div><div class="directorScoreTotal">— / 100<small>weighted score</small></div></div></div>
+<div class="workbench">
+<div class="card workbenchCard"><div class="label">QUICK FIND</div><h2>Find an agent</h2><p class="workbenchIntro">Search your relationships or Amanda’s active prospects. Open the record or take action right here.</p><input class="directorSearch" id="directorQuickSearch" type="search" placeholder="Agent, email, phone, or prospect" autocomplete="off" aria-label="Find an agent or prospect"><div class="searchHint searchShortcut">Tip: press <kbd>Ctrl/⌘</kbd> + <kbd>K</kbd> to jump to search.</div><div class="searchResults" id="directorQuickResults"><div class="searchHint">Start typing to find an agent.</div></div><div class="workbenchLinks"><button type="button" data-view="relationships">All relationships</button><button type="button" data-view="growth">Growth opportunities</button></div></div>
+<div class="card workbenchCard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div class="label">YOUR FOCUS</div><h2>What needs your attention?</h2><p class="workbenchIntro" style="margin-bottom:0">Prioritized: at risk, due follow-ups, lead gaps, then growth.</p></div><div class="whoCount" id="directorQueueCount">—</div></div><div class="queueList" id="directorActionQueue"><div class="queueEmpty">Loading your current actions…</div></div><div class="workbenchLinks"><button type="button" data-drill="atRisk">At risk</button><button type="button" data-drill="upcoming7">Follow-ups</button><button type="button" data-drill="noLead14">No lead in 14+ days <span id="directorLeadCheckinCount">—</span></button><button type="button" data-drill="growthOpps">Growth</button></div></div>
+</div>
+<div class="grid kpis" id="overviewKpis"><div class="card click" data-drill="active"><div class="label">Total Active Agent Goal</div><div class="big" id="kpiActive">Loading…</div><div class="delta" id="kpiActiveDelta" data-live-delta="active">Latest shared Power BI</div><div class="hint">200 overall · Channel / A / B = 50% of score</div></div><div class="card click" data-drill="channel"><div class="label">Channel</div><div class="big"><span id="dirChannelCount">—</span></div><div class="delta" data-live-delta="channel">Latest shared Power BI</div></div><div class="card click" data-drill="tierA"><div class="label">A</div><div class="big"><span id="dirACount">—</span></div><div class="delta" data-live-delta="tierA">Latest shared Power BI</div></div><div class="card click" data-drill="tierB"><div class="label">B</div><div class="big"><span id="dirBCount">—</span></div><div class="delta" data-live-delta="tierB">Latest shared Power BI</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="kpiAtRisk">—</div><div class="delta down">A, B, Channel and Builder</div></div><div class="card click" data-drill="feedback"><div class="label">Agent Voice</div><div class="big" id="feedbackCount">—</div><div class="delta" id="repeatMini">Loading saved feedback…</div></div></div>
+<details class="overviewDetails"><summary><span>My accounts needing attention</span><span class="detailsHint">Open your owned-account list</span></summary><div class="overviewDetailsBody"><div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
+<div class="whoHead"><div><div class="label">MY ACCOUNTS NEEDING ATTENTION</div><h2 id="whoTitle">My Accounts Needing Attention</h2><p id="whoSubtitle">Your Director-owned A, B, Channel, Builder, Strategic, and confirmed Nyny-owned C relationships.</p></div><div><div class="whoCount" id="whoCount">—</div><div class="hint">your priorities ↗</div></div></div>
 <div class="whoPreview" id="whoPreview"></div>
 <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px;border-top:1px solid var(--line);padding-top:13px">
 <button class="btn primary" type="button" data-export-attention="director">Export My Director List (<span id="exportDirectorCount">0</span>)</button>
 <span class="meta" style="align-self:center">CSV includes tier, owner, reason, due date, last meaningful contact, phone, and email.</span>
 </div>
-</div>
+</div></div></details>
+<details class="overviewDetails"><summary><span>Meetings &amp; Central Ohio market brief</span><span class="detailsHint">Director planning and timely talking points</span></summary><div class="overviewDetailsBody">
+<div class="card workbenchCard directorWeekBoard"><div class="directorWeekHead"><div><div class="label">DIRECTOR WEEK BOARD · MANUAL PLAN</div><h2>Meetings where your presence matters</h2><p class="workbenchIntro">Plan the meetings you want to join, your role, and the result you want. Shows overdue and upcoming meetings through the next 14 days.</p></div><button class="btn primary" type="button" id="planDirectorMeeting">+ Plan a meeting</button></div><div class="meta">Meeting dates are entered manually and saved in this browser; Amanda’s shared activity feed does not include future calendar dates or attendance plans.</div><div id="directorMeetingList" class="directorMeetingList"><div class="queueEmpty">No Director meetings planned yet.</div></div></div>
+<div class="card workbenchCard marketBrief"><div class="label">CENTRAL OHIO · AGENT VALUE BRIEF · UPDATED OCT 13, 2026</div><h2>A timely reason to check in</h2><p class="workbenchIntro">September inventory rose 12.3% to 6,530 homes and median days on market rose to 33 from 30. Supply is still only 2.6 months, so the region remains seller-leaning overall.</p><div class="marketTalkTrack"><b>Try this with an agent:</b> “Buyers have more homes and a little more time to compare. What are you seeing in your business? Send me a listing or buyer scenario you want to plan around, and we can talk through financing options early.”</div><div class="workbenchLinks"><a href="https://columbusrealtors.com/news/central-ohio-housing-reports---september-2026" target="_blank" rel="noopener">Open Columbus REALTORS’ source report ↗</a><span class="meta">Refresh this brief after each monthly release.</span></div></div>
+</div></details>
+<details class="overviewDetails"><summary><span>Browse all dashboard sections</span><span class="detailsHint">Quick links to the detail views below</span></summary><div class="overviewDetailsBody">
 <div class="grid modules" id="overviewModules">
-<div class="module" data-view="growth"><div><div class="moduleTop"><div class="moduleIcon">↗</div><span class="arrow">OPEN →</span></div><h2>Growth</h2><p>Road to 200, Channel/A/B movement and the strongest advancement opportunities.</p></div><div class="moduleStats"><span><b id="mGrowthOpps">—</b> opportunities</span><span><b id="mChannel">—</b> Channel</span></div></div>
+<div class="module" data-view="growth"><div><div class="moduleTop"><div class="moduleIcon">↗</div><span class="arrow">OPEN →</span></div><h2>Growth</h2><p>Grow the 200-agent base, with Channel/A/B net counts as the weighted growth priority.</p></div><div class="moduleStats"><span><b id="mGrowthOpps">—</b> opportunities</span><span><b id="mChannel">—</b> Channel</span></div></div>
 <div class="module" data-view="relationships"><div><div class="moduleTop"><div class="moduleIcon">◎</div><span class="arrow">OPEN →</span></div><h2>My Relationships</h2><p>Your complete Director-owned roster, including confirmed Nyny-owned C relationships.</p></div><div class="moduleStats"><span><b id="mDirectorAccounts">—</b> my accounts</span><span><b id="mAtRisk">—</b> at risk</span><span><b id="mWatch">—</b> watch</span></div></div>
-<div class="module" data-view="execution"><div><div class="moduleTop"><div class="moduleIcon">✓</div><span class="arrow">OPEN →</span></div><h2>Amanda Execution</h2><p>C-agent attention, calls, connections, meetings and measurable relationship advancement.</p></div><div class="moduleStats"><span><b id="mAmandaAttention">—</b> C agents need attention</span><span><b id="mCalls">168</b> calls</span><span><b id="mHeld">9</b> held</span></div></div>
+<div class="module" data-view="execution"><div><div class="moduleTop"><div class="moduleIcon">✓</div><span class="arrow">OPEN →</span></div><h2>Amanda Execution</h2><p>C-agent attention, calls, connections, meetings and measurable relationship advancement.</p></div><div class="moduleStats"><span><b id="mAmandaAttention">—</b> C agents need attention</span><span><b id="mCalls">—</b> calls</span><span><b id="mHeld">—</b> held</span></div></div>
 <div class="module" data-view="feedback"><div><div class="moduleTop"><div class="moduleIcon">!</div><span class="arrow">OPEN →</span></div><h2>Agent Feedback & Experience</h2><p>LP feedback, repeat patterns, management routing and relationship impact.</p></div><div class="moduleStats"><span><b id="mFeedback">0</b> records</span><span><b id="mRepeat">0</b> repeat</span><span><b id="mFeedbackRisk">0</b> at risk</span></div></div>
 <div class="module" data-view="impact"><div><div class="moduleTop"><div class="moduleIcon">★</div><span class="arrow">OPEN →</span></div><h2>Director Impact</h2><p>Your interventions, strategic relationships, escalations, logged work and outcomes.</p></div><div class="moduleStats"><span><b id="mProtected">0</b> protected</span><span><b id="mStrategic">0</b> strategic</span><span><b id="mRouted">0</b> routed</span></div></div>
 <div class="module" data-view="priorities"><div><div class="moduleTop"><div class="moduleIcon">→</div><span class="arrow">OPEN →</span></div><h2>Priorities</h2><p>My focus, leadership needs, current wins and the 30 / 60 / 90 outlook.</p></div><div class="moduleStats"><span><b id="mFocus">0</b> focus</span><span><b id="mLeadership">0</b> leadership</span><span><b id="mWins">0</b> wins</span></div></div>
-</div></section>
+</div></details></section>
 
-<section class="view" id="view-growth"><div class="viewHead"><h2>Growth</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid two"><div class="card click" data-drill="active"><div class="label">Current Shared Roster</div><div class="big" id="growthActiveCount">Loading…</div><div class="delta up">Live from the latest LP Power BI upload</div></div><div class="card"><div class="label">Tier Growth · click a bar</div><div class="chart"><div class="bar" data-drill="channel" style="height:25%"><span>Channel</span></div><div class="bar" data-drill="tierA" style="height:78%"><span>A</span></div><div class="bar" data-drill="tierB" style="height:88%"><span>B</span></div><div class="bar" data-drill="growthOpps" style="height:48%"><span>Opps</span></div></div></div></div><div class="section"><h3>Growth Opportunities</h3><div class="grid three"><div class="card click" data-drill="growthOpps"><div class="label">All Opportunities</div><div class="big" id="growthAllCount">—</div><div class="hint">See agents + next move</div></div><div class="card click" data-drill="tierB"><div class="label">B → A Candidates</div><div class="big" id="growthBCount">—</div></div><div class="card click" data-drill="channel"><div class="label">Channel Relationships</div><div class="big" id="growthChannelCount">—</div></div></div></div></section>
+<section class="view" id="view-growth"><div class="viewHead"><h2>Growth</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid two"><div class="card click" data-drill="active"><div class="label">Current Shared Roster</div><div class="big" id="growthActiveCount">Loading…</div><div class="delta up">Latest shared Power BI snapshot</div></div><div class="card"><div class="label">Live relationship mix · select a row to open agents</div><div class="minirow healthChoice" data-drill="channel" role="button" tabindex="0"><b>Channel relationships</b><span id="growthChannelCount">—</span></div><div class="minirow healthChoice" data-drill="tierA" role="button" tabindex="0"><b>A relationships</b><span id="growthACount">—</span></div><div class="minirow healthChoice" data-drill="tierB" role="button" tabindex="0"><b>B relationships</b><span id="growthBCount">—</span></div><div class="minirow healthChoice" data-drill="growthOpps" role="button" tabindex="0"><b>Growth opportunities</b><span id="growthAllCount">—</span></div></div></div></section>
 <section class="view" id="view-relationships">
 <div class="viewHead"><h2>My Relationships</h2><button class="backBtn" data-view="overview">← Overview</button></div>
 <div class="grid three"><div class="card click" data-drill="directorAccounts"><div class="label">My Accounts</div><div class="big" id="directorAccountsCount">—</div><div class="hint">Active Director-owned relationships, including confirmed C agents</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="relationshipRiskCount">—</div><div class="hint">Only genuinely unresolved relationship work</div></div><div class="card click" data-drill="health"><div class="label">My Relationship Health</div><div class="big" id="relationshipHealthPercent">—</div><div class="hint" id="relationshipHealthHint">Loading your account health…</div></div></div>
@@ -130,12 +292,24 @@
 <div class="section"><div class="card" id="amandaTrendCard" data-amanda-trend="1" role="button" tabindex="0" style="cursor:pointer"><div class="label"><span id="amandaTrendOpen" role="button" tabindex="0" style="cursor:pointer">Trend View ↗</span></div><p class="meta">This Week vs Last Week and This Month vs Last Month for calls, connections, booking rate, held meetings and advancement.</p><div id="amandaTrendLive" class="dataNeeded">Loading RM activity…</div></div></div>
 </section>
 <section class="view" id="view-feedback"><div class="viewHead"><h2>Agent Feedback & Experience</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="feedback"><div class="label">Feedback Received</div><div class="big" id="feedbackCountDetail">0</div></div><div class="card click" data-drill="repeat"><div class="label">Repeat Issues</div><div class="big" id="repeatCount">0</div><div class="delta down">Pattern detected</div></div><div class="card click" data-drill="feedbackRisk"><div class="label">Relationships at Risk</div><div class="big" id="relationshipFeedbackRiskCount">0</div></div></div><div class="section"><div class="grid two"><div class="card"><div class="label">How this protects your lane</div><p class="meta">Feedback is documented, routed to the appropriate leader, and monitored for relationship impact. LP remediation remains with LP leadership.</p></div><div class="card"><div class="label">Recent Saved Feedback</div><div id="feedbackSavedPreview" class="savedPreview"></div></div></div></div></section>
-<section class="view" id="view-impact"><div class="viewHead"><h2>Director Impact</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="protected"><div class="label">At-Risk Protected</div><div class="big" id="impactProtectedCount">0</div></div><div class="card click" data-drill="strategic"><div class="label">Strategic / Builder</div><div class="big" id="impactStrategicCount">0</div></div><div class="card click" data-drill="escalations"><div class="label">Experience Items Routed</div><div class="big" id="impactRoutedCount">0</div></div></div><div class="section"><div class="card"><div class="label">Recent Director Work Logged</div><div id="workSavedPreview" class="savedPreview"></div></div></div></section>
+<section class="view" id="view-impact"><div class="viewHead"><div><h2>Director Impact &amp; Score Trends</h2><div class="meta">Save one mid-month or month-end checkpoint, then turn the numbers into a concise Daniel update.</div></div><button class="backBtn" data-view="overview">← Overview</button></div>
+<div class="card directorTrendPanel" id="directorScoreTrendPanel">
+ <div class="trendPanelHead"><div><div class="label">WEIGHTED SCORECARD HISTORY</div><h3>Measure progress between check-ins</h3><p class="meta">Tier migration remains 50%: Channel 15%, A 15%, B 20%. Each checkpoint stores the verified source date and weighted components.</p></div><div class="trendCapture"><label for="directorSnapshotPeriod">Checkpoint</label><select id="directorSnapshotPeriod"><option>Mid-month</option><option>Month-end</option><option>Ad hoc</option></select><button class="btn primary" id="saveDirectorScoreSnapshot" type="button" disabled>Save score checkpoint</button></div></div>
+ <div class="trendLiveStatus" id="directorTrendLiveStatus">Sync live partner data before capturing a score checkpoint.</div>
+ <div class="trendSummary" id="directorScoreTrendSummary">No checkpoints saved yet. Save a mid-month or month-end baseline to start the trend.</div>
+ <div class="trendGrid"><div class="trendChart" id="directorScoreTrendChart"><div class="trendEmpty">Your dated score checkpoints will appear here.</div></div><div class="trendHistory"><div class="label">RECENT CHECKPOINTS</div><div id="directorScoreSnapshotHistory"><div class="trendEmpty">No saved checkpoints yet.</div></div></div></div>
+ <div class="trendNoteHead"><div class="label">DANIEL UPDATE · HIGH-LEVEL CONTEXT</div><span class="meta">Add only the wins, risks, decisions, and next steps he needs.</span></div>
+ <div class="trendNotesGrid"><div class="field"><label for="directorReportWins">Wins / partner progress</label><textarea id="directorReportWins" maxlength="1200" placeholder="New relationships, partner movement, opportunities created, or an agent relationship you helped protect."></textarea></div><div class="field"><label for="directorReportRisks">Risks / blockers</label><textarea id="directorReportRisks" maxlength="1200" placeholder="Meaningful lead gaps, partner risks, capacity issues, or market obstacles that need attention."></textarea></div><div class="field"><label for="directorReportAsks">Daniel’s support or decision needed</label><textarea id="directorReportAsks" maxlength="1200" placeholder="Be specific: a decision, introduction, escalation, or leadership support."></textarea></div><div class="field"><label for="directorReportNext">Next two-week actions</label><textarea id="directorReportNext" maxlength="1200" placeholder="The 2–3 actions you and Amanda will own before the next checkpoint."></textarea></div></div>
+ <div class="trendReportHead"><div><div class="label">DANIEL-READY BRIEF</div><span class="meta">Generated from the latest saved checkpoint and the one before it. You can edit the text before copying.</span></div><div class="trendReportActions"><button class="btn" id="generateDirectorBrief" type="button">Generate update</button><button class="btn primary" id="copyDirectorBrief" type="button">Copy update</button><button class="btn" id="exportDirectorScoreHistory" type="button">Download CSV</button></div></div>
+ <textarea class="directorBriefOutput" id="directorDanielBrief" aria-label="Daniel-ready director update" placeholder="Save a checkpoint, then generate the update."></textarea>
+ <div class="trendBackup"><span class="meta">History is saved in this browser. Export a backup before changing browsers or devices.</span><button class="btn" id="exportDirectorScoreBackup" type="button">Download backup</button><label class="btn importLabel" for="importDirectorScoreBackup">Import backup</label><input id="importDirectorScoreBackup" type="file" accept="application/json,.json" hidden></div>
+</div><div class="grid three"><div class="card click" data-drill="protected"><div class="label">At-Risk Protected</div><div class="big" id="impactProtectedCount">0</div></div><div class="card click" data-drill="strategic"><div class="label">Strategic / Builder</div><div class="big" id="impactStrategicCount">0</div></div><div class="card click" data-drill="escalations"><div class="label">Experience Items Routed</div><div class="big" id="impactRoutedCount">0</div></div></div><div class="section"><div class="card"><div class="label">Recent Director Work Logged</div><div id="workSavedPreview" class="savedPreview"></div></div></div></section>
 <section class="view" id="view-priorities"><div class="viewHead"><h2>Priorities</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid three"><div class="card click" data-drill="whoNeeds"><div class="label">My Accounts Needing Attention</div><div class="big" id="priorityFocusCount">0</div><div class="hint">A, B, Channel and Builder</div></div><div class="card click" data-drill="leadership"><div class="label">Needs Leadership</div><div class="big" id="priorityLeadershipCount">0</div></div><div class="card click" data-drill="wins"><div class="label">Wins</div><div class="big" id="priorityWinsCount">0</div></div></div><div class="section"><h3>Upcoming Follow-Ups</h3><div class="grid three"><div class="card click" data-drill="upcoming7"><div class="label">Next 7 Days</div><div class="big" id="directorUpcoming7Count">—</div></div><div class="card click" data-drill="upcoming14"><div class="label">Next 14 Days</div><div class="big" id="directorUpcoming14Count">—</div></div><div class="card click" data-drill="upcoming30"><div class="label">Next 30 Days</div><div class="big" id="directorUpcoming30Count">—</div></div></div></div></section>
 <div class="footer">Director Command Center · LP and RM records refresh from the shared tracker source · Director notes remain private to this browser</div></main></div>
 
 <div class="drawerBack" id="drawerBack"><div class="drawer"><div class="drawerHead"><h2 id="drawerTitle">Details</h2><button class="close" id="closeDrawer">×</button></div><div class="drawerBody"><div class="summary" id="drawerSummary"></div><div id="drawerResults"></div></div></div></div>
 <div class="modalBack" id="workModal"><div class="modal"><div class="modalHead"><h2>Log My Work</h2><button class="close" data-close="workModal">×</button></div><div class="modalBody"><form id="workForm"><div class="formGrid"><div class="field"><label>Agent / Relationship</label><input name="agent" required placeholder="Agent or relationship name"></div><div class="field"><label>Work Type</label><select name="type" required><option value="">Choose…</option><option>A/B/Channel Relationship Touch</option><option>Strategic Meeting</option><option>Builder / Strategic Partner</option><option>At-Risk Intervention</option><option>Escalation</option><option>Warm Introduction</option><option>Growth Opportunity</option><option>Leadership / Process Work</option><option>Other Director Activity</option></select></div><div class="field"><label>Outcome</label><select name="outcome"><option>Completed</option><option>Follow-up Needed</option><option>Relationship Protected</option><option>Relationship Advanced</option><option>Routed to Leadership</option><option>Monitoring</option></select></div><div class="field"><label>Follow-up Date</label><input name="followup" type="date"></div><div class="field full"><label>What I did / Notes</label><textarea name="notes" required></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="workModal">Cancel</button><button class="btn primary" type="submit">Save Director Work</button></div></form></div></div></div>
+<div class="modalBack" id="meetingModal"><div class="modal"><div class="modalHead"><h2>Plan Director Attendance</h2><button class="close" data-close="meetingModal">×</button></div><div class="modalBody"><form id="meetingForm"><div class="formGrid"><div class="field"><label>Agent / Team</label><input name="agent" required placeholder="Agent, team, or brokerage"></div><div class="field"><label>Meeting date and time</label><input name="date" type="datetime-local" required></div><div class="field"><label>Your role</label><select name="role" required><option>Amanda leads · I join</option><option>Joint lead</option><option>I lead</option></select></div><div class="field"><label>Why your presence matters</label><select name="reason" required><option>Top producer / strategic upside</option><option>High production, low share</option><option>Rising agent / growth potential</option><option>Service recovery / relationship risk</option><option>Broker or team leader relationship</option><option>Complex opportunity / senior support</option><option>Amanda requested support</option><option>Other strategic reason</option></select></div><div class="field full"><label>Meeting goal / useful value to bring</label><textarea name="goal" required placeholder="Example: understand their team’s upcoming buyer needs and agree on one way to improve response or conversion"></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="meetingModal">Cancel</button><button class="btn primary" type="submit">Save to Week Board</button></div></form></div></div></div>
 <div class="modalBack" id="feedbackModal"><div class="modal"><div class="modalHead"><h2>Agent Feedback & Experience</h2><button class="close" data-close="feedbackModal">×</button></div><div class="modalBody"><form id="feedbackForm"><div class="formGrid"><div class="field"><label>Agent</label><input name="agent" required placeholder="Agent name"></div><div class="field"><label>LP Involved</label><select name="lp" required><option value="">Choose LP…</option><option>Osgood</option><option>Gavin</option><option>Said</option><option>Karen</option><option>Jordan</option><option>Isaak</option></select></div><div class="field"><label>Feedback Type</label><select name="category" required><option value="">Choose…</option><option>Communication</option><option>Responsiveness</option><option>Tone / Experience</option><option>Follow-through</option><option>Knowledge / Guidance</option><option>Closing / Process</option><option>Other</option></select></div><div class="field"><label>Relationship Impact</label><select name="impact"><option>None</option><option>Low</option><option>Medium</option><option>High / At Risk</option></select></div><div class="field"><label>Repeat Issue?</label><select name="repeat"><option>No</option><option>Yes</option></select></div><div class="field"><label>Shared with Management?</label><select name="sharedMgmt" id="sharedMgmt"><option>No</option><option>Yes</option></select></div><div class="field" id="sharedWithField" style="display:none"><label>Shared With</label><input name="sharedWith"></div><div class="field" id="sharedDateField" style="display:none"><label>Date Shared</label><input name="sharedDate" type="date"></div><div class="field"><label>My Action</label><select name="action"><option>Documented</option><option>Spoke with Agent</option><option>Shared with Management</option><option>Followed Up</option><option>Other</option></select></div><div class="field"><label>Status</label><select name="status"><option>New</option><option>Routed</option><option>Monitoring</option><option>Resolved</option><option>Repeated</option></select></div><div class="field"><label>Follow-up Date</label><input name="followup" type="date"></div><div class="field full"><label>Agent Feedback</label><textarea name="feedback" required placeholder="Factual summary of what the agent reported"></textarea></div><div class="field full"><label>Outcome / Notes</label><textarea name="notes"></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="feedbackModal">Cancel</button><button class="btn primary" type="submit">Save Agent Feedback</button></div></form></div></div></div>
 <div class="modalBack" id="coachModal"><div class="modal"><div class="modalHead"><h2>Manager Coaching Note</h2><button class="close" data-close="coachModal">×</button></div><div class="modalBody"><form id="coachForm"><div class="formGrid"><div class="field"><label>Type</label><select name="type" required><option>Coach</option><option>Recognize</option><option>Follow Up</option></select></div><div class="field"><label>Follow-up Date</label><input name="followup" type="date"></div><div class="field full"><label>What we discussed / expectation</label><textarea name="note" required placeholder="Example: Reviewed call cadence. Expectation is to make and log the required calls consistently."></textarea></div><div class="field full"><label>What I want to see next</label><textarea name="next"></textarea></div></div><div class="formActions"><button class="btn" type="button" data-close="coachModal">Cancel</button><button class="btn primary" type="submit">Save Coaching Note</button></div></form></div></div></div>
 <div class="toast" id="toast"></div>
@@ -235,6 +409,36 @@
     return /^\d{4}-\d{2}-\d{2}$/.test(String(followUpDate || '')) && String(followUpDate) <= String(today || '');
   }
 
+  function sortDirectorMeetings(meetings, now) {
+    const current = now instanceof Date ? now.getTime() : new Date(now || Date.now()).getTime();
+    const horizon = current + 14 * 24 * 60 * 60 * 1000;
+    return (Array.isArray(meetings) ? meetings : []).filter(meeting => {
+      if (!meeting || /^completed$/i.test(String(meeting.status || ''))) return false;
+      const date = new Date(meeting.date || '').getTime();
+      return Number.isFinite(date) && date <= horizon;
+    }).map(meeting => {
+      const date = new Date(meeting.date).getTime();
+      const dayStart = new Date(current); dayStart.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(dayStart); tomorrow.setDate(tomorrow.getDate() + 1);
+      const timing = date < dayStart.getTime() ? 'Overdue' : date < tomorrow.getTime() ? 'Today' : 'Upcoming';
+      return {...meeting, timing};
+    }).sort((a, b) => new Date(a.date) - new Date(b.date));
+  }
+
+  function buildDirectorActionQueue(drills, limit) {
+    drills = drills || {};
+    const max = Number.isFinite(Number(limit)) ? Math.max(0, Number(limit)) : 12;
+    const priorities = [['atRisk', 'At risk'], ['upcoming7', 'Due soon'], ['noLead14', 'Lead gap'], ['growthOpps', 'Growth']];
+    const seen = new Set(), items = [];
+    priorities.forEach(([key, label]) => (Array.isArray(drills[key]) ? drills[key] : []).forEach(row => {
+      const name = String(row && row[0] || '').trim(), normalized = normalizeAgent(name);
+      if (!normalized || seen.has(normalized) || items.length >= max) return;
+      seen.add(normalized);
+      items.push({name, label, detail: row.slice(1).filter(Boolean).slice(0, 3).join(' · ')});
+    }));
+    return items;
+  }
+
   function definitionSections() {
     return [
       {title: 'Work Types', items: [
@@ -267,7 +471,7 @@
     ];
   }
 
-  return {normalizeAgent, filterResolvedAttention, ensureActivityIds, removeActivity, newestFirst, suggestFollowUp, isFollowUpDue, definitionSections};
+  return {normalizeAgent, filterResolvedAttention, ensureActivityIds, removeActivity, newestFirst, suggestFollowUp, isFollowUpDue, sortDirectorMeetings, buildDirectorActionQueue, definitionSections};
 });
 </script>
 <script>
@@ -495,6 +699,25 @@
       const tier = text(profile.tier).toUpperCase();
       return bool(profile.high_potential_flag) || !!text(profile.next_growth_opportunity) || (snapshotNames.has(keyName(profile.agent_name)) && (tier === 'A' || tier === 'B'));
     });
+    const leadHistory = (Array.isArray(input.activities) ? input.activities : []).concat(Array.isArray(input.leadActivities) ? input.leadActivities : []);
+    const lastLeadByName = new Map();
+    leadHistory.forEach(activity => {
+      if (isSystemActivity(activity)) return;
+      const type = text(activity && activity.act_type), outcome = text(activity && activity.outcome);
+      const isLeadReceived = /buyer opportunity received/i.test(outcome) || /(?:lead|referral|buyer opportunity) received/i.test(type);
+      if (!isLeadReceived) return;
+      const name = keyName(activity && activity.agent_name), stamp = text(activity && (activity.act_date || activity.created_at));
+      const moment = dateMs(stamp);
+      if (name && moment && moment > (lastLeadByName.get(name)?.moment || 0)) lastLeadByName.set(name, {moment, date: stamp.slice(0, 10)});
+    });
+    const leadCheckIns = actionable.filter(profile => isDirectorOwned(profile) && (['A', 'B'].includes(accountTier(profile)) || isConfirmedNynyC(profile))).map(profile => {
+      const lead = lastLeadByName.get(keyName(profile.agent_name));
+      return {profile, lastLeadDate: lead && lead.date || '', daysSinceLead: lead ? daysBetween(lead.date, nowIso) : null};
+    }).filter(item => item.daysSinceLead == null || item.daysSinceLead >= 14).sort((left, right) => {
+      if (left.daysSinceLead == null) return right.daysSinceLead == null ? text(left.profile.agent_name).localeCompare(text(right.profile.agent_name)) : 1;
+      if (right.daysSinceLead == null) return -1;
+      return right.daysSinceLead - left.daysSinceLead || text(left.profile.agent_name).localeCompare(text(right.profile.agent_name));
+    });
     const watch = directorAccounts.filter(profile => {
       if (riskReasons.has(keyName(profile.agent_name))) return false;
       const staleDays = daysBetween(profile.last_meaning_contact_date || profile.last_meaningful_contact_date, nowIso);
@@ -588,6 +811,7 @@
         amandaProspects: amandaProspects.length,
         needsOwnership: needsOwnership.length,
         growthOpportunities: growth.length,
+        leadCheckIns: leadCheckIns.length,
         relationshipHealth: {healthy: healthyCount, watch: watch.length, atRisk: atRisk.length, percent: healthyPercent},
         execution: {activities: activities.length, calls: calls.length, connections: connections.length, booked: booked.length, held: held.length, overdue: overdue.length}
       },
@@ -607,6 +831,7 @@
         upcoming14: upcoming(14).map(profile => profileRow(profile, accountTier(profile), 'Next follow-up ' + profile.next_rm_followup)),
         upcoming30: upcoming(30).map(profile => profileRow(profile, accountTier(profile), 'Next follow-up ' + profile.next_rm_followup)),
         growthOpps: growth.map(profile => profileRow(profile, 'Growth opportunity', text(profile.next_growth_opportunity) || (bool(profile.high_potential_flag) ? 'High-potential relationship' : text(profile.tier).toUpperCase() + ' advancement candidate'))),
+        noLead14: leadCheckIns.map(item => profileRow(item.profile, item.daysSinceLead == null ? 'No lead date on file' : item.daysSinceLead + ' days since last lead', item.daysSinceLead == null ? 'Verify history, then ask what opportunities are coming up' : 'Last recorded lead ' + item.lastLeadDate + ' · ask what opportunities are coming up')),
         whoNeeds: whoNeedsProfiles.slice(0, 50).map(profile => isConfirmedNynyC(profile)
           ? profileRow(profile, 'C relationship call', 'Nyny ownership confirmed · call from Director view')
           : riskReasons.has(keyName(profile.agent_name))
@@ -668,6 +893,7 @@
     setText(document, 'mWatch', health.watch);
     setText(document, 'growthAllCount', metrics.growthOpportunities);
     setText(document, 'growthActiveCount', powerBi.active + ' / 200');
+    setText(document, 'growthACount', (dashboard.drills.tierA || []).length);
     setText(document, 'growthBCount', (dashboard.drills.tierB || []).length);
     setText(document, 'growthChannelCount', powerBi.Channel);
     setText(document, 'relationshipRiskCount', metrics.atRisk);
@@ -776,9 +1002,12 @@
 
     async function refresh() {
       if (activeRefresh) return activeRefresh;
-      activeRefresh = Promise.resolve(load()).then(result => {
+      activeRefresh = Promise.resolve().then(load).then(result => {
         render(result);
         return result;
+      }).catch(error => {
+        try { if (typeof options.onError === 'function') options.onError(error); } catch (handlerError) { console.error('Director refresh error handler failed', handlerError); }
+        return null;
       }).finally(() => { activeRefresh = null; });
       return activeRefresh;
     }
@@ -828,8 +1057,9 @@ atRisk:{title:'At Risk Relationships',summary:'Current unresolved relationship r
 feedback:{title:'Agent Feedback & Experience',summary:'Shows only feedback you save in this Director browser.',rows:[]},
 repeat:{title:'Repeat Experience Issues',summary:'Shows only repeat feedback you save in this Director browser.',rows:[]},
 feedbackRisk:{title:'Relationships at Risk from Feedback',summary:'Shows only saved feedback marked High / At Risk.',rows:[]},
-road:{title:'Road to 200 Trend',summary:'Aggregate prototype trend only; not a live roster feed.',rows:[]},
+road:{title:'Total Active Agent Base Trend',summary:'Aggregate prototype trend only; not a live roster feed.',rows:[]},
 growthOpps:{title:'Growth Opportunities',summary:'Current Director-owned opportunities and advancement candidates.',rows:[]},
+noLead14:{title:'Realtor Opportunity Check-Ins',summary:'Director-owned A, B and confirmed C agents with no recorded buyer opportunity in 14 or more days, plus relationships without a lead date on file. Verify missing records before treating them as a true gap.',rows:[]},
 health:{title:'Relationship Health',summary:'Current healthy, watch and at-risk mix for active Director relationships.',rows:[]},
 healthHealthy:{title:'Healthy Relationships',summary:'Active Director relationships that are on cadence with no current risk signals.',rows:[]},
 healthWatch:{title:'Watch Relationships',summary:'Active Director relationships that need a timely check-in before they become at risk.',rows:[]},
@@ -849,7 +1079,7 @@ outlook60:{title:'60 Day Outlook',summary:'No fabricated agent-level records are
 outlook90:{title:'90 Day Outlook',summary:'No fabricated agent-level records are shown.',rows:[]}
 };
 const ranges={today:{active:'136 / 200',delta:'Today',calls:'42',connections:'16',booked:'3',held:'2',advanced:'1'},week:{active:'136 / 200',delta:'↑ 2 this week',calls:'168',connections:'61',booked:'12',held:'9',advanced:'4'},month:{active:'136 / 200',delta:'↑ 6 this month',calls:'168',connections:'61',booked:'12',held:'9',advanced:'4'}};
-const WORK_KEY='director_work_v2',FEEDBACK_KEY='director_feedback_v2',COACH_KEY='director_coaching_v1';
+const WORK_KEY='director_work_v2',FEEDBACK_KEY='director_feedback_v2',COACH_KEY='director_coaching_v1',MEETING_KEY='director_meetings_v1',SCORE_SNAPSHOT_KEY='director_score_snapshots_v1';
 let accountDirectoryControlsBound=false;
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -905,6 +1135,14 @@ function closeModal(id){
 function openWorkFor(name){
  closeAllOverlays(); openModal('workModal');
  const f=document.querySelector('#workForm [name="agent"]'); if(f)f.value=name;
+ updateWorkSuggestion();
+}
+function openLeadCheckin(name){
+ openWorkFor(name);
+ const form=$('workForm');if(!form)return;
+ form.elements.type.value='Growth Opportunity';
+ form.elements.outcome.value='Completed';
+ form.elements.notes.value='Check-in prompted by no buyer opportunity recorded in 14+ days. Asked how business is going, what buyer needs or opportunities are coming up, and how we can make it easier to work together.';
  updateWorkSuggestion();
 }
 
@@ -1174,8 +1412,10 @@ document.addEventListener('click',e=>{
  if(e.target.id==='closeDrawer'){e.preventDefault();e.stopPropagation();closeDrawer();return}
  const toast=e.target.closest('[data-toast]');if(toast){toastMsg(toast.dataset.toast);return}
  const del=e.target.closest('[data-delete-work]');if(del){e.preventDefault();e.stopPropagation();deleteWorkActivity(del.dataset.deleteWork);return}
+ const meetingDone=e.target.closest('[data-meeting-complete]');if(meetingDone){e.preventDefault();e.stopPropagation();completeDirectorMeeting(meetingDone.dataset.meetingComplete);return}
  const remove=e.target.closest('[data-remove-relationship]');if(remove){e.preventDefault();e.stopPropagation();removeRelationship(remove.dataset.removeRelationship);return}
  const viewAgent=e.target.closest('[data-view-agent]');if(viewAgent){e.preventDefault();e.stopPropagation();openRelationship(viewAgent.dataset.viewAgent);return}
+ const leadCheckin=e.target.closest('[data-lead-checkin]');if(leadCheckin){openLeadCheckin(leadCheckin.dataset.leadCheckin);return}
  const log=e.target.closest('[data-log-agent]');if(log){openWorkFor(log.dataset.logAgent);return}
  const exportButton=e.target.closest('[data-export-attention]');if(exportButton){e.preventDefault();e.stopPropagation();downloadAttentionExport(exportButton.dataset.exportAttention);return}
  const d=e.target.closest('[data-drill]');if(d){openDrill(d.dataset.drill);return}
@@ -1188,7 +1428,15 @@ document.addEventListener('change',e=>{
  const type=e.target.closest('[data-account-type]');
  if(type){e.preventDefault();e.stopPropagation();changeRelationshipType(type);}
 });
+$('directorQuickSearch').addEventListener('input',renderDirectorWorkbench);
 $('logWorkBtn').addEventListener('click',()=>{openModal('workModal');updateWorkSuggestion()});
+$('planDirectorMeeting').addEventListener('click',()=>openModal('meetingModal'));
+$('meetingForm').addEventListener('submit',e=>{
+ e.preventDefault();const form=e.currentTarget,fields=form.elements;
+ const rows=saved(MEETING_KEY),id=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'meeting-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+ rows.push({id,agent:fields.agent.value.trim(),date:fields.date.value,role:fields.role.value,reason:fields.reason.value,goal:fields.goal.value.trim(),status:'Planned',createdAt:new Date().toISOString()});
+ put(MEETING_KEY,rows);form.reset();closeModal('meetingModal');renderDirectorMeetingBoard();toastMsg('Meeting added to your week board');
+});
 $('myActivityBtn').addEventListener('click',openMyActivity);
 $('addFeedbackBtn').addEventListener('click',()=>openModal('feedbackModal'));
 $('addCoachBtn').addEventListener('click',()=>openModal('coachModal'));
@@ -1198,7 +1446,10 @@ $('workForm').addEventListener('submit',e=>{e.preventDefault();saveForm(e.curren
 $('feedbackForm').addEventListener('submit',e=>{e.preventDefault();saveForm(e.currentTarget,FEEDBACK_KEY)});
 $('sharedMgmt').addEventListener('change',e=>{const yes=e.target.value==='Yes';$('sharedWithField').style.display=yes?'grid':'none';$('sharedDateField').style.display=yes?'grid':'none'});
 document.querySelectorAll('.modalBack').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAllOverlays()});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){closeAllOverlays();return}
+ if((e.ctrlKey||e.metaKey)&&String(e.key).toLowerCase()==='k'){e.preventDefault();showView('overview');const search=$('directorQuickSearch');if(search){search.focus();search.select();}}
+});
 addDefinitionsButton();
 prepareWorkFormHelpers();
 renderSaved();
@@ -1235,12 +1486,20 @@ function dirLatestPbSnapshot(profiles){
  if(!latestMs)return{stamp:null,rows:[],counts:{A:0,B:0,C:0,total:0}};
  const by=new Map();
  all.forEach(p=>{const ms=Date.parse(p&&p.powerbi_last_seen_at||''),lvl=String(p&&p.powerbi_level||'').trim().toUpperCase();
-  if(!['A','B','C'].includes(lvl)||!Number.isFinite(ms)||Math.abs(ms-latestMs)>=120000)return;
+  if(!['A','B','C','CHANNEL'].includes(lvl)&&p.closes_past_year==null&&p.total_leads_past_year==null)return;
+  if(!Number.isFinite(ms)||Math.abs(ms-latestMs)>=120000||p.do_not_contact===true||String(p.relationship_status||'active').toLowerCase()==='inactive'||String(p.relationship_type||'').toLowerCase()==='strategic_partner')return;
   const k=String(p.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ');if(k&&!by.has(k))by.set(k,p);
  });
- const rows=[...by.values()],counts={A:0,B:0,C:0,total:0};
- rows.forEach(p=>{const l=String(p.powerbi_level||'').toUpperCase();if(counts[l]!==undefined){counts[l]++;counts.total++}});
+ const rows=[...by.values()],counts={Channel:0,A:0,B:0,C:0,total:0};
+ rows.forEach(p=>{const l=dirTierFromProduction(p);p.tier=l;if(l&&counts[l]!==undefined)counts[l]++;});
+ counts.total=rows.length;
  return{stamp,rows,counts};
+}
+function dirTierFromProduction(p){
+ const closesRaw=p&&(p.closes_past_year!=null?p.closes_past_year:p.closed_past_year),leadsRaw=p&&(p.total_leads_past_year!=null?p.total_leads_past_year:p.leads_past_year);
+ if(closesRaw==null&&leadsRaw==null)return null;
+ const closes=Math.max(0,Number(closesRaw)||0),leads=Math.max(0,Number(leadsRaw)||0);
+ return closes>=10?'Channel':closes>=4?'A':closes>=2?'B':closes>=1||leads>=1?'C':null;
 }
 function dirSetText(id,v){const e=$(id);if(e)e.textContent=v}
 function dirUpdateGrowthDrills(snapshot,receipt){
@@ -1258,7 +1517,7 @@ async function loadDirectorSharedPowerBi(force){
  try{
   const [logs,profiles]=await Promise.all([
    dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),
-   dSb('agent_profiles?select=agent_name,tier,powerbi_level,powerbi_last_seen_at,retained,relationship_status,do_not_contact&powerbi_last_seen_at=not.is.null&limit=5000')
+   dSb('agent_profiles?select=*&powerbi_last_seen_at=not.is.null&limit=5000')
   ]);
   const row=logs&&logs[0],receipt=row?dirParsePbReceipt(row.source_app,row.imported_at):null,snapshot=dirLatestPbSnapshot(profiles);
   const receiptMs=Date.parse(receipt&&receipt.imported_at||'')||0,snapMs=Date.parse(snapshot&&snapshot.stamp||'')||0;
@@ -1307,13 +1566,18 @@ let directorRefreshController=null;
 async function loadDirectorUnifiedDashboard(){
  const since=new Date();since.setDate(since.getDate()-90);
  const today=dLocalDate(new Date());
- const [profiles,recentActivities,dueActivities,logs,assignments,ownershipConfirmations]=await Promise.all([
+ const monthStart=dLocalDate(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+ const [profiles,recentActivities,leadOutcomeActivities,leadTypeActivities,leadReferralActivities,dueActivities,logs,assignments,ownershipConfirmations,monthLeads]=await Promise.all([
    dSb('agent_profiles?select=*&limit=5000'),
    dSb('amanda_activities?select=*&act_date=gte.'+dLocalDate(since)+'&order=created_at.desc&limit=5000'),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&outcome=ilike.*buyer%20opportunity%20received*&order=act_date.desc&limit=5000').catch(()=>[]),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*lead%20received*&order=act_date.desc&limit=5000').catch(()=>[]),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*referral%20received*&order=act_date.desc&limit=5000').catch(()=>[]),
    dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+today+'&order=follow_up_date.asc&limit=5000').catch(()=>[]),
    dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&order=imported_at.desc&limit=1').catch(()=>[]),
    dSb('agent_assignments?select=agent_name,rm,lp,level,updated_at&limit=5000'),
-   dSb('amanda_activities?act_type=eq.Relationship%20Ownership%20Confirmation&select=agent_name,act_type,outcome,act_date,created_at&order=created_at.desc&limit=5000').catch(()=>[])
+   dSb('amanda_activities?act_type=eq.Relationship%20Ownership%20Confirmation&select=agent_name,act_type,outcome,act_date,created_at&order=created_at.desc&limit=5000').catch(()=>[]),
+   dSb('velocify_leads?date_added=gte.'+monthStart+'&select=referral_partner_name,date_added&limit=10000').catch(()=>[])
  ]);
  const activityMap=new Map();
  (recentActivities||[]).concat(dueActivities||[]).forEach(activity=>{
@@ -1322,24 +1586,271 @@ async function loadDirectorUnifiedDashboard(){
  });
  const activities=[...activityMap.values()];
  const receipt=(logs||[])[0]||null;
- const dashboard=DirectorData.buildDashboard({profiles,activities,assignments,ownershipConfirmations,directorWork:saved(WORK_KEY),receipt,now:new Date().toISOString()});
- dashboard.shared={profiles,activities,assignments,ownershipConfirmations,receipt};
+ const leadMap=new Map();
+ (leadOutcomeActivities||[]).concat(leadTypeActivities||[],leadReferralActivities||[]).forEach(activity=>leadMap.set(activity.id||[activity.agent_name,activity.act_type,activity.act_date,activity.outcome].join('|'),activity));
+ const leadActivities=[...leadMap.values()];
+ const dashboard=DirectorData.buildDashboard({profiles,activities,leadActivities,assignments,ownershipConfirmations,directorWork:saved(WORK_KEY),receipt,now:new Date().toISOString()});
+ dashboard.shared={profiles,activities,leadActivities,assignments,ownershipConfirmations,receipt,monthLeads};
  return dashboard;
+}
+function renderDirectorWorkbench(){
+ const dashboard=window.__directorDashboard||{}, directory=dashboard.directory||[], drills=dashboard.drills||[];
+ const search=$('directorQuickSearch'), results=$('directorQuickResults');
+ if(search&&results){
+  const query=search.value.trim().toLowerCase();
+  if(!query) results.innerHTML='<div class="searchHint">Start typing to find an agent.</div>';
+  else {
+   const prospects=(drills.amandaProspects||[]).map(row=>({agent:row[0],type:'Prospect',owner:'Amanda',status:row[1],lastMeaningfulContact:'',nextFollowUp:'',attention:row.slice(2).join(' · ')}));
+   const all=directory.concat(prospects), seen=new Set();
+   const matches=all.filter(row=>{
+    const key=DirectorActivity.normalizeAgent(row.agent);if(!key||seen.has(key))return false;seen.add(key);
+    return [row.agent,row.email,row.phone,row.type,row.owner,row.status,row.attention].join(' ').toLowerCase().includes(query);
+   }).slice(0,8);
+   results.innerHTML=matches.length?matches.map(row=>`<div class="quickResult"><div><strong>${esc(row.agent)}</strong><small>${esc([row.type||'Agent',row.owner?'Owner: '+row.owner:'',row.attention||row.nextFollowUp||row.status||''].filter(Boolean).join(' · '))}</small></div><div class="quickResultActions"><button data-view-agent="${esc(row.agent)}">View</button><button data-log-agent="${esc(row.agent)}">Log</button></div></div>`).join(''):'<div class="searchHint">No matching agent found. Try another name or open the growth view.</div>';
+  }
+ }
+ const queue=$('directorActionQueue');if(!queue)return;
+ const queueItems=DirectorActivity.buildDirectorActionQueue(drills,12);
+ dirSetText('directorQueueCount',queueItems.length);
+ queue.innerHTML=queueItems.length?queueItems.map(item=>`<div class="queueItem"><div><strong>${esc(item.name)}</strong><small>${esc(item.detail||'Review relationship and choose a next step')}</small></div><span class="queueTag ${item.label==='Lead gap'?'leadGapTag':''}">${esc(item.label)}</span><div class="quickResultActions"><button data-view-agent="${esc(item.name)}">View</button>${item.label==='Lead gap'?`<button data-lead-checkin="${esc(item.name)}">Check in</button>`:`<button data-log-agent="${esc(item.name)}">Log</button>`}</div></div>`).join(''):'<div class="queueEmpty">No urgent or upcoming items are currently listed.</div>';
+ const leadRows=drills.noLead14||[];
+ dirSetText('directorLeadCheckinCount',leadRows.length);
+}
+function renderDirectorMeetingBoard(){
+ const list=$('directorMeetingList');if(!list)return;
+ const rows=DirectorActivity.sortDirectorMeetings(saved(MEETING_KEY),new Date());
+ if(!rows.length){list.innerHTML='<div class="queueEmpty">No overdue or upcoming meetings in the next 14 days. Use “Plan a meeting” to choose where your presence can move the relationship forward.</div>';return}
+ list.innerHTML=rows.map(meeting=>{
+  const when=new Date(meeting.date).toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  const timingClass=meeting.timing.toLowerCase();
+  return `<div class="directorMeeting"><div><div><span class="meetingTiming ${timingClass}">${esc(meeting.timing)}</span><strong>${esc(meeting.agent)}</strong></div><p><b>${esc(when)}</b> · ${esc(meeting.role)}<br><b>Why join:</b> ${esc(meeting.reason)}<br><b>Goal:</b> ${esc(meeting.goal)}</p></div><div class="meetingActions"><button class="meetingComplete" type="button" data-log-agent="${esc(meeting.agent)}">Log outcome</button><button class="meetingComplete" type="button" data-meeting-complete="${esc(meeting.id)}">Mark held</button></div></div>`;
+ }).join('');
+}
+function directorMilestone(at){
+ const d=at instanceof Date?at:new Date(at||Date.now()),ymd=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+ if(ymd<='2026-09-30')return{label:'9/30 Target',Channel:2,A:14,B:21};
+ if(ymd<='2026-10-31')return{label:'10/31 Target',Channel:2,A:16,B:24};
+ if(ymd<='2026-11-30')return{label:'11/30 Target',Channel:3,A:18,B:27};
+ return{label:'12/31 Goal',Channel:4,A:20,B:30};
+}
+function directorPeriodActivity(shared,workRows,now,previous){
+ const dateKey=dLocalDate(now),intendedStart=new Date(now.getFullYear(),now.getMonth(),1);
+ if(previous&&previous.dateKey){intendedStart.setTime(new Date(previous.dateKey+'T00:00:00').getTime());intendedStart.setDate(intendedStart.getDate()+1)}
+ const cutoff=new Date(now);cutoff.setDate(cutoff.getDate()-89);const coveredStart=intendedStart<cutoff?cutoff:intendedStart;
+ const from=dLocalDate(coveredStart),intendedFrom=dLocalDate(intendedStart),complete=intendedStart>=cutoff;
+ const inRange=value=>{const day=String(value||'').slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(day)&&day>=from&&day<=dateKey};
+ const system=/^(?:Tuesday Call Plan Snapshot|Tuesday Contact Classification|Funded Unit Snapshot|Transaction Snapshot|Transaction Contact Override|Data Sync|Power BI Sync|Power BI Agent Snapshot|Portfolio Profile|Tier Migration|LP Tuesday File Update|Relationship Ownership Confirmation)$/i;
+ const unique=new Map();(Array.isArray(shared.activities)?shared.activities:[]).forEach(a=>{const type=String(a&&a.act_type||''),name=String(a&&a.agent_name||'');if(system.test(type)||/^__/.test(name)||/\[TXN_TRIGGER\]/i.test(String(a&&a.notes||'')))return;const when=a&&(a.act_date||a.created_at||a.edited_at);if(!inRange(when))return;const id=String(a.id||[name,type,a.act_date,a.outcome].join('|'));if(!unique.has(id))unique.set(id,a)});
+ const activities=[...unique.values()],count=(test)=>activities.filter(test).length;
+ const calls=count(a=>/call/i.test(String(a.act_type||'')));
+ const connections=count(a=>/talk-to|connection/i.test(String(a.act_type||''))||/connected|meaningful conversation|reached|meeting scheduled/i.test(String(a.outcome||'')));
+ const meetingsBooked=count(a=>/meeting scheduled|booked/i.test(String(a.outcome||'')));
+ const meetingsHeld=count(a=>/meeting|break bread/i.test(String(a.act_type||''))&&!/scheduled|booked|cancel|no.show/i.test(String(a.outcome||'')));
+ const leads=(Array.isArray(shared.monthLeads)?shared.monthLeads:[]).filter(row=>inRange(row&&row.date_added)).length;
+ const work=(Array.isArray(workRows)?workRows:[]).filter(row=>inRange(row&&(row.createdAt||row.date)));
+ return{from:intendedFrom,coveredFrom:from,to:dateKey,complete,sourceWindowDays:90,agentReferredLeads:leads,calls,connections,meetingsBooked,meetingsHeld,directorActions:work.length,relationshipsProtected:work.filter(x=>x.outcome==='Relationship Protected').length,relationshipsAdvanced:work.filter(x=>x.outcome==='Relationship Advanced').length,leadershipRouted:work.filter(x=>x.outcome==='Routed to Leadership').length};
+}
+function buildDirectorScoreSnapshot(dashboard,capturedAt,notes,period,previous,workRows){
+ const now=capturedAt instanceof Date?new Date(capturedAt.getTime()):new Date(capturedAt||Date.now());
+ const shared=dashboard&&dashboard.shared||{},profiles=shared.profiles;
+ if(!Array.isArray(profiles)||!profiles.length)throw new Error('Live verified partner snapshot is unavailable. Sync the dashboard before saving.');
+ const verified=dirLatestPbSnapshot(profiles);
+ if(!verified||!verified.stamp||!verified.counts)throw new Error('Live verified partner snapshot is unavailable. Sync the dashboard before saving.');
+ const counts={Channel:Number(verified.counts.Channel)||0,A:Number(verified.counts.A)||0,B:Number(verified.counts.B)||0,C:Number(verified.counts.C)||0,total:Number(verified.counts.total)||0};
+ const target=directorMilestone(now),monthLeads=Array.isArray(shared.monthLeads)?shared.monthLeads.length:0;
+ const daysElapsed=Math.max(1,now.getDate()),daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+ const projectedRatio=counts.total?(monthLeads/daysElapsed*daysInMonth)/counts.total:0;
+ const channelPoints=Math.min(1,counts.Channel/target.Channel)*15,aPoints=Math.min(1,counts.A/target.A)*15,bPoints=Math.min(1,counts.B/target.B)*20;
+ const leadPoints=Math.min(100,projectedRatio/1.15*100)*.30,activePoints=Math.min(100,counts.total/200*100)*.20;
+ const tierPoints=channelPoints+aPoints+bPoints,total=Math.round((tierPoints+leadPoints+activePoints)*10)/10;
+ const dashMetrics=dashboard&&dashboard.metrics||{},health=dashMetrics.relationshipHealth||{},portfolio={directorAccounts:Number(dashMetrics.directorAccounts)||0,atRisk:Number(dashMetrics.atRisk)||0,watch:Number(health.watch)||0,leadCheckIns:Number(dashMetrics.leadCheckIns)||0,growthOpportunities:Number(dashMetrics.growthOpportunities)||0};
+ const dateKey=dLocalDate(now),clean=x=>String(x||'').trim().slice(0,1200),activity=directorPeriodActivity(shared,workRows,now,previous);
+ return{
+  id:'director-score-'+dateKey,capturedAt:now.toISOString(),dateKey,period:String(period||'Check-in'),sourceStamp:verified.stamp,
+  target:{label:target.label,Channel:target.Channel,A:target.A,B:target.B},counts,portfolio,activity,monthLeads,daysElapsed,daysInMonth,projectedRatio,
+  weights:{tierMigration:50,channel:15,a:15,b:20,agentToLead:30,active:20},
+  metrics:{
+   channel:{actual:counts.Channel,goal:target.Channel,points:Math.round(channelPoints*10)/10,weight:15},
+   a:{actual:counts.A,goal:target.A,points:Math.round(aPoints*10)/10,weight:15},
+   b:{actual:counts.B,goal:target.B,points:Math.round(bPoints*10)/10,weight:20},
+   agentToLead:{actual:projectedRatio,goal:1.15,points:Math.round(leadPoints*10)/10,weight:30,monthLeads},
+   active:{actual:counts.total,goal:200,points:Math.round(activePoints*10)/10,weight:20}
+  },tierMigrationPoints:Math.round(tierPoints*10)/10,score:total,
+  tierOnPace:counts.Channel>=target.Channel&&counts.A>=target.A&&counts.B>=target.B,
+  notes:{wins:clean(notes&&notes.wins),risks:clean(notes&&notes.risks),asks:clean(notes&&notes.asks),next:clean(notes&&notes.next)}
+ };
+}
+function buildDanielDirectorBrief(current,previous){
+ if(!current)throw new Error('Save a score snapshot first.');
+ const delta=(a,b)=>{const n=Number(a||0)-Number(b||0);return(n>0?'+':'')+n.toFixed(1)};
+ const countDelta=(a,b)=>{const n=Number(a||0)-Number(b||0);return(n>0?'+':'')+n};
+ const d=new Date(current.capturedAt),date=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+ const trend=previous?' ('+delta(current.score,previous.score)+' points vs '+new Date(previous.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'})+')':' (baseline; next checkpoint will show change)';
+ const tierDelta=k=>previous?' · '+countDelta(current.counts[k],previous.counts[k])+' vs prior':'';
+ const pace=current.tierOnPace?'On pace for this checkpoint’s tier targets.':'Behind this checkpoint’s targets: '+[['Channel',current.target.Channel-current.counts.Channel],['A',current.target.A-current.counts.A],['B',current.target.B-current.counts.B]].filter(x=>x[1]>0).map(x=>x[1]+' '+x[0]).join(', ')+'.';
+ const note=x=>x||'None noted.',portfolioDelta=k=>previous?' ('+countDelta(current.portfolio&&current.portfolio[k],previous.portfolio&&previous.portfolio[k])+' vs prior)':'';
+ return[
+  'DIRECTOR UPDATE · '+date+' · '+current.period,
+  'Data source snapshot: '+(current.sourceStamp||'not available'),
+  '',
+  'WEIGHTED SCORE: '+Number(current.score).toFixed(1)+' / 100'+trend,
+  'Tier Migration (50%): '+Number(current.tierMigrationPoints).toFixed(1)+' / 50',
+  '  Channel: '+current.counts.Channel+'/'+current.target.Channel+' · '+Number(current.metrics.channel.points).toFixed(1)+'/15 pts'+tierDelta('Channel'),
+  '  A: '+current.counts.A+'/'+current.target.A+' · '+Number(current.metrics.a.points).toFixed(1)+'/15 pts'+tierDelta('A'),
+  '  B: '+current.counts.B+'/'+current.target.B+' · '+Number(current.metrics.b.points).toFixed(1)+'/20 pts'+tierDelta('B'),
+  'Agent-to-Lead (30%): '+Number(current.projectedRatio).toFixed(2)+' projected leads per active partner; '+current.monthLeads+' leads month-to-date ('+Number(current.metrics.agentToLead.points).toFixed(1)+'/30).',
+  'Overall Active Agent Base (200 goal · 20%): '+current.counts.total+'/200 ('+Number(current.metrics.active.points).toFixed(1)+'/20).',
+  'Tier pace: '+pace,
+  'Period execution ('+(current.activity.complete?'since '+current.activity.from:'available activity window from '+current.activity.coveredFrom)+' through '+current.activity.to+'): '+current.activity.agentReferredLeads+' agent-referred leads · '+current.activity.connections+' connections · '+current.activity.meetingsBooked+' meetings booked · '+current.activity.meetingsHeld+' held · '+current.activity.calls+' calls.',
+  'Director work logged in period: '+current.activity.directorActions+' actions · '+current.activity.relationshipsProtected+' relationships protected · '+current.activity.relationshipsAdvanced+' advanced · '+current.activity.leadershipRouted+' routed to leadership.',
+  'Relationship health: '+current.portfolio.directorAccounts+' Director accounts · '+current.portfolio.atRisk+' at risk'+portfolioDelta('atRisk')+' · '+current.portfolio.watch+' watch'+portfolioDelta('watch')+'.',
+  'Opportunity pipeline: '+current.portfolio.leadCheckIns+' lead check-ins (14+ days since lead or lead date missing)'+portfolioDelta('leadCheckIns')+' · '+current.portfolio.growthOpportunities+' growth opportunities'+portfolioDelta('growthOpportunities')+'.',
+  '',
+  'WINS / MOMENTUM: '+note(current.notes&&current.notes.wins),
+  'RISKS / BLOCKERS: '+note(current.notes&&current.notes.risks),
+  'SUPPORT OR DECISION NEEDED: '+note(current.notes&&current.notes.asks),
+  'NEXT CHECK-IN ACTIONS: '+note(current.notes&&current.notes.next),
+  '',
+  'Tier performance uses net partner counts. Individual tier moves remain tracked separately.'
+ ].join('\n');
+}
+function directorScoreHistoryCsv(history){
+ const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+ const headers=['date','period','weighted_score','tier_migration_points','channel_count','channel_target','channel_points','a_count','a_target','a_points','b_count','b_target','b_points','month_to_date_leads','projected_agent_to_lead_ratio','agent_to_lead_points','active_partners','active_target','active_points','director_accounts','at_risk','watch','lead_check_ins_14plus_or_missing_date','growth_opportunities','activity_from','activity_coverage_complete','agent_referred_leads','calls','connections','meetings_booked','meetings_held','director_actions','relationships_protected','relationships_advanced','leadership_routed','data_as_of','wins','risks','asks','next_actions'];
+ const rows=(Array.isArray(history)?history:[]).map(s=>[s.dateKey,s.period,s.score,s.tierMigrationPoints,s.counts&&s.counts.Channel,s.target&&s.target.Channel,s.metrics&&s.metrics.channel&&s.metrics.channel.points,s.counts&&s.counts.A,s.target&&s.target.A,s.metrics&&s.metrics.a&&s.metrics.a.points,s.counts&&s.counts.B,s.target&&s.target.B,s.metrics&&s.metrics.b&&s.metrics.b.points,s.monthLeads,s.projectedRatio,s.metrics&&s.metrics.agentToLead&&s.metrics.agentToLead.points,s.counts&&s.counts.total,200,s.metrics&&s.metrics.active&&s.metrics.active.points,s.portfolio&&s.portfolio.directorAccounts,s.portfolio&&s.portfolio.atRisk,s.portfolio&&s.portfolio.watch,s.portfolio&&s.portfolio.leadCheckIns,s.portfolio&&s.portfolio.growthOpportunities,s.activity&&s.activity.from,s.activity&&s.activity.complete,s.activity&&s.activity.agentReferredLeads,s.activity&&s.activity.calls,s.activity&&s.activity.connections,s.activity&&s.activity.meetingsBooked,s.activity&&s.activity.meetingsHeld,s.activity&&s.activity.directorActions,s.activity&&s.activity.relationshipsProtected,s.activity&&s.activity.relationshipsAdvanced,s.activity&&s.activity.leadershipRouted,s.sourceStamp,s.notes&&s.notes.wins,s.notes&&s.notes.risks,s.notes&&s.notes.asks,s.notes&&s.notes.next]);
+ return[headers,...rows].map(row=>row.map(q).join(',')).join('\r\n');
+}
+function directorScoreSnapshots(){
+ try{return JSON.parse(localStorage.getItem(SCORE_SNAPSHOT_KEY)||'[]').filter(s=>s&&s.id&&Number.isFinite(Number(s.score))).sort((a,b)=>String(a.capturedAt).localeCompare(String(b.capturedAt)))}catch(_){return[]}
+}
+function directorTrendEsc(value){return String(value==null?'':value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderDirectorScoreTrends(){
+ const host=$('directorScoreTrendPanel');if(!host)return;
+ const history=directorScoreSnapshots(),latest=history.at(-1)||null,previous=history.at(-2)||null,dashboard=window.__directorDashboard;
+ let live=null;try{if(dashboard)live=buildDirectorScoreSnapshot(dashboard,new Date(),{},'Live',directorScoreSnapshots().at(-1)||null,saved(WORK_KEY))}catch(_){}
+ const save=$('saveDirectorScoreSnapshot');if(save)save.disabled=!live;
+ const status=$('directorTrendLiveStatus');if(status)status.textContent=live?'Live score: '+live.score.toFixed(1)+' / 100 · data through '+new Date(live.sourceStamp).toLocaleDateString():'Sync live partner data before capturing a score checkpoint.';
+ const summary=$('directorScoreTrendSummary');
+ if(summary){if(history.length<1)summary.textContent='No checkpoints saved yet. Save a mid-month or month-end baseline to start the trend.';else if(!previous)summary.textContent='Baseline saved '+new Date(latest.capturedAt).toLocaleDateString()+' at '+Number(latest.score).toFixed(1)+' / 100. Save the next check-in to measure movement.';else{const delta=latest.score-previous.score;summary.textContent='Since '+new Date(previous.capturedAt).toLocaleDateString()+': '+(delta>0?'+':'')+delta.toFixed(1)+' score points · Channel '+(latest.counts.Channel-previous.counts.Channel>=0?'+':'')+(latest.counts.Channel-previous.counts.Channel)+' · A '+(latest.counts.A-previous.counts.A>=0?'+':'')+(latest.counts.A-previous.counts.A)+' · B '+(latest.counts.B-previous.counts.B>=0?'+':'')+(latest.counts.B-previous.counts.B)+'.';}}
+ const chart=$('directorScoreTrendChart');
+ if(chart){if(!history.length)chart.innerHTML='<div class="trendEmpty">Your dated score checkpoints will appear here. Save one baseline now; save again in about two weeks or at month-end.</div>';else{
+  const rows=history.slice(-12),w=780,h=220,left=44,right=14,top=18,bottom=37,xspan=w-left-right,yspan=h-top-bottom;
+  const pts=rows.map((s,i)=>({x:rows.length===1?w/2:left+i*xspan/(rows.length-1),y:top+(100-Math.max(0,Math.min(100,Number(s.score)||0)))*yspan/100,s}));
+  const line=pts.map(p=>p.x+','+p.y).join(' '),marks=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="5" fill="#287f79" stroke="#fff" stroke-width="2"><title>'+directorTrendEsc(new Date(p.s.capturedAt).toLocaleDateString())+': '+Number(p.s.score).toFixed(1)+'</title></circle>').join(''),labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-10)+'" text-anchor="middle">'+directorTrendEsc(new Date(p.s.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}))+'</text>').join('');
+  chart.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Weighted portfolio score trend, out of 100"><line x1="'+left+'" y1="'+(top+yspan)+'" x2="'+(w-right)+'" y2="'+(top+yspan)+'"/><line x1="'+left+'" y1="'+(top+yspan/2)+'" x2="'+(w-right)+'" y2="'+(top+yspan/2)+'"/><line x1="'+left+'" y1="'+top+'" x2="'+(w-right)+'" y2="'+top+'"/><text x="5" y="'+(top+4)+'">100</text><text x="15" y="'+(top+yspan/2+4)+'">50</text><text x="26" y="'+(top+yspan+4)+'">0</text><polyline points="'+line+'" fill="none" stroke="#287f79" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+marks+labels+'</svg>';
+ }}
+ const list=$('directorScoreSnapshotHistory');if(list)list.innerHTML=history.length?history.slice().reverse().slice(0,6).map(s=>'<div class="scoreHistoryRow"><strong>'+directorTrendEsc(new Date(s.capturedAt).toLocaleDateString())+' · '+directorTrendEsc(s.period)+'</strong><span>'+Number(s.score).toFixed(1)+'/100 · '+s.counts.Channel+' Channel · '+s.counts.A+' A · '+s.counts.B+' B</span></div>').join(''):'<div class="trendEmpty">No saved checkpoints yet.</div>';
+ const report=$('directorDanielBrief');if(report&&latest&&!report.dataset.userEdited)report.value=buildDanielDirectorBrief(latest,previous);
+}
+function saveDirectorScoreSnapshot(){
+ let snap;try{const dashboard=window.__directorDashboard;if(!dashboard)throw new Error('Sync the dashboard before saving a checkpoint.');const notes={wins:$('directorReportWins').value,risks:$('directorReportRisks').value,asks:$('directorReportAsks').value,next:$('directorReportNext').value},history=directorScoreSnapshots(),previous=history.filter(s=>s.dateKey!==dLocalDate(new Date())).at(-1)||null;snap=buildDirectorScoreSnapshot(dashboard,new Date(),notes,$('directorSnapshotPeriod').value,previous,saved(WORK_KEY));const existing=history.findIndex(s=>s.dateKey===snap.dateKey);if(existing>=0){if(!confirm('A checkpoint already exists for today. Replace it with these current figures and notes?'))return;history[existing]=snap}else history.push(snap);localStorage.setItem(SCORE_SNAPSHOT_KEY,JSON.stringify(history));['directorReportWins','directorReportRisks','directorReportAsks','directorReportNext'].forEach(id=>{const e=$(id);if(e)e.value=''});const brief=$('directorDanielBrief');if(brief)brief.dataset.userEdited='';renderDirectorScoreTrends();toastMsg('Score checkpoint saved');}catch(e){toastMsg('Checkpoint not saved · '+(e.message||'Storage unavailable'));}
+}
+function downloadDirectorFile(filename,type,contents){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([contents],{type}));a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function generateDirectorBrief(){const history=directorScoreSnapshots(),latest=history.at(-1),previous=history.at(-2),out=$('directorDanielBrief');if(!out)return;if(!latest){toastMsg('Save a checkpoint before generating the update');return}out.value=buildDanielDirectorBrief(latest,previous);out.dataset.userEdited='';toastMsg('Daniel update generated');}
+async function copyDirectorBrief(){const out=$('directorDanielBrief');if(!out||!out.value)return;try{await navigator.clipboard.writeText(out.value)}catch(_){out.focus();out.select();document.execCommand('copy')}toastMsg('Daniel update copied')}
+function exportDirectorScoreHistory(){const rows=directorScoreSnapshots();if(!rows.length){toastMsg('Save a checkpoint before exporting history');return}downloadDirectorFile('director-score-trends.csv','text/csv;charset=utf-8',directorScoreHistoryCsv(rows))}
+function exportDirectorScoreBackup(){downloadDirectorFile('director-score-history-backup.json','application/json',JSON.stringify({format:'director-score-history',version:1,snapshots:directorScoreSnapshots()},null,2))}
+function importDirectorScoreBackup(file){const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(String(reader.result||'')),incoming=Array.isArray(parsed)?parsed:parsed&&parsed.snapshots;if(!Array.isArray(incoming))throw new Error('Backup did not contain score snapshots.');const merged=new Map(directorScoreSnapshots().map(s=>[s.id,s]));incoming.forEach(s=>{if(s&&s.id&&Number.isFinite(Number(s.score)))merged.set(s.id,s)});localStorage.setItem(SCORE_SNAPSHOT_KEY,JSON.stringify([...merged.values()].sort((a,b)=>String(a.capturedAt).localeCompare(String(b.capturedAt)))));renderDirectorScoreTrends();toastMsg(incoming.length+' checkpoint records imported');}catch(e){toastMsg('Could not import · '+e.message)}};reader.readAsText(file)}
+function bindDirectorScoreTrendEvents(){
+ const bind=(id,event,fn)=>{const e=$(id);if(e&&!e.dataset.bound){e.addEventListener(event,fn);e.dataset.bound='1'}};
+ bind('saveDirectorScoreSnapshot','click',saveDirectorScoreSnapshot);bind('generateDirectorBrief','click',generateDirectorBrief);bind('copyDirectorBrief','click',copyDirectorBrief);bind('exportDirectorScoreHistory','click',exportDirectorScoreHistory);bind('exportDirectorScoreBackup','click',exportDirectorScoreBackup);
+ bind('importDirectorScoreBackup','change',e=>{if(e.target.files&&e.target.files[0])importDirectorScoreBackup(e.target.files[0]);e.target.value=''});
+ bind('directorDanielBrief','input',e=>{e.target.dataset.userEdited='1'});
+}
+
+function directorScoreSnapshots(){
+ try{return JSON.parse(localStorage.getItem(SCORE_SNAPSHOT_KEY)||'[]').filter(s=>s&&s.id&&Number.isFinite(Number(s.score))).sort((a,b)=>String(a.capturedAt).localeCompare(String(b.capturedAt)))}catch(_){return[]}
+}
+function directorTrendEsc(value){return String(value==null?'':value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderDirectorScoreTrends(){
+ const host=$('directorScoreTrendPanel');if(!host)return;
+ const history=directorScoreSnapshots(),latest=history.at(-1)||null,previous=history.at(-2)||null,dashboard=window.__directorDashboard;
+ let live=null;try{if(dashboard)live=buildDirectorScoreSnapshot(dashboard,new Date(),{},'Live',directorScoreSnapshots().at(-1)||null,saved(WORK_KEY))}catch(_){}
+ const save=$('saveDirectorScoreSnapshot');if(save)save.disabled=!live;
+ const status=$('directorTrendLiveStatus');if(status)status.textContent=live?'Live score: '+live.score.toFixed(1)+' / 100 · data through '+new Date(live.sourceStamp).toLocaleDateString():'Sync live partner data before capturing a score checkpoint.';
+ const summary=$('directorScoreTrendSummary');
+ if(summary){if(history.length<1)summary.textContent='No checkpoints saved yet. Save a mid-month or month-end baseline to start the trend.';else if(!previous)summary.textContent='Baseline saved '+new Date(latest.capturedAt).toLocaleDateString()+' at '+Number(latest.score).toFixed(1)+' / 100. Save the next check-in to measure movement.';else{const delta=latest.score-previous.score;summary.textContent='Since '+new Date(previous.capturedAt).toLocaleDateString()+': '+(delta>0?'+':'')+delta.toFixed(1)+' score points · Channel '+(latest.counts.Channel-previous.counts.Channel>=0?'+':'')+(latest.counts.Channel-previous.counts.Channel)+' · A '+(latest.counts.A-previous.counts.A>=0?'+':'')+(latest.counts.A-previous.counts.A)+' · B '+(latest.counts.B-previous.counts.B>=0?'+':'')+(latest.counts.B-previous.counts.B)+'.';}}
+ const chart=$('directorScoreTrendChart');
+ if(chart){if(!history.length)chart.innerHTML='<div class="trendEmpty">Your dated score checkpoints will appear here. Save one baseline now; save again in about two weeks or at month-end.</div>';else{
+  const rows=history.slice(-12),w=780,h=220,left=44,right=14,top=18,bottom=37,xspan=w-left-right,yspan=h-top-bottom;
+  const pts=rows.map((s,i)=>({x:rows.length===1?w/2:left+i*xspan/(rows.length-1),y:top+(100-Math.max(0,Math.min(100,Number(s.score)||0)))*yspan/100,s}));
+  const line=pts.map(p=>p.x+','+p.y).join(' '),marks=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="5" fill="#287f79" stroke="#fff" stroke-width="2"><title>'+directorTrendEsc(new Date(p.s.capturedAt).toLocaleDateString())+': '+Number(p.s.score).toFixed(1)+'</title></circle>').join(''),labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-10)+'" text-anchor="middle">'+directorTrendEsc(new Date(p.s.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}))+'</text>').join('');
+  chart.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Weighted portfolio score trend, out of 100"><line x1="'+left+'" y1="'+(top+yspan)+'" x2="'+(w-right)+'" y2="'+(top+yspan)+'"/><line x1="'+left+'" y1="'+(top+yspan/2)+'" x2="'+(w-right)+'" y2="'+(top+yspan/2)+'"/><line x1="'+left+'" y1="'+top+'" x2="'+(w-right)+'" y2="'+top+'"/><text x="5" y="'+(top+4)+'">100</text><text x="15" y="'+(top+yspan/2+4)+'">50</text><text x="26" y="'+(top+yspan+4)+'">0</text><polyline points="'+line+'" fill="none" stroke="#287f79" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+marks+labels+'</svg>';
+ }}
+ const list=$('directorScoreSnapshotHistory');if(list)list.innerHTML=history.length?history.slice().reverse().slice(0,6).map(s=>'<div class="scoreHistoryRow"><strong>'+directorTrendEsc(new Date(s.capturedAt).toLocaleDateString())+' · '+directorTrendEsc(s.period)+'</strong><span>'+Number(s.score).toFixed(1)+'/100 · '+s.counts.Channel+' Channel · '+s.counts.A+' A · '+s.counts.B+' B</span></div>').join(''):'<div class="trendEmpty">No saved checkpoints yet.</div>';
+ const report=$('directorDanielBrief');if(report&&latest&&!report.dataset.userEdited)report.value=buildDanielDirectorBrief(latest,previous);
+}
+function saveDirectorScoreSnapshot(){
+ let snap;try{const dashboard=window.__directorDashboard;if(!dashboard)throw new Error('Sync the dashboard before saving a checkpoint.');const notes={wins:$('directorReportWins').value,risks:$('directorReportRisks').value,asks:$('directorReportAsks').value,next:$('directorReportNext').value};snap=buildDirectorScoreSnapshot(dashboard,new Date(),notes,$('directorSnapshotPeriod').value);const history=directorScoreSnapshots(),existing=history.findIndex(s=>s.dateKey===snap.dateKey);if(existing>=0){if(!confirm('A checkpoint already exists for today. Replace it with these current figures and notes?'))return;history[existing]=snap}else history.push(snap);localStorage.setItem(SCORE_SNAPSHOT_KEY,JSON.stringify(history));['directorReportWins','directorReportRisks','directorReportAsks','directorReportNext'].forEach(id=>{const e=$(id);if(e)e.value=''});const brief=$('directorDanielBrief');if(brief)brief.dataset.userEdited='';renderDirectorScoreTrends();toastMsg('Score checkpoint saved');}catch(e){toastMsg('Checkpoint not saved · '+(e.message||'Storage unavailable'));}
+}
+function downloadDirectorFile(filename,type,contents){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([contents],{type}));a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function generateDirectorBrief(){const history=directorScoreSnapshots(),latest=history.at(-1),previous=history.at(-2),out=$('directorDanielBrief');if(!out)return;if(!latest){toastMsg('Save a checkpoint before generating the update');return}out.value=buildDanielDirectorBrief(latest,previous);out.dataset.userEdited='';toastMsg('Daniel update generated');}
+async function copyDirectorBrief(){const out=$('directorDanielBrief');if(!out||!out.value)return;try{await navigator.clipboard.writeText(out.value)}catch(_){out.focus();out.select();document.execCommand('copy')}toastMsg('Daniel update copied')}
+function exportDirectorScoreHistory(){const rows=directorScoreSnapshots();if(!rows.length){toastMsg('Save a checkpoint before exporting history');return}downloadDirectorFile('director-score-trends.csv','text/csv;charset=utf-8',directorScoreHistoryCsv(rows))}
+function exportDirectorScoreBackup(){downloadDirectorFile('director-score-history-backup.json','application/json',JSON.stringify({format:'director-score-history',version:1,snapshots:directorScoreSnapshots()},null,2))}
+function importDirectorScoreBackup(file){const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(String(reader.result||'')),incoming=Array.isArray(parsed)?parsed:parsed&&parsed.snapshots;if(!Array.isArray(incoming))throw new Error('Backup did not contain score snapshots.');const merged=new Map(directorScoreSnapshots().map(s=>[s.id,s]));incoming.forEach(s=>{if(s&&s.id&&Number.isFinite(Number(s.score)))merged.set(s.id,s)});localStorage.setItem(SCORE_SNAPSHOT_KEY,JSON.stringify([...merged.values()].sort((a,b)=>String(a.capturedAt).localeCompare(String(b.capturedAt)))));renderDirectorScoreTrends();toastMsg(incoming.length+' checkpoint records imported');}catch(e){toastMsg('Could not import · '+e.message)}};reader.readAsText(file)}
+function bindDirectorScoreTrendEvents(){
+ const bind=(id,event,fn)=>{const e=$(id);if(e&&!e.dataset.bound){e.addEventListener(event,fn);e.dataset.bound='1'}};
+ bind('saveDirectorScoreSnapshot','click',saveDirectorScoreSnapshot);bind('generateDirectorBrief','click',generateDirectorBrief);bind('copyDirectorBrief','click',copyDirectorBrief);bind('exportDirectorScoreHistory','click',exportDirectorScoreHistory);bind('exportDirectorScoreBackup','click',exportDirectorScoreBackup);
+ bind('importDirectorScoreBackup','change',e=>{if(e.target.files&&e.target.files[0])importDirectorScoreBackup(e.target.files[0]);e.target.value=''});
+ bind('directorDanielBrief','input',e=>{e.target.dataset.userEdited='1'});
+}
+
+function renderDirectorWeightedScore(dashboard){
+ const host=$('directorWeightedScore');if(!host)return;
+ const shared=dashboard&&dashboard.shared||{},snapshot=dirLatestPbSnapshot(shared.profiles||[]),counts=snapshot.counts||{Channel:0,A:0,B:0,C:0,total:0},target=directorMilestone(new Date());
+ const monthLeads=Array.isArray(shared.monthLeads)?shared.monthLeads.length:0,now=new Date(),days=Math.max(1,now.getDate()),daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+ const projectedRatio=counts.total?((monthLeads/days*daysInMonth)/counts.total):0;
+ const tierPts={Channel:Math.min(1,counts.Channel/target.Channel)*15,A:Math.min(1,counts.A/target.A)*15,B:Math.min(1,counts.B/target.B)*20};
+ const ratioPts=Math.min(100,projectedRatio/1.15*100)*.30,activePts=Math.min(100,counts.total/200*100)*.20;
+ const total=Math.round((tierPts.Channel+tierPts.A+tierPts.B+ratioPts+activePts)*10)/10;
+ const metrics=[
+  {name:'Channel · 15%',actual:counts.Channel,goal:target.Channel,pts:tierPts.Channel,weight:15},
+  {name:'A · 15%',actual:counts.A,goal:target.A,pts:tierPts.A,weight:15},
+  {name:'B · 20%',actual:counts.B,goal:target.B,pts:tierPts.B,weight:20},
+  {name:'Agent-to-Lead · 30%',actual:projectedRatio.toFixed(2),goal:'1.15',pts:ratioPts,weight:30},
+  {name:'Overall Active Base · 20%',actual:counts.total,goal:200,pts:activePts,weight:20}
+ ];
+ const tierOnPace=counts.Channel>=target.Channel&&counts.A>=target.A&&counts.B>=target.B;
+ const gaps=[['Channel',target.Channel-counts.Channel],['A',target.A-counts.A],['B',target.B-counts.B]].filter(x=>x[1]>0).map(x=>x[1]+' '+x[0]);
+ const status=tierOnPace?'At or ahead of this month’s tier targets':gaps.join(' · ')+' behind this month’s tier targets';
+ const roadmap=[{label:'Current baseline',Channel:1,A:12,B:18},{label:'9/30 Target',Channel:2,A:14,B:21},{label:'10/31 Target',Channel:2,A:16,B:24},{label:'11/30 Target',Channel:3,A:18,B:27},{label:'12/31 Goal',Channel:4,A:20,B:30}];
+ host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD · '+target.label+'</div><h2>Progress toward year-end</h2><div class="meta">Primary mix goal: grow Channel / A / B net counts (50% of the score). The 200-agent goal is the overall active base; tier counts are included within it, not added on top. Individual tier moves stay tracked separately.</div></div><div class="directorScoreTotal">'+total.toFixed(1)+' / 100<small>weighted score · live counts</small></div></div>'
+  +'<div class="directorScoreGrid">'+metrics.map(m=>'<div class="directorScoreMetric"><div class="directorScoreMetricTop"><span>'+m.name+'</span><b>'+Number(m.pts).toFixed(1)+' / '+m.weight+'</b></div><small>'+m.actual+' / '+m.goal+(m.name==='Agent-to-Lead · 30%'?' projected ratio':' partners')+'</small><div class="directorScoreTrack"><i style="width:'+Math.min(100,Math.max(0,m.pts/m.weight*100))+'%"></i></div></div>').join('')+'</div>'
+  +'<div class="directorScoreFoot"><span class="directorScoreStatus '+(tierOnPace?'':'behind')+'">'+status+'</span><span>Tier rules: Channel 10+ · A 4–9 · B 2–3 · C 1 closing or 1 lead</span></div>'
+  +'<div class="directorScoreRoadmap">'+roadmap.map(m=>'<span class="'+(m.label===target.label?'current':'')+'">'+m.label+': '+m.Channel+' Ch · '+m.A+' A · '+m.B+' B</span>').join('')+'</div>';
+}
+function completeDirectorMeeting(id){
+ const rows=saved(MEETING_KEY),meeting=rows.find(row=>String(row.id)===String(id));
+ if(!meeting)return;
+ meeting.status='Completed';meeting.completedAt=new Date().toISOString();put(MEETING_KEY,rows);renderDirectorMeetingBoard();toastMsg('Meeting marked held');
 }
 function renderDirectorUnifiedDashboard(dashboard){
  window.__directorDashboard=dashboard;
  DirectorPage.applyDashboard(document,dashboard,demoData);
+ renderDirectorWeightedScore(dashboard);
+ renderDirectorScoreTrends();
  const focus=(dashboard.drills.whoNeeds||[]).length;
  dirSetText('priorityFocusCount',focus);dirSetText('mFocus',focus);
  renderAccountDirectory();
+ renderDirectorWorkbench();
+ renderDirectorMeetingBoard();
  renderSaved();
  renderWhoNeeds(window.__directorSelectedRange||'month');
  if($('workModal')&&$('workModal').classList.contains('open'))updateWorkSuggestion();
 }
+function renderDirectorLoadError(error){
+ renderDirectorScoreTrends();
+ const message=String(error&&error.message||error||'Data could not be loaded');
+ const status=$('dirPowerBiStatus');if(status)status.textContent='Live data unavailable · '+message+' · Select Sync Now to retry.';
+ const host=$('directorWeightedScore');
+ if(host)host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD</div><h2>Live counts unavailable</h2><div class="meta">This preview could not reach the shared RM data source, so it is not showing sample counts as if they were real. Open the tracker where the shared data connection is available, or select Sync Now to retry.</div></div><div class="directorScoreTotal">— / 100<small>waiting for live data</small></div></div>';
+ const queue=$('directorActionQueue');if(queue)queue.innerHTML='<div class="queueEmpty">Live agent data did not load. Select Sync Now to retry.</div>';
+}
 function rebuildDirectorDashboardFromCurrent(){
  const current=window.__directorDashboard||{},shared=current.shared||{};
  if(!Array.isArray(shared.profiles)||!Array.isArray(shared.activities))return;
- const dashboard=DirectorData.buildDashboard({profiles:shared.profiles,activities:shared.activities,assignments:shared.assignments||[],ownershipConfirmations:shared.ownershipConfirmations||[],directorWork:saved(WORK_KEY),receipt:shared.receipt||null,now:new Date().toISOString()});
+ const dashboard=DirectorData.buildDashboard({profiles:shared.profiles,activities:shared.activities,leadActivities:shared.leadActivities||[],assignments:shared.assignments||[],ownershipConfirmations:shared.ownershipConfirmations||[],directorWork:saved(WORK_KEY),receipt:shared.receipt||null,now:new Date().toISOString()});
  dashboard.shared=shared;
  renderDirectorUnifiedDashboard(dashboard);
 }
@@ -1618,6 +2129,8 @@ function bindAmandaTrend(){
 }
 
 async function directorLiveStartup(){
+ bindDirectorScoreTrendEvents();
+ renderDirectorScoreTrends();
  bindAmandaTrend();
  bindDirectorNavigation();
  let initialRange='month';try{initialRange=localStorage.getItem('director_range_v2')||'month'}catch(_){} window.__directorSelectedRange=initialRange;
@@ -1635,6 +2148,7 @@ async function directorLiveStartup(){
      return dashboardPromise;
    },
    render:renderDirectorUnifiedDashboard,
+   onError:renderDirectorLoadError,
    cleanUrl:DirectorData.cleanTrackingUrl,
    document,window,history,location,setInterval,clearInterval,
    intervalMs:60000
