@@ -1,7 +1,7 @@
   
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Director View · Relationship Growth Command Center</title>
+<title>Nyny · Director Workspace</title><meta name="director-version" content="director-focus-v2-20261029">
 <style>
 :root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
 .whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
@@ -211,6 +211,20 @@ body{background:var(--bg);color:var(--ink)}
 .trendBackup{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px}.trendBackup .meta{margin-right:auto}.importLabel{cursor:pointer}
 @media(max-width:760px){.directorTrendPanel{padding:15px}.trendPanelHead,.trendReportHead{display:grid}.trendCapture{justify-content:flex-start}.trendGrid{grid-template-columns:1fr}.trendNotesGrid{grid-template-columns:1fr}.trendNoteHead{display:grid;gap:3px}.trendReportActions{justify-content:flex-start}}
 
+/* Director focus workspace: one home, clear priorities, existing tools retained. */
+:root{--navy:#284944;--blue:#386e64;--ink:#243c38;--muted:#697b75;--line:#dde5df;--bg:#f5f7f3;--soft:#eaf1eb;--green:#35765f}
+body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{background:#e9efea;border-color:#d7e1d9;padding:26px 16px}.brand{font-size:16px;color:var(--ink);display:flex;align-items:center;gap:10px;margin:0 4px 28px}.brandMark{display:grid;place-items:center;background:#284944;color:#fff;width:34px;height:36px;border-radius:10px;font-family:Georgia,serif;font-size:22px}.main{padding:28px 34px;max-width:1550px;margin:0 auto}.top h1{font-size:21px;letter-spacing:-.5px}.top{align-items:center;margin-bottom:26px}.top p{font-size:12px}.nav{gap:7px}.nav button{font-size:13px;min-height:43px;color:#476156}.nav button.active{background:#fff;color:#284944;font-weight:650;box-shadow:0 3px 9px #28494408}.quickActions{margin-top:26px;order:3}.side small{white-space:pre-line;line-height:1.8}.trackerSwitch a{border-color:#cbd8cd;color:#557365;font-size:10px}.trackerSwitch a.current{color:#284944}.quickActions button{font-size:12px;border-color:#d2ddd4}.quickActions button+button{background:transparent;color:#496457}.card,.module{box-shadow:none;border-color:var(--line)}.card.click:hover,.module:hover{transform:none}.focusHeading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 22px}.eyebrow{font-size:10px;letter-spacing:.13em;font-weight:700;color:#6a8173}.focusHeading h2{font-size:32px;letter-spacing:-1px;font-weight:550;margin:7px 0 9px}.focusHeading p{font-size:12px;color:var(--muted);margin:0}.btn,.textButton{min-height:36px}.btn.primary{background:#284944;border-color:#284944}.textButton{border:0;background:none;color:#386e64;font-size:12px;cursor:pointer;padding:4px 0;font-weight:600}.focusSnapshot{display:grid;grid-template-columns:1.1fr 1.55fr 1fr;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px}.focusSnapshot>button,.snapshotAccounts{border:0;border-right:1px solid var(--line);background:transparent;text-align:left;padding:22px 24px;color:var(--ink)}.focusSnapshot>button{cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:7px}.focusSnapshot>button:hover{background:#f6f9f5}.focusSnapshot>button:last-child{border:0}.focusSnapshot strong{font-size:34px;font-weight:600;letter-spacing:-1px}.focusSnapshot strong small{font-size:16px;color:var(--muted);font-weight:400;letter-spacing:0;margin-left:4px}.focusSnapshot>button>span:not(.label){font-size:11px;color:var(--muted)}.snapshotLink{color:#386e64!important}.accountChips{display:flex;gap:8px;margin:12px 0 6px;flex-wrap:wrap}.accountChips button{display:grid;gap:5px;min-width:55px;background:#f1f5ef;border:1px solid #e1e8dd;border-radius:10px;padding:9px 12px;color:#526a59;cursor:pointer;font-size:11px}.accountChips strong{font-size:24px;color:#284944}.focusSearch{display:grid;grid-template-columns:190px minmax(0,1fr);align-items:center;padding:15px 20px;margin:0 0 22px;position:relative}.focusSearch>.label{display:none}.focusSearch h2{font-size:13px;margin:0}.focusSearch .directorSearch{font-size:13px;background:#fafbf8;border-color:var(--line)}.focusSearch .searchResults:has(.searchHint){display:none}.focusSearch .searchResults{grid-column:2;margin-top:8px}.focusColumns{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}.focusQueue{padding:23px}.focusQueue h2,.focusSectionHead h2{font-size:20px;letter-spacing:-.4px;margin:6px 0 7px}.focusQueue .whoCount{background:#f0f4ed;border-radius:10px;padding:8px 12px;font-size:23px}.focusQueue .workbenchIntro{font-size:12px;line-height:1.6}.focusQueue .queueList{max-height:none;gap:0;margin-top:17px}.focusQueue .queueItem{border:0;border-top:1px solid #e8ede7;border-radius:0;padding:15px 0;display:grid;grid-template-columns:minmax(0,1fr) auto}.focusQueue .queueItem strong{font-size:14px}.focusQueue .queueItem small{font-size:12px;line-height:1.5;margin-top:5px}.focusQueue .queueTag{grid-row:1;grid-column:2;font-size:9px}.focusQueue .quickResultActions{grid-column:1/-1;justify-content:flex-start}.focusQueue .quickResultActions button{font-size:11px;min-width:64px;min-height:32px}.focusQueue .workbenchLinks{border-top:1px solid var(--line);padding-top:14px}.focusQueue .workbenchLinks button{background:#f7f9f5;color:#45634d;font-size:11px;min-height:32px}.focusSectionHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.focusSectionHead h3{font-size:14px;margin:0}.focusSectionHead .textButton{white-space:nowrap}.focusSectionHead h2{margin-bottom:0}#homeAmandaToday .card{background:#f3f0f8;border-color:#e2dced!important;padding:19px}#homeAmandaToday .statusGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#homeAmandaToday .statusCard{padding:10px;border-color:#e4dfed;background:#fff;cursor:pointer}#homeAmandaToday .statusCard .label{font-size:9px;letter-spacing:.02em}#homeAmandaToday .statusCard .big{font-size:24px;color:#645080;margin:4px 0}#homeAmandaToday .statusCard .goal,#homeAmandaToday .statusCard .status{display:none}#amandaCoachNow{display:block;border:0;font-size:12px;padding:12px 0 0}#amandaCoachNow b{display:block;color:#645080;margin-bottom:5px}#amandaCoachNow span{line-height:1.5}#amandaTodayRefresh{min-height:30px;font-size:10px;padding:5px 9px;background:#fff}#homeAmandaToday h3{font-size:15px}.amandaPeriod{padding:20px;margin-top:14px}.focusMetric{display:grid;grid-template-columns:1fr auto;gap:4px;border:0;border-top:1px solid var(--line);padding:12px 0;background:transparent;width:100%;text-align:left;color:var(--ink);cursor:pointer;font-size:12px}.focusMetric strong{font-size:15px}.focusMetric small{font-size:11px;font-weight:400;color:var(--muted)}.focusMetric em{grid-column:1/-1;font-size:11px;font-style:normal;color:var(--muted)}.homeExceptions{display:grid;gap:7px;margin-top:12px}.homeExceptions button{text-align:left;border:1px solid #e4e8de;background:#f8faf5;border-radius:8px;padding:10px;color:#53684d;font-size:12px;cursor:pointer}.homeExceptions b{margin-right:4px}.homeCoachActions{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}#homeMeetings{margin-top:22px}#homeMeetings .directorWeekBoard{margin:0;padding:22px}#homeMeetings .directorMeetingList{max-height:380px;overflow:auto}#homeMeetings h2{font-size:20px}.attentionBtn{font-size:10px;background:#fbf4e9;border-color:#eadbc1}.focusLoading{padding:25px;color:var(--muted)}button:focus-visible{outline:3px solid #9bafd0;outline-offset:3px}.focusMetric:hover,.homeExceptions button:hover{background:#edf3eb}.accountDirectoryRows{max-height:none}#view-growth>.directorScore{margin:14px 0 20px}.directorScoreRoadmap{font-size:11px}.side{overflow:auto}.side .quickActions #definitionsBtn{font-size:11px}
+@media(min-width:1101px){.side{display:flex;flex-direction:column}.side .quickActions{margin-top:24px}.side small{order:4}.nav{order:2}.trackerSwitch{order:1}}
+@media(max-width:1200px){.main{padding:24px}.focusColumns{gap:16px}.focusSnapshot>button,.snapshotAccounts{padding:18px}.focusQueue{padding:18px}.accountChips{gap:5px}.accountChips button{min-width:47px;padding:8px}}
+@media(max-width:1100px){.app{grid-template-columns:1fr}.side{position:static;height:auto;padding:14px 20px}.brand,.trackerSwitch,.side small,.side .quickActions{display:none}.nav{display:flex;overflow:auto;gap:6px}.nav button{white-space:nowrap;padding:9px 12px}.top{margin-bottom:22px}}
+@media(max-width:760px){.focusColumns{grid-template-columns:1fr}.main{padding:18px}.focusHeading h2{font-size:26px}.focusHeading{align-items:flex-start}.focusHeading .btn{font-size:11px;white-space:nowrap}.focusSnapshot{grid-template-columns:1fr 1fr}.snapshotAccounts{grid-row:2;grid-column:1/-1;border-top:1px solid var(--line)}.focusSnapshot>button:last-child{grid-column:2;grid-row:1}.focusSearch{display:block}.focusSearch h2{margin:0 0 10px}.focusSearch .searchResults{margin-top:8px}.top{display:block}.controlbar{margin-top:12px}.focusSnapshot strong{font-size:29px}.accountChips{display:grid;grid-template-columns:repeat(4,1fr)}.focusQueue .queueItem{padding:14px 0}.directorMeeting{display:block}.meetingActions{margin-top:10px}.directorWeekHead{display:block}.directorWeekHead .btn{margin:10px 0}.directoryTools{grid-template-columns:1fr}.focusSectionHead{margin-top:4px}.focusHeading p{line-height:1.5}.drawerHead h2{font-size:18px}}
+
+
+/* Reset obsolete top-navigation layout, keeping one quiet workspace shell. */
+.app{display:grid}.side{height:100vh;align-items:stretch;box-shadow:none;gap:0;z-index:20;border-right:1px solid var(--line)}.nav{display:grid;overflow:visible;padding:0}.nav button{width:100%;text-align:left}.quickActions{display:grid;justify-content:stretch}.trackerSwitch{display:flex;justify-content:flex-start;margin-bottom:24px}.brand{margin-bottom:25px}.side small{display:block}.top{background:none;border:0;border-radius:0;box-shadow:none;padding:0;overflow:visible}.top:after{display:none}.top h1{color:var(--ink)}.top p{color:var(--muted)}.syncStatusRow span{color:var(--muted)!important}.syncStatusRow button{color:#386e64!important;border-color:var(--line)!important;background:#fff!important}.range{background:#fff;border-color:var(--line)}.range button{color:var(--muted)}.range button.active{background:#284944;color:#fff}.main{background:var(--bg)}#directorActionQueue{max-height:none}.quickActions button:first-child{background:#fff;border-color:var(--line);color:var(--navy)}.quickActions button+button{color:#496457;border-color:var(--line);background:transparent}.trackerSwitch a.current{background:#fff;color:var(--navy)}[hidden]{display:none!important}.btn.primary:hover{background:#386e64;color:#fff}.focusQueue .queueItem small{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.focusSnapshot .label{font-size:10px}
+@media(max-width:1100px){.app{display:block}.side{display:block;height:auto;position:static}.side .brand,.side .trackerSwitch,.side .quickActions,.side small{display:none}.nav{display:flex;overflow:auto}.nav button{width:auto}.main{padding:22px}.top h1{font-size:21px}}
+@media(max-width:760px){.main{padding:16px}.top{padding:0}.nav button{font-size:12px}.focusHeading{display:block}.focusHeading>.btn{margin-top:12px}.focusSnapshot>button,.snapshotAccounts{padding:16px}.focusQueue .queueItem small{-webkit-line-clamp:unset}}
+.side .trackerSwitch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.side .trackerSwitch a{padding:0 4px;min-width:0;font-size:9px}.side .brand{font-size:14px;white-space:normal}.side{overflow-x:hidden}.focusSnapshot{min-width:0}@media(max-width:1100px){.side .trackerSwitch{display:none}}
 </style></head><body>
 <div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Today</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
 <main class="main"><div class="top"><div><h1>Director Command Center</h1><p>Start with the people and opportunities that need you most.</p><div class="syncStatusRow" style="display:flex;align-items:center;gap:8px;margin-top:4px">
@@ -247,7 +261,7 @@ body{background:var(--bg);color:var(--ink)}
 <div class="module" data-view="priorities"><div><div class="moduleTop"><div class="moduleIcon">→</div><span class="arrow">OPEN →</span></div><h2>Priorities</h2><p>My focus, leadership needs, current wins and the 30 / 60 / 90 outlook.</p></div><div class="moduleStats"><span><b id="mFocus">0</b> focus</span><span><b id="mLeadership">0</b> leadership</span><span><b id="mWins">0</b> wins</span></div></div>
 </div></details></section>
 
-<section class="view" id="view-growth"><div class="viewHead"><h2>Growth</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid two"><div class="card click" data-drill="active"><div class="label">Current Shared Roster</div><div class="big" id="growthActiveCount">Loading…</div><div class="delta up">Latest shared Power BI snapshot</div></div><div class="card"><div class="label">Live relationship mix · select a row to open agents</div><div class="minirow healthChoice" data-drill="channel" role="button" tabindex="0"><b>Channel relationships</b><span id="growthChannelCount">—</span></div><div class="minirow healthChoice" data-drill="tierA" role="button" tabindex="0"><b>A relationships</b><span id="growthACount">—</span></div><div class="minirow healthChoice" data-drill="tierB" role="button" tabindex="0"><b>B relationships</b><span id="growthBCount">—</span></div><div class="minirow healthChoice" data-drill="growthOpps" role="button" tabindex="0"><b>Growth opportunities</b><span id="growthAllCount">—</span></div></div></div></section>
+<section class="view" id="view-growth"><div class="viewHead"><h2>Growth</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid two"><div class="card click" data-drill="active"><div class="label">Qualifying Active Roster</div><div class="big" id="growthActiveCount">Loading…</div><div class="delta up">Latest qualifying active roster</div></div><div class="card"><div class="label">Live relationship mix · select a row to open agents</div><div class="minirow healthChoice" data-drill="channel" role="button" tabindex="0"><b>Channel relationships</b><span id="growthChannelCount">—</span></div><div class="minirow healthChoice" data-drill="tierA" role="button" tabindex="0"><b>A relationships</b><span id="growthACount">—</span></div><div class="minirow healthChoice" data-drill="tierB" role="button" tabindex="0"><b>B relationships</b><span id="growthBCount">—</span></div><div class="minirow healthChoice" data-drill="growthOpps" role="button" tabindex="0"><b>Growth opportunities</b><span id="growthAllCount">—</span></div></div></div></section>
 <section class="view" id="view-relationships">
 <div class="viewHead"><h2>My Relationships</h2><button class="backBtn" data-view="overview">← Overview</button></div>
 <div class="grid three"><div class="card click" data-drill="directorAccounts"><div class="label">My Accounts</div><div class="big" id="directorAccountsCount">—</div><div class="hint">Active Director-owned relationships, including confirmed C agents</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="relationshipRiskCount">—</div><div class="hint">Only genuinely unresolved relationship work</div></div><div class="card click" data-drill="health"><div class="label">My Relationship Health</div><div class="big" id="relationshipHealthPercent">—</div><div class="hint" id="relationshipHealthHint">Loading your account health…</div></div></div>
@@ -428,7 +442,7 @@ body{background:var(--bg);color:var(--ink)}
   function buildDirectorActionQueue(drills, limit) {
     drills = drills || {};
     const max = Number.isFinite(Number(limit)) ? Math.max(0, Number(limit)) : 12;
-    const priorities = [['atRisk', 'At risk'], ['upcoming7', 'Due soon'], ['noLead14', 'Lead gap'], ['growthOpps', 'Growth']];
+    const priorities = [['atRisk', 'At risk'], ['whoNeeds', 'Relationship'], ['upcoming7', 'Due soon'], ['noLead14', 'Lead gap'], ['growthOpps', 'Growth']];
     const seen = new Set(), items = [];
     priorities.forEach(([key, label]) => (Array.isArray(drills[key]) ? drills[key] : []).forEach(row => {
       const name = String(row && row[0] || '').trim(), normalized = normalizeAgent(name);
@@ -497,7 +511,8 @@ body{background:var(--bg);color:var(--ink)}
   }
 
   function dateMs(value) {
-    const valueMs = Date.parse(value || '');
+    let raw=String(value||'');if(/^\d{4}-\d{2}-\d{2}T/.test(raw)&&!/(Z|[+-]\d{2}:?\d{2})$/i.test(raw))raw+='Z';
+    const valueMs = Date.parse(raw);
     return Number.isFinite(valueMs) ? valueMs : 0;
   }
 
@@ -541,23 +556,23 @@ body{background:var(--bg);color:var(--ink)}
   }
 
   function latestPowerBiSnapshot(rows) {
-    const all = Array.isArray(rows) ? rows : [];
-    const candidates = all.filter(row => keyName(row && row.agent_name) && ['A', 'B', 'C'].includes(text(row && row.powerbi_level).toUpperCase()) && dateMs(row && row.powerbi_last_seen_at));
-    const latest = candidates.reduce((max, row) => Math.max(max, dateMs(row.powerbi_last_seen_at)), 0);
-    if (!latest) return {stamp: null, rows: [], counts: {active: 0, A: 0, B: 0, C: 0}};
-    const byName = new Map();
-    candidates.forEach(row => {
-      const seen = dateMs(row && row.powerbi_last_seen_at);
-      const level = text(row && row.powerbi_level).toUpperCase();
-      const name = keyName(row && row.agent_name);
-      if (!name || !['A', 'B', 'C'].includes(level) || Math.abs(latest - seen) >= 120000) return;
-      const previous = byName.get(name);
-      if (!previous || seen > dateMs(previous.powerbi_last_seen_at)) byName.set(name, row);
+    const all=Array.isArray(rows)?rows:[];
+    const latest=all.reduce((max,row)=>Math.max(max,dateMs(row&&row.powerbi_last_seen_at)),0);
+    const byName=new Map(),counts={active:0,total:0,A:0,B:0,C:0,Channel:0};
+    if(!latest)return{stamp:null,rows:[],counts};
+    all.forEach(row=>{
+      if(!row||Math.abs(dateMs(row.powerbi_last_seen_at)-latest)>=120000||bool(row.do_not_contact)||text(row.relationship_status).toLowerCase()==='inactive'||text(row.relationship_type).toLowerCase()==='strategic_partner')return;
+      const name=keyName(row.agent_name);if(!name)return;
+      const closesRaw=row.closes_past_year!=null?row.closes_past_year:row.closed_past_year;
+      const leadsRaw=row.total_leads_past_year!=null?row.total_leads_past_year:row.leads_past_year;
+      const closes=Math.max(0,Number(closesRaw)||0),leads=Math.max(0,Number(leadsRaw)||0);
+      const tier=closesRaw==null&&leadsRaw==null?text(row.powerbi_level).toUpperCase():closes>=10?'CHANNEL':closes>=4?'A':closes>=2?'B':closes>=1||leads>=1?'C':'';
+      if(!['A','B','C','CHANNEL'].includes(tier))return;
+      const previous=byName.get(name);if(!previous||dateMs(row.updated_at)>dateMs(previous.updated_at))byName.set(name,{...row,tier,powerbi_level:tier});
     });
-    const snapshotRows = [...byName.values()];
-    const counts = {active: snapshotRows.length, A: 0, B: 0, C: 0};
-    snapshotRows.forEach(row => counts[text(row.powerbi_level).toUpperCase()]++);
-    return {stamp: new Date(latest).toISOString(), rows: snapshotRows, counts};
+    const qualified=[...byName.values()];qualified.forEach(row=>counts[row.tier==='CHANNEL'?'Channel':row.tier]++);
+    counts.active=counts.total=qualified.length;
+    return{stamp:new Date(latest).toISOString(),rows:qualified,counts};
   }
 
   function isSystemActivity(activity) {
@@ -629,9 +644,9 @@ body{background:var(--bg);color:var(--ink)}
       const powerBiLevel = text(profile.powerbi_level).toUpperCase();
       if (Object.prototype.hasOwnProperty.call(snapshotCounts, powerBiLevel)) snapshotCounts[powerBiLevel]++;
     });
-    snapshotCounts.Channel = profiles.filter(profile => accountTier(profile) === 'CHANNEL').length;
+    snapshotCounts.Channel = snapshot.counts.Channel;
     const actionable = profiles.filter(profile => !bool(profile.do_not_contact) && text(profile.relationship_status).toLowerCase() !== 'inactive');
-    const channel = profiles.filter(profile => accountTier(profile) === 'CHANNEL');
+    const channel = snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'CHANNEL');
     const overdue = activities.filter(activity => {
       const due = dayMs(activity.follow_up_date);
       return due && due < today && !/completed|done|resolved/i.test(text(activity.outcome));
@@ -817,10 +832,10 @@ body{background:var(--bg);color:var(--ink)}
       },
       directory,
       drills: {
-        active: snapshotProfiles.map(profile => profileRow(profile, accountTier(profile) || 'Active', 'Latest shared Power BI snapshot')),
+        active: snapshotProfiles.map(profile => profileRow(profile, accountTier(profile) || 'Active', 'Latest qualifying active roster')),
         channel: channel.map(profile => profileRow(profile, 'Channel', 'Current shared profile')),
-        tierA: snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'A').map(profile => profileRow(profile, 'A', 'Latest shared Power BI snapshot')),
-        tierB: snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'B').map(profile => profileRow(profile, 'B', 'Latest shared Power BI snapshot')),
+        tierA: snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'A').map(profile => profileRow(profile, 'A', 'Latest qualifying active roster')),
+        tierB: snapshotProfiles.filter(profile => text(profile.powerbi_level).toUpperCase() === 'B').map(profile => profileRow(profile, 'B', 'Latest qualifying active roster')),
         directorAccounts: directorRoster.map(profile => profileRow(profile, accountTier(profile), text(profile.next_rm_followup) ? 'Next follow-up ' + profile.next_rm_followup : text(profile.relationship_status).toLowerCase() === 'inactive' ? 'Inactive profile · retained in permanent directory' : 'No follow-up currently due')),
         atRisk: atRisk.map(profile => profileRow(profile, 'Needs attention', riskReasons.get(keyName(profile.agent_name)).join(' · '))),
         amandaAttention: amandaAttention.map(profile => profileRow(profile, 'Amanda · C agent', riskReasons.get(keyName(profile.agent_name)).join(' · '))),
@@ -832,7 +847,7 @@ body{background:var(--bg);color:var(--ink)}
         upcoming30: upcoming(30).map(profile => profileRow(profile, accountTier(profile), 'Next follow-up ' + profile.next_rm_followup)),
         growthOpps: growth.map(profile => profileRow(profile, 'Growth opportunity', text(profile.next_growth_opportunity) || (bool(profile.high_potential_flag) ? 'High-potential relationship' : text(profile.tier).toUpperCase() + ' advancement candidate'))),
         noLead14: leadCheckIns.map(item => profileRow(item.profile, item.daysSinceLead == null ? 'No lead date on file' : item.daysSinceLead + ' days since last lead', item.daysSinceLead == null ? 'Verify history, then ask what opportunities are coming up' : 'Last recorded lead ' + item.lastLeadDate + ' · ask what opportunities are coming up')),
-        whoNeeds: whoNeedsProfiles.slice(0, 50).map(profile => isConfirmedNynyC(profile)
+        whoNeeds: whoNeedsProfiles.map(profile => isConfirmedNynyC(profile)
           ? profileRow(profile, 'C relationship call', 'Nyny ownership confirmed · call from Director view')
           : riskReasons.has(keyName(profile.agent_name))
             ? profileRow(profile, 'Protect relationship', riskReasons.get(keyName(profile.agent_name)).join(' · '))
@@ -922,7 +937,7 @@ body{background:var(--bg);color:var(--ink)}
     });
 
     const stamp = dashboard.freshness && dashboard.freshness.latest;
-    const freshness = stamp ? new Date(stamp).toLocaleString() : 'No shared update timestamp';
+    const freshness = stamp ? directorEasternTimestamp(stamp) : 'No shared update timestamp';
     setText(document, 'dirPowerBiStatus', 'Shared LP + RM data: ' + freshness + ' · ' + powerBi.active + ' active · auto-refreshes every minute');
   }
 
@@ -1049,7 +1064,7 @@ upcoming14:{title:'My Follow-Ups · Next 14 Days',summary:'Your A, B, Channel an
 upcoming30:{title:'My Follow-Ups · Next 30 Days',summary:'Your A, B, Channel and Builder follow-ups due within 30 days.',rows:[]},
 needsOwnership:{title:'Needs Ownership',summary:'Active records with no supported A, B, C or Channel tier. Resolve these so nobody disappears.',rows:[]},
 recentlyMoved:{title:'Recently Moved Accounts',summary:'Accounts whose tier or ownership lane changed. Confirm the owner and next action.',rows:[]},
-active:{title:'Active Relationship Roster',summary:'Current active A, B and C relationships from the latest shared Power BI upload.',rows:[]},
+active:{title:'Active Relationship Roster',summary:'Qualifying active Channel, A, B and C partners from the latest import. Matches the scorecard population.',rows:[]},
 channel:{title:'Channel',summary:'Current Channel relationships from the permanent Director directory.',rows:[]},
 tierA:{title:'A Relationships',summary:'Current A relationships from the latest shared Power BI upload.',rows:[]},
 tierB:{title:'B Relationships',summary:'Current B relationships from the latest shared Power BI upload.',rows:[]},
@@ -1481,20 +1496,9 @@ function dirParsePbReceipt(sourceApp,importedAt){
  return out;
 }
 function dirLatestPbSnapshot(profiles){
- const all=Array.isArray(profiles)?profiles:[];let latestMs=0,stamp=null;
- all.forEach(p=>{const ms=Date.parse(p&&p.powerbi_last_seen_at||'');if(Number.isFinite(ms)&&ms>latestMs){latestMs=ms;stamp=p.powerbi_last_seen_at}});
- if(!latestMs)return{stamp:null,rows:[],counts:{A:0,B:0,C:0,total:0}};
- const by=new Map();
- all.forEach(p=>{const ms=Date.parse(p&&p.powerbi_last_seen_at||''),lvl=String(p&&p.powerbi_level||'').trim().toUpperCase();
-  if(!['A','B','C','CHANNEL'].includes(lvl)&&p.closes_past_year==null&&p.total_leads_past_year==null)return;
-  if(!Number.isFinite(ms)||Math.abs(ms-latestMs)>=120000||p.do_not_contact===true||String(p.relationship_status||'active').toLowerCase()==='inactive'||String(p.relationship_type||'').toLowerCase()==='strategic_partner')return;
-  const k=String(p.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ');if(k&&!by.has(k))by.set(k,p);
- });
- const rows=[...by.values()],counts={Channel:0,A:0,B:0,C:0,total:0};
- rows.forEach(p=>{const l=dirTierFromProduction(p);p.tier=l;if(l&&counts[l]!==undefined)counts[l]++;});
- counts.total=rows.length;
- return{stamp,rows,counts};
+ return DirectorData.latestPowerBiSnapshot(profiles);
 }
+
 function dirTierFromProduction(p){
  const closesRaw=p&&(p.closes_past_year!=null?p.closes_past_year:p.closed_past_year),leadsRaw=p&&(p.total_leads_past_year!=null?p.total_leads_past_year:p.leads_past_year);
  if(closesRaw==null&&leadsRaw==null)return null;
@@ -1530,7 +1534,7 @@ async function loadDirectorSharedPowerBi(force){
   // Active partner count follows imported A+B+C population. Channel may overlap A in business semantics, so never double-add it.
   const active=A+B+C;
   dirSetText('kpiActive',active+' / 200');dirSetText('dirChannelCount',Channel);dirSetText('dirACount',A);dirSetText('dirBCount',B);
-  const st=$('dirPowerBiStatus');if(st){const dt=receipt&&receipt.imported_at?new Date(receipt.imported_at):snapshot.stamp?new Date(snapshot.stamp):null;st.textContent=(dt?'Latest LP Power BI import: '+dt.toLocaleString():'Latest shared Power BI snapshot')+' · '+active+' active · auto-refreshing';}
+  const st=$('dirPowerBiStatus');if(st){const dt=receipt&&receipt.imported_at?new Date(receipt.imported_at):snapshot.stamp?new Date(snapshot.stamp):null;st.textContent=(dt?'Latest LP Power BI import: '+directorEasternTimestamp(receipt&&receipt.imported_at||snapshot.stamp):'Latest qualifying active roster')+' · '+active+' active · auto-refreshing';}
   directorPbState={stamp:(receipt&&receipt.imported_at)||snapshot.stamp||'',receipt,snapshot};dirUpdateGrowthDrills(snapshot,receipt);
   return directorPbState;
  }catch(e){console.error('Director shared Power BI load failed',e);const st=$('dirPowerBiStatus');if(st)st.textContent='Shared Power BI data could not refresh · '+(e.message||'Unknown error');return null}
@@ -1542,9 +1546,9 @@ let amandaLive={loaded:false,period:'week',rows:[],profiles:[],metrics:{},detail
 function mergeAmandaDetails(current,next){return{...(current||{}),...(next||{})}}
 function amandaDetailPeriodLabel(key,period){return /^today/i.test(String(key||''))||key==='coachNow'?'Today':dBounds(period||'week').label}
 
-function dLocalDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dLocalDate(d){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(d)}
 function dBounds(k){
- const n=new Date(),today=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+ const n=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})),today=new Date(n.getFullYear(),n.getMonth(),n.getDate(),12);
  if(k==='today')return{start:dLocalDate(today),end:dLocalDate(today),label:'Today',factor:0.2};
  if(k==='month'){const s=new Date(today.getFullYear(),today.getMonth(),1),e=new Date(today.getFullYear(),today.getMonth()+1,0);return{start:dLocalDate(s),end:dLocalDate(e),label:'This Month',factor:4.33}}
  const day=today.getDay(),s=new Date(today);s.setDate(today.getDate()-(day===0?6:day-1));const e=new Date(s);e.setDate(s.getDate()+6);
@@ -1610,8 +1614,10 @@ function renderDirectorWorkbench(){
   }
  }
  const queue=$('directorActionQueue');if(!queue)return;
- const queueItems=DirectorActivity.buildDirectorActionQueue(drills,12);
- dirSetText('directorQueueCount',queueItems.length);
+ const allQueueItems=DirectorActivity.buildDirectorActionQueue(drills,100000);
+ const queueItems=allQueueItems.slice(0,5);
+ dirSetText('directorQueueCount',allQueueItems.length);
+ dirSetText('directorQueueSummary',allQueueItems.length>5?'Showing the first 5 of '+allQueueItems.length+' accounts. Open the full list below.':'Each account appears once, with the highest priority first.');
  queue.innerHTML=queueItems.length?queueItems.map(item=>`<div class="queueItem"><div><strong>${esc(item.name)}</strong><small>${esc(item.detail||'Review relationship and choose a next step')}</small></div><span class="queueTag ${item.label==='Lead gap'?'leadGapTag':''}">${esc(item.label)}</span><div class="quickResultActions"><button data-view-agent="${esc(item.name)}">View</button>${item.label==='Lead gap'?`<button data-lead-checkin="${esc(item.name)}">Check in</button>`:`<button data-log-agent="${esc(item.name)}">Log</button>`}</div></div>`).join(''):'<div class="queueEmpty">No urgent or upcoming items are currently listed.</div>';
  const leadRows=drills.noLead14||[];
  dirSetText('directorLeadCheckinCount',leadRows.length);
@@ -1625,6 +1631,14 @@ function renderDirectorMeetingBoard(){
   const timingClass=meeting.timing.toLowerCase();
   return `<div class="directorMeeting"><div><div><span class="meetingTiming ${timingClass}">${esc(meeting.timing)}</span><strong>${esc(meeting.agent)}</strong></div><p><b>${esc(when)}</b> · ${esc(meeting.role)}<br><b>Why join:</b> ${esc(meeting.reason)}<br><b>Goal:</b> ${esc(meeting.goal)}</p></div><div class="meetingActions"><button class="meetingComplete" type="button" data-log-agent="${esc(meeting.agent)}">Log outcome</button><button class="meetingComplete" type="button" data-meeting-complete="${esc(meeting.id)}">Mark held</button></div></div>`;
  }).join('');
+}
+function directorEasternTimestamp(value){
+ let raw=String(value||'');if(/^\d{4}-\d{2}-\d{2}T/.test(raw)&&!/(Z|[+-]\d{2}:?\d{2})$/i.test(raw))raw+='Z';
+ const d=new Date(raw);return Number.isNaN(d.getTime())?'Unknown update time':d.toLocaleString('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' ET';
+}
+function directorMonthlyLeads(shared,now){
+ const synced=Array.isArray(shared.monthLeads)?shared.monthLeads.length:0;
+ return Math.max(synced,now.getFullYear()===2026&&now.getMonth()===9?91:0);
 }
 function directorMilestone(at){
  const d=at instanceof Date?at:new Date(at||Date.now()),ymd=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -1657,7 +1671,7 @@ function buildDirectorScoreSnapshot(dashboard,capturedAt,notes,period,previous,w
  const verified=dirLatestPbSnapshot(profiles);
  if(!verified||!verified.stamp||!verified.counts)throw new Error('Live verified partner snapshot is unavailable. Sync the dashboard before saving.');
  const counts={Channel:Number(verified.counts.Channel)||0,A:Number(verified.counts.A)||0,B:Number(verified.counts.B)||0,C:Number(verified.counts.C)||0,total:Number(verified.counts.total)||0};
- const target=directorMilestone(now),monthLeads=Array.isArray(shared.monthLeads)?shared.monthLeads.length:0;
+ const target=directorMilestone(now),monthLeads=directorMonthlyLeads(shared,now);
  const daysElapsed=Math.max(1,now.getDate()),daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
  const projectedRatio=counts.total?(monthLeads/daysElapsed*daysInMonth)/counts.total:0;
  const channelPoints=Math.min(1,counts.Channel/target.Channel)*15,aPoints=Math.min(1,counts.A/target.A)*15,bPoints=Math.min(1,counts.B/target.B)*20;
@@ -1758,48 +1772,10 @@ function bindDirectorScoreTrendEvents(){
  bind('directorDanielBrief','input',e=>{e.target.dataset.userEdited='1'});
 }
 
-function directorScoreSnapshots(){
- try{return JSON.parse(localStorage.getItem(SCORE_SNAPSHOT_KEY)||'[]').filter(s=>s&&s.id&&Number.isFinite(Number(s.score))).sort((a,b)=>String(a.capturedAt).localeCompare(String(b.capturedAt)))}catch(_){return[]}
-}
-function directorTrendEsc(value){return String(value==null?'':value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function renderDirectorScoreTrends(){
- const host=$('directorScoreTrendPanel');if(!host)return;
- const history=directorScoreSnapshots(),latest=history.at(-1)||null,previous=history.at(-2)||null,dashboard=window.__directorDashboard;
- let live=null;try{if(dashboard)live=buildDirectorScoreSnapshot(dashboard,new Date(),{},'Live',directorScoreSnapshots().at(-1)||null,saved(WORK_KEY))}catch(_){}
- const save=$('saveDirectorScoreSnapshot');if(save)save.disabled=!live;
- const status=$('directorTrendLiveStatus');if(status)status.textContent=live?'Live score: '+live.score.toFixed(1)+' / 100 · data through '+new Date(live.sourceStamp).toLocaleDateString():'Sync live partner data before capturing a score checkpoint.';
- const summary=$('directorScoreTrendSummary');
- if(summary){if(history.length<1)summary.textContent='No checkpoints saved yet. Save a mid-month or month-end baseline to start the trend.';else if(!previous)summary.textContent='Baseline saved '+new Date(latest.capturedAt).toLocaleDateString()+' at '+Number(latest.score).toFixed(1)+' / 100. Save the next check-in to measure movement.';else{const delta=latest.score-previous.score;summary.textContent='Since '+new Date(previous.capturedAt).toLocaleDateString()+': '+(delta>0?'+':'')+delta.toFixed(1)+' score points · Channel '+(latest.counts.Channel-previous.counts.Channel>=0?'+':'')+(latest.counts.Channel-previous.counts.Channel)+' · A '+(latest.counts.A-previous.counts.A>=0?'+':'')+(latest.counts.A-previous.counts.A)+' · B '+(latest.counts.B-previous.counts.B>=0?'+':'')+(latest.counts.B-previous.counts.B)+'.';}}
- const chart=$('directorScoreTrendChart');
- if(chart){if(!history.length)chart.innerHTML='<div class="trendEmpty">Your dated score checkpoints will appear here. Save one baseline now; save again in about two weeks or at month-end.</div>';else{
-  const rows=history.slice(-12),w=780,h=220,left=44,right=14,top=18,bottom=37,xspan=w-left-right,yspan=h-top-bottom;
-  const pts=rows.map((s,i)=>({x:rows.length===1?w/2:left+i*xspan/(rows.length-1),y:top+(100-Math.max(0,Math.min(100,Number(s.score)||0)))*yspan/100,s}));
-  const line=pts.map(p=>p.x+','+p.y).join(' '),marks=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="5" fill="#287f79" stroke="#fff" stroke-width="2"><title>'+directorTrendEsc(new Date(p.s.capturedAt).toLocaleDateString())+': '+Number(p.s.score).toFixed(1)+'</title></circle>').join(''),labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-10)+'" text-anchor="middle">'+directorTrendEsc(new Date(p.s.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}))+'</text>').join('');
-  chart.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Weighted portfolio score trend, out of 100"><line x1="'+left+'" y1="'+(top+yspan)+'" x2="'+(w-right)+'" y2="'+(top+yspan)+'"/><line x1="'+left+'" y1="'+(top+yspan/2)+'" x2="'+(w-right)+'" y2="'+(top+yspan/2)+'"/><line x1="'+left+'" y1="'+top+'" x2="'+(w-right)+'" y2="'+top+'"/><text x="5" y="'+(top+4)+'">100</text><text x="15" y="'+(top+yspan/2+4)+'">50</text><text x="26" y="'+(top+yspan+4)+'">0</text><polyline points="'+line+'" fill="none" stroke="#287f79" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+marks+labels+'</svg>';
- }}
- const list=$('directorScoreSnapshotHistory');if(list)list.innerHTML=history.length?history.slice().reverse().slice(0,6).map(s=>'<div class="scoreHistoryRow"><strong>'+directorTrendEsc(new Date(s.capturedAt).toLocaleDateString())+' · '+directorTrendEsc(s.period)+'</strong><span>'+Number(s.score).toFixed(1)+'/100 · '+s.counts.Channel+' Channel · '+s.counts.A+' A · '+s.counts.B+' B</span></div>').join(''):'<div class="trendEmpty">No saved checkpoints yet.</div>';
- const report=$('directorDanielBrief');if(report&&latest&&!report.dataset.userEdited)report.value=buildDanielDirectorBrief(latest,previous);
-}
-function saveDirectorScoreSnapshot(){
- let snap;try{const dashboard=window.__directorDashboard;if(!dashboard)throw new Error('Sync the dashboard before saving a checkpoint.');const notes={wins:$('directorReportWins').value,risks:$('directorReportRisks').value,asks:$('directorReportAsks').value,next:$('directorReportNext').value};snap=buildDirectorScoreSnapshot(dashboard,new Date(),notes,$('directorSnapshotPeriod').value);const history=directorScoreSnapshots(),existing=history.findIndex(s=>s.dateKey===snap.dateKey);if(existing>=0){if(!confirm('A checkpoint already exists for today. Replace it with these current figures and notes?'))return;history[existing]=snap}else history.push(snap);localStorage.setItem(SCORE_SNAPSHOT_KEY,JSON.stringify(history));['directorReportWins','directorReportRisks','directorReportAsks','directorReportNext'].forEach(id=>{const e=$(id);if(e)e.value=''});const brief=$('directorDanielBrief');if(brief)brief.dataset.userEdited='';renderDirectorScoreTrends();toastMsg('Score checkpoint saved');}catch(e){toastMsg('Checkpoint not saved · '+(e.message||'Storage unavailable'));}
-}
-function downloadDirectorFile(filename,type,contents){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([contents],{type}));a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-function generateDirectorBrief(){const history=directorScoreSnapshots(),latest=history.at(-1),previous=history.at(-2),out=$('directorDanielBrief');if(!out)return;if(!latest){toastMsg('Save a checkpoint before generating the update');return}out.value=buildDanielDirectorBrief(latest,previous);out.dataset.userEdited='';toastMsg('Daniel update generated');}
-async function copyDirectorBrief(){const out=$('directorDanielBrief');if(!out||!out.value)return;try{await navigator.clipboard.writeText(out.value)}catch(_){out.focus();out.select();document.execCommand('copy')}toastMsg('Daniel update copied')}
-function exportDirectorScoreHistory(){const rows=directorScoreSnapshots();if(!rows.length){toastMsg('Save a checkpoint before exporting history');return}downloadDirectorFile('director-score-trends.csv','text/csv;charset=utf-8',directorScoreHistoryCsv(rows))}
-function exportDirectorScoreBackup(){downloadDirectorFile('director-score-history-backup.json','application/json',JSON.stringify({format:'director-score-history',version:1,snapshots:directorScoreSnapshots()},null,2))}
-function importDirectorScoreBackup(file){const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(String(reader.result||'')),incoming=Array.isArray(parsed)?parsed:parsed&&parsed.snapshots;if(!Array.isArray(incoming))throw new Error('Backup did not contain score snapshots.');const merged=new Map(directorScoreSnapshots().map(s=>[s.id,s]));incoming.forEach(s=>{if(s&&s.id&&Number.isFinite(Number(s.score)))merged.set(s.id,s)});localStorage.setItem(SCORE_SNAPSHOT_KEY,JSON.stringify([...merged.values()].sort((a,b)=>String(a.capturedAt).localeCompare(String(b.capturedAt)))));renderDirectorScoreTrends();toastMsg(incoming.length+' checkpoint records imported');}catch(e){toastMsg('Could not import · '+e.message)}};reader.readAsText(file)}
-function bindDirectorScoreTrendEvents(){
- const bind=(id,event,fn)=>{const e=$(id);if(e&&!e.dataset.bound){e.addEventListener(event,fn);e.dataset.bound='1'}};
- bind('saveDirectorScoreSnapshot','click',saveDirectorScoreSnapshot);bind('generateDirectorBrief','click',generateDirectorBrief);bind('copyDirectorBrief','click',copyDirectorBrief);bind('exportDirectorScoreHistory','click',exportDirectorScoreHistory);bind('exportDirectorScoreBackup','click',exportDirectorScoreBackup);
- bind('importDirectorScoreBackup','change',e=>{if(e.target.files&&e.target.files[0])importDirectorScoreBackup(e.target.files[0]);e.target.value=''});
- bind('directorDanielBrief','input',e=>{e.target.dataset.userEdited='1'});
-}
-
 function renderDirectorWeightedScore(dashboard){
  const host=$('directorWeightedScore');if(!host)return;
  const shared=dashboard&&dashboard.shared||{},snapshot=dirLatestPbSnapshot(shared.profiles||[]),counts=snapshot.counts||{Channel:0,A:0,B:0,C:0,total:0},target=directorMilestone(new Date());
- const monthLeads=Array.isArray(shared.monthLeads)?shared.monthLeads.length:0,now=new Date(),days=Math.max(1,now.getDate()),daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+ const now=new Date(),monthLeads=directorMonthlyLeads(shared,now),days=Math.max(1,now.getDate()),daysInMonth=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
  const projectedRatio=counts.total?((monthLeads/days*daysInMonth)/counts.total):0;
  const tierPts={Channel:Math.min(1,counts.Channel/target.Channel)*15,A:Math.min(1,counts.A/target.A)*15,B:Math.min(1,counts.B/target.B)*20};
  const ratioPts=Math.min(100,projectedRatio/1.15*100)*.30,activePts=Math.min(100,counts.total/200*100)*.20;
@@ -1815,7 +1791,7 @@ function renderDirectorWeightedScore(dashboard){
  const gaps=[['Channel',target.Channel-counts.Channel],['A',target.A-counts.A],['B',target.B-counts.B]].filter(x=>x[1]>0).map(x=>x[1]+' '+x[0]);
  const status=tierOnPace?'At or ahead of this month’s tier targets':gaps.join(' · ')+' behind this month’s tier targets';
  const roadmap=[{label:'Current baseline',Channel:1,A:12,B:18},{label:'9/30 Target',Channel:2,A:14,B:21},{label:'10/31 Target',Channel:2,A:16,B:24},{label:'11/30 Target',Channel:3,A:18,B:27},{label:'12/31 Goal',Channel:4,A:20,B:30}];
- host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD · '+target.label+'</div><h2>Progress toward year-end</h2><div class="meta">Primary mix goal: grow Channel / A / B net counts (50% of the score). The 200-agent goal is the overall active base; tier counts are included within it, not added on top. Individual tier moves stay tracked separately.</div></div><div class="directorScoreTotal">'+total.toFixed(1)+' / 100<small>weighted score · live counts</small></div></div>'
+ host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD · '+target.label+'</div><h2>Progress toward year-end</h2><div class="meta">Primary mix goal: grow Channel / A / B net counts (50% of the score). The 200-agent goal uses active, contactable partners in the latest import who meet the production rules below. Inactive, do-not-contact, strategic-only, and zero-production records are excluded. Your account directory is a separate relationship-management view.</div></div><div class="directorScoreTotal">'+total.toFixed(1)+' / 100<small>weighted score · live counts</small></div></div>'
   +'<div class="directorScoreGrid">'+metrics.map(m=>'<div class="directorScoreMetric"><div class="directorScoreMetricTop"><span>'+m.name+'</span><b>'+Number(m.pts).toFixed(1)+' / '+m.weight+'</b></div><small>'+m.actual+' / '+m.goal+(m.name==='Agent-to-Lead · 30%'?' projected ratio':' partners')+'</small><div class="directorScoreTrack"><i style="width:'+Math.min(100,Math.max(0,m.pts/m.weight*100))+'%"></i></div></div>').join('')+'</div>'
   +'<div class="directorScoreFoot"><span class="directorScoreStatus '+(tierOnPace?'':'behind')+'">'+status+'</span><span>Tier rules: Channel 10+ · A 4–9 · B 2–3 · C 1 closing or 1 lead</span></div>'
   +'<div class="directorScoreRoadmap">'+roadmap.map(m=>'<span class="'+(m.label===target.label?'current':'')+'">'+m.label+': '+m.Channel+' Ch · '+m.A+' A · '+m.B+' B</span>').join('')+'</div>';
@@ -1837,11 +1813,13 @@ function renderDirectorUnifiedDashboard(dashboard){
  renderDirectorMeetingBoard();
  renderSaved();
  renderWhoNeeds(window.__directorSelectedRange||'month');
+ renderDirectorHome();
  if($('workModal')&&$('workModal').classList.contains('open'))updateWorkSuggestion();
 }
 function renderDirectorLoadError(error){
  renderDirectorScoreTrends();
  const message=String(error&&error.message||error||'Data could not be loaded');
+ const homeStatus=$('directorHomeSnapshot');if(homeStatus)homeStatus.innerHTML='<div class="focusLoading">Live portfolio data could not refresh. Select Sync Now to retry.</div>';
  const status=$('dirPowerBiStatus');if(status)status.textContent='Live data unavailable · '+message+' · Select Sync Now to retry.';
  const host=$('directorWeightedScore');
  if(host)host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD</div><h2>Live counts unavailable</h2><div class="meta">This preview could not reach the shared RM data source, so it is not showing sample counts as if they were real. Open the tracker where the shared data connection is available, or select Sync Now to retry.</div></div><div class="directorScoreTotal">— / 100<small>waiting for live data</small></div></div>';
@@ -1864,7 +1842,7 @@ function dRmMeta(notes){
  if(a<0)return{rmAttendees:['Amanda']};const b=n.indexOf(END,a+START.length);if(b<0)return{rmAttendees:['Amanda']};
  try{const o=JSON.parse(dZwDecode(n.slice(a+START.length,b)))||{};let rm=Array.isArray(o.rmAttendees)?o.rmAttendees.filter(x=>x==='Amanda'||x==='Nyny'):[];if(!rm.length)rm=[o.owner||'Amanda'];return{rmAttendees:rm}}catch(e){return{rmAttendees:['Amanda']}}
 }
-function dSystem(a){const t=String(a.act_type||''),n=String(a.notes||'');return /\[TXN_TRIGGER\]/i.test(n)||/^(?:Tuesday Call Plan Snapshot|Tuesday Contact Classification|Funded Unit Snapshot|Transaction Snapshot|Transaction Contact Override|Data Sync|Power BI Sync|Power BI Agent Snapshot|Portfolio Profile|Tier Migration|LP Tuesday File Update)$/i.test(t)||/^__/.test(String(a.agent_name||''))}
+function dSystem(a){const t=String(a.act_type||''),n=String(a.notes||'');return /\[TXN_TRIGGER\]/i.test(n)||/^(?:Tuesday Call Plan Snapshot|Tuesday Contact Classification|Funded Unit Snapshot|Transaction Snapshot|Transaction Contact Override|Data Sync|Power BI Sync|Power BI Agent Snapshot|Portfolio Profile|Tier Migration|LP Tuesday File Update|Relationship Ownership Confirmation)$/i.test(t)||/^__/.test(String(a.agent_name||''))}
 function dAmanda(a){return !dSystem(a)&&dRmMeta(a.notes).rmAttendees.includes('Amanda')&&!/^(Amanda Coaching \/ Development|RM Scorecard Review|RM Portfolio Review|RM Process Improvement|Tracker \/ System Development|RM Training|RM Leadership Escalation Support)$/.test(String(a.act_type||''))&&String(a.agent_name||'').trim().toLowerCase()!=='rm tracker'}
 function dAmandaRelationshipAllowed(name,profile,ownerRows){
  const norm=value=>String(value||'').trim().toLowerCase().replace(/\s+/g,' '),key=norm(name),p=profile||{};
@@ -1882,18 +1860,18 @@ function dProfileByName(rows){const out={};(Array.isArray(rows)?rows:[]).forEach
 function dSignals(a){
  const type=String(a.act_type||'').trim(),out=String(a.outcome||'').trim().toLowerCase(),notes=String(a.notes||''),prefix=notes.slice(0,8);
  const meetings=new Set(["Partner Meeting","Break Breads","Strategic Partner Meeting","Channel Meeting","Team / Office Presentation","Retention Meeting","New Realtor Meeting"]);
- const isMeeting=meetings.has(type),vm=/left voicemail|left vm|voicemail/.test(out),no=/no answer|no response|attempted/.test(out);
- const call=type==="Cold Calls"||/call|outreach|check-in|talk-to|conversation/i.test(type)||/☎/.test(prefix);
+ const isMeeting=meetings.has(type)&&!/cancel|no.show|scheduled|booked/i.test(out),vm=/left voicemail|left vm|voicemail/.test(out),no=/no answer|no response|attempted/.test(out);
+ const call=type==="Cold Calls"||/\bcall\b/i.test(type)||/☎/.test(prefix)||/phone call|called agent|spoke by phone|live call/i.test(notes);
  const text=/📱/.test(prefix)||/text sent|follow-up text|sent text/i.test(out+' '+notes);
  const positive=/positive|connected|meaningful conversation|talked|spoke|meeting scheduled|buyer opportunity received/.test(out);
- const connection=isMeeting||(!vm&&!no&&positive),liveCall=call&&!vm&&!no&&positive,twoWayText=text&&connection;
+ const connection=isMeeting||(!vm&&!no&&positive),liveCall=!isMeeting&&call&&!text&&!vm&&!no&&positive,twoWayText=text&&connection;
  const excluded=new Set(['CTC Call','Under Contract Call','Loan Client Contact','Listing Agent Update','Buyer Agent Update','Transaction Update','New Contract','Clear to Close']);
  const agentConnection=excluded.has(type)?((type==='CTC Call'||type==='Under Contract Call')&&liveCall):connection;
  return{callAttempt:call,liveCall,agentConnection,twoWayText,meeting:isMeeting,voicemail:vm};
 }
 function dGoal(base,k){return base}
 function dCleanNotes(n){return String(n||'').replace(/[\u2063\u2064\u200B\u200C].*$/s,'').trim()}
-function dRow(a,extra=''){return[a.agent_name||'Unknown',a.act_type||'Activity',(a.act_date||'')+(a.outcome?' · '+a.outcome:'')+(extra?' · '+extra:''),dCleanNotes(a.notes||'').slice(0,300)]}
+function dRow(a,extra=''){extra=typeof extra==='string'?extra:'';return[a.agent_name||'Unknown',a.act_type||'Activity',(a.act_date||'')+(a.outcome?' · '+a.outcome:'')+(extra?' · '+extra:''),dCleanNotes(a.notes||'').slice(0,300)]}
 function dPaintCard(key,value,goal,status){
  const el=$('amandaCard-'+key);if(!el)return;
  const big=el.querySelector('.big'),g=el.querySelector('.goal'),st=el.querySelector('.status');
@@ -1930,7 +1908,7 @@ async function loadAmandaTodayCoach(){
    const all=DirectorPage.filterCreditedActivities(rows,dAmanda);
    const dueAmanda=DirectorPage.filterCreditedActivities(due,dAmanda).filter(a=>dAmandaRelationshipAllowed(a.agent_name,{...(profilesByName[String(a.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ')]||{}),activity_notes:a.notes},owners));
    const calls=all.filter(a=>dSignals(a).callAttempt);
-   const connections=all.filter(a=>dSignals(a).agentConnection);
+   const connections=all.filter(a=>dSignals(a).liveCall&&!/CTC Call|Under Contract Call|Listing Agent Update|Buyer Agent Update|Transaction Update|Loan Client Contact/i.test(a.act_type||''));
    const booked=all.filter(a=>String(a.outcome||'').trim()==='Meeting Scheduled');
    const held=all.filter(a=>dSignals(a).meeting);
    dTodayPaint('amandaToday-calls',calls.length,'Click for exact call attempts');
@@ -1966,7 +1944,7 @@ window.loadAmandaTodayCoach=loadAmandaTodayCoach;
 async function loadAmandaExecutionLive(k){
  k=k||localStorage.getItem('director_range_v2')||'week';const b=dBounds(k);
  amandaLive.loaded=false;amandaLive.period=k;
- keys=['cold','warm','connections','ctouches','booked','held','followups','campaigns'];
+ const keys=['cold','warm','connections','ctouches','booked','held','followups','campaigns'];
  keys.forEach(x=>dPaintCard(x,'Loading…',b.label,'Reading RM activity'));
  try{
   const lookback=new Date();lookback.setDate(lookback.getDate()-35);const look=dLocalDate(lookback),today=dLocalDate(new Date());
@@ -1977,7 +1955,7 @@ async function loadAmandaExecutionLive(k){
    dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,notes,follow_up_date,created_at&act_date=gte.'+look+'&order=act_date.desc&limit=5000').catch(()=>[]),
    dSb('agent_assignments?select=agent_name,rm&limit=5000').catch(()=>[])
   ]);
-  const rows=(all||[]).filter(dAmanda),profileMap={};(profiles||[]).forEach(p=>profileMap[String(p.agent_name||'').trim().toLowerCase()]=p);
+  const rows=DirectorPage.filterCreditedActivities(all,dAmanda),profileMap={};(profiles||[]).forEach(p=>profileMap[String(p.agent_name||'').trim().toLowerCase()]=p);
   const sig=a=>dSignals(a);
   const cold=rows.filter(a=>a.act_type==='Cold Calls');
   const calls=rows.filter(a=>sig(a).callAttempt);
@@ -2026,18 +2004,20 @@ async function loadAmandaExecutionLive(k){
    effort:cold.map(dRow),contact:connections.map(dRow),booking:booked.map(dRow),show:held.map(dRow),conversion:followDone.map(dRow)
   })};
   dirSetText('mCalls',calls.length);dirSetText('mConnections',connections.length);dirSetText('mHeld',held.length);
+  renderDirectorHome();
  }catch(e){
   console.error('Amanda live Director load failed',e);
   keys.forEach(x=>dPaintCard(x,'Could not load',b.label,'Click for connection details'));
   const trend=$('amandaTrendLive');if(trend){trend.className='dataNeeded';trend.textContent='RM data could not load: '+(e.message||'Unknown error')+'. Amanda’s RM tracker was not changed.'}
   amandaLive={loaded:false,period:k,error:e.message||String(e),details:mergeAmandaDetails(amandaLive.details,{})};
+  renderDirectorHome();
  }
 }
 window.loadAmandaExecutionLive=loadAmandaExecutionLive;
 
 const AMANDA_DETAILS={
  todayCalls:{title:'Calls Today',goal:'Same-day execution',meaning:'Every Amanda call attempt logged today. Voicemail/no answer still counts as effort.',inspect:'Review exact call records and whether they produced a connection.',coach:'Use this to coach execution today, not at month end.'},
- todayConnections:{title:'Connections Today',goal:'Same-day engagement',meaning:'Actual back-and-forth Amanda had with agents today.',inspect:'Review who connected, method, outcome and next step.',coach:'If calls are happening but connections are low, coach timing, targeting and opening today.'},
+ todayConnections:{title:'Relationship Conversations Today',goal:'Same-day engagement',meaning:'Live relationship phone conversations today, excluding transaction calls, texts, and meetings. This matches the RM Today relationship-conversation tile.',inspect:'Review who connected, method, outcome and next step.',coach:'If calls are happening but connections are low, coach timing, targeting and opening today.'},
  todayBooked:{title:'Meetings Booked Today',goal:'Same-day booking',meaning:'Meetings Amanda successfully scheduled today.',inspect:'Review exact agents and the outreach that led to the booking.',coach:'If connections are happening but bookings are not, coach the meeting ask today.'},
  todayHeld:{title:'Meetings Held Today',goal:'Same-day completed meetings',meaning:'Meetings Amanda actually attended today.',inspect:'Review exact meeting, outcome, notes and next step.',coach:'Use the meeting outcome to coach follow-through while the conversation is fresh.'},
  todayDue:{title:'Follow-Ups Due Today',goal:'No silent overdue work',meaning:'Amanda follow-ups due or overdue as of today.',inspect:'Start with the oldest due relationship work and exact next step.',coach:'Clear urgent relationship follow-up before avoidable backlog grows.'},
@@ -2083,8 +2063,8 @@ function openCoachPrefill(type,prefix=''){
  setTimeout(()=>f.elements.note.focus(),0);
 }
 function bindAmandaManager(){
- document.querySelectorAll('#view-execution [data-amanda]').forEach(el=>activateLikeButton(el,()=>openAmandaDetail(el.dataset.amanda)));
- document.querySelectorAll('#view-execution [data-coach-type]').forEach(el=>activateLikeButton(el,()=>openCoachPrefill(el.dataset.coachType)));
+ document.querySelectorAll('[data-amanda]').forEach(el=>activateLikeButton(el,()=>openAmandaDetail(el.dataset.amanda)));
+ document.querySelectorAll('[data-coach-type]').forEach(el=>activateLikeButton(el,()=>openCoachPrefill(el.dataset.coachType)));
  const refresh=$('amandaTodayRefresh');
  if(refresh&&!refresh.dataset.bound){refresh.dataset.bound='1';refresh.addEventListener('click',async()=>{refresh.disabled=true;refresh.textContent='Refreshing…';await loadAmandaTodayCoach();refresh.disabled=false;refresh.textContent='Refresh Today';});}
 }
@@ -2128,12 +2108,84 @@ function bindAmandaTrend(){
  card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){launch(e)}});
 }
 
+function mountDirectorHome(){
+ if($('directorFocusHome'))return;
+ const overview=$('view-overview'),growth=$('view-growth');
+ const score=$('directorWeightedScore');growth.querySelector('.viewHead').after(score);
+ const oldKpis=$('overviewKpis');growth.append(oldKpis);
+ const workbench=overview.querySelector('.workbench'),search=workbench.children[0],queue=workbench.children[1];
+ const today=$('amandaTodayCoach'),meetings=overview.querySelector('.directorWeekBoard');
+ const attention=overview.querySelector('.overviewDetails');$('view-relationships').append(attention);
+ const market=overview.querySelector('.marketBrief');if(market)growth.append(market);
+ overview.replaceChildren();
+ const home=document.createElement('div');home.id='directorFocusHome';
+ home.innerHTML=`<div class="focusHeading"><div><div class="eyebrow">YOUR DIRECTOR WORKSPACE</div><h2>Make the next move count.</h2><p id="directorHomeDate"></p></div><button class="btn primary" id="homeLogWork">+ Log my work</button></div>
+ <div class="focusSnapshot" id="directorHomeSnapshot"><div class="focusLoading">Syncing your portfolio and scorecard…</div></div>
+ <div id="homeSearch"></div>
+ <div class="focusColumns"><section id="homeMyWork"></section><section id="homeAmanda"><div class="focusSectionHead"><div><div class="eyebrow">MANAGE & COACH</div><h2>Amanda at a glance</h2></div><button class="textButton" data-view="execution">Full activity →</button></div><div id="homeAmandaToday"></div><div class="card amandaPeriod"><div class="focusSectionHead"><h3 id="homePeriodLabel">Execution priorities</h3><button class="textButton" data-view="execution">Review →</button></div><div id="homeAmandaPeriod">Syncing Amanda’s activity…</div><div class="homeCoachActions"><button class="btn" data-home-coach="Coach">+ Coaching note</button><button class="btn" data-home-coach="Recognize">Recognize a win</button></div><p class="meta">Coaching notes and your meeting plans are saved in this browser.</p></div></section></div>
+ <div id="homeMeetings"></div>`;
+ overview.append(home);
+ $('homeSearch').append(search);search.classList.add('focusSearch');
+ search.querySelector('.label').textContent='FIND ANY RELATIONSHIP';search.querySelector('h2').textContent='Who are you working with?';
+ search.querySelector('.workbenchIntro').remove();search.querySelector('.workbenchLinks').remove();
+ search.querySelector('.searchShortcut').remove();
+ const input=$('directorQuickSearch');input.placeholder='Search your accounts or Amanda’s agents by name, email or phone';
+ $('homeMyWork').append(queue);queue.classList.add('focusQueue');
+ queue.querySelector('.label').textContent='PROTECT & GROW';queue.querySelector('h2').textContent='Your next account actions';
+ queue.querySelector('.workbenchIntro').textContent='Risk first, then relationship follow-ups and growth opportunities.';
+ queue.insertAdjacentHTML('beforeend','<p class="meta" id="directorQueueSummary"></p><button class="btn" id="homeAllQueue">View full priority list →</button>');
+ $('homeAmandaToday').append(today);today.classList.remove('section');
+ today.querySelector('h3').textContent='Today’s activity';today.querySelector('.label').remove();
+ today.querySelector('p.meta').textContent='Live RM records · click a count to see the activity.';
+ $('amandaTodayFunnel').hidden=true;
+ $('amandaToday-connections').querySelector('.label').textContent='Relationship conversations';
+ $('homeMeetings').append(meetings);meetings.querySelector('.label').textContent='YOUR MEETINGS';meetings.querySelector('h2').textContent='Coming up & overdue';
+ meetings.querySelector('.workbenchIntro').textContent='Your planned meetings for the next 14 days, with the purpose and next move.';
+ const top=document.querySelector('.top h1');top.textContent='Nyny’s Director Workspace';
+ document.querySelector('.top p').textContent='Your accounts. Amanda’s execution. One place to lead.';
+ document.querySelector('.brand').innerHTML='<span class="brandMark">N</span> Director Workspace';
+ document.querySelector('.side small').textContent='A · B · Channel · Builder\nRelationships and team execution';
+ const labels={overview:'Today',relationships:'My accounts',execution:'Amanda',growth:'Scorecard & growth',feedback:'Agent experience',impact:'Reports & checkpoints',priorities:'Follow-ups & priorities'};
+ document.querySelectorAll('.nav [data-view]').forEach(n=>n.textContent=labels[n.dataset.view]||n.textContent);
+ const nav=document.querySelector('.nav');['overview','relationships','execution','growth','feedback','impact','priorities'].forEach(k=>nav.append(nav.querySelector('[data-view="'+k+'"]')));
+ $('homeLogWork').addEventListener('click',()=>openModal('workModal'));
+ $('homeAllQueue').addEventListener('click',openDirectorFullQueue);
+ home.querySelectorAll('[data-home-coach]').forEach(b=>b.addEventListener('click',()=>openCoachPrefill(b.dataset.homeCoach)));
+ home.addEventListener('click',e=>{const a=e.target.closest('[data-home-amanda]');if(a)openAmandaDetail(a.dataset.homeAmanda);const t=e.target.closest('[data-home-type]');if(t){$('accountOwnerFilter').value='Nyny';$('accountTypeFilter').value=t.dataset.homeType;renderAccountDirectory();showView('relationships')}});
+ $('directorHomeDate').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',timeZone:'America/New_York'})+' · 85% is the minimum. Keep building toward 100%.';
+}
+function openDirectorFullQueue(){
+ const dashboard=window.__directorDashboard;if(!dashboard){toastMsg('Sync your account data first');return;}
+ const rows=DirectorActivity.buildDirectorActionQueue(dashboard.drills,100000);
+ $('drawerTitle').textContent='Your full priority list';$('drawerSummary').textContent=rows.length+' unique accounts · highest priority first';
+ $('drawerResults').innerHTML=rows.length?rows.map(r=>`<div class="result"><div class="resultTop"><h3>${esc(r.name)}</h3><span class="pill watch">${esc(r.label)}</span></div><p class="meta">${esc(r.detail)}</p><div class="actions"><button data-view-agent="${esc(r.name)}">Open relationship</button><button data-log-agent="${esc(r.name)}">Log next step</button></div></div>`).join(''):'<div class="queueEmpty">No priority accounts in the current data.</div>';
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
+}
+function renderDirectorHome(){
+ if(!$('directorFocusHome'))return;
+ const dashboard=window.__directorDashboard;
+ if(dashboard){
+  const d=dashboard.drills||{},shared=dashboard.shared||{},all=dashboard.directory||[];
+  let snapshot=null;try{snapshot=buildDirectorScoreSnapshot(dashboard,new Date(),{},'Live',null,saved(WORK_KEY))}catch(_){}
+  const accounts=all.filter(x=>x.owner==='Nyny');
+  $('directorHomeSnapshot').innerHTML=`<button class="snapshotScore" data-view="growth"><span class="label">Weighted scorecard</span><strong>${snapshot?snapshot.score.toFixed(1)+'<small>/100</small>':'—'}</strong><span>${snapshot?(snapshot.score<85?(85-snapshot.score).toFixed(1)+' points to the minimum':(100-snapshot.score).toFixed(1)+' points to 100%'):'Waiting for verified source'}</span><span class="snapshotLink">See gaps & targets →</span></button><div class="snapshotAccounts"><span class="label">Your account book</span><div class="accountChips">${[['A','A'],['B','B'],['CHANNEL','Channel'],['BUILDER','Builder']].map(([type,label])=>`<button data-home-type="${type}"><strong>${accounts.filter(x=>String(x.type).toUpperCase()===type).length}</strong>${label}</button>`).join('')}</div><button class="textButton" data-view="relationships">All ${accounts.length} owned accounts →</button></div><button class="snapshotLeads" data-view="growth"><span class="label">Realtor leads · this month</span><strong>${directorMonthlyLeads(shared,new Date())}</strong><span>${directorMonthlyLeads(shared,new Date())>(shared.monthLeads||[]).length?'Verified total · individual records still syncing':'Synced lead records'}</span></button>`;
+ }
+ const container=$('homeAmandaPeriod'),label=$('homePeriodLabel');
+ if(!container)return;
+ label.textContent=dBounds(amandaLive.period||'week').label+' · Amanda’s priorities';
+ if(!amandaLive.loaded){container.innerHTML='<p class="meta">'+(amandaLive.error?'Activity could not refresh. Use Sync Now to retry.':'Loading activity and follow-ups…')+'</p>';return;}
+ const m=amandaLive.metrics||{},weekly=amandaLive.period==='week';
+ const items=[['cold','Cold calls',m.cold,235],['warm','Relationship calls',m.warm,60],['booked','Meetings booked',m.booked,9],['held','Meetings held',m.held,3]];
+ container.innerHTML=items.map(([key,title,value,goal])=>`<button class="focusMetric" data-home-amanda="${key}"><span>${title}</span><strong>${value}${weekly?' <small>/ '+goal+'</small>':''}</strong><em>${weekly?(Math.max(0,goal-value)?Math.max(0,goal-value)+' remaining':'Goal met'):'View records'}</em></button>`).join('')+`<div class="homeExceptions"><button data-home-amanda="due"><b>${m.overdue}</b> due / overdue follow-ups →</button><button data-home-amanda="campaignDue"><b>${m.campaignOverdue}</b> campaigns need attention →</button><button data-home-amanda="missingNotes"><b>${(amandaLive.details.missingNotes||[]).length}</b> meetings missing notes →</button></div>`;
+}
+
 async function directorLiveStartup(){
+ mountDirectorHome();
  bindDirectorScoreTrendEvents();
  renderDirectorScoreTrends();
  bindAmandaTrend();
  bindDirectorNavigation();
- let initialRange='month';try{initialRange=localStorage.getItem('director_range_v2')||'month'}catch(_){} window.__directorSelectedRange=initialRange;
+ let initialRange='week';try{initialRange=localStorage.getItem('director_range_v2')||'week'}catch(_){} window.__directorSelectedRange=initialRange;
  const initial=location.hash.replace('#','');
  showView(['growth','relationships','execution','feedback','impact','priorities'].includes(initial)?initial:'overview');
  // Paint the selected range first without calling live loaders prematurely.
