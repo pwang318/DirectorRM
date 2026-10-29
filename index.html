@@ -1,7 +1,7 @@
   
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nyny · Director Workspace</title><meta name="director-version" content="director-goal100-v10-20261029">
+<title>Nyny · Director Workspace</title><meta name="director-version" content="director-detailed-v11-20261029">
 <style>
 :root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
 .whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
@@ -312,7 +312,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <div class="card directorTrendPanel" id="directorScoreTrendPanel">
  <div class="trendPanelHead"><div><div class="label">YOUR NEXT CHECK-IN</div><h3>A clear update, without the extra steps.</h3><p class="meta">Your numbers, wins, risks and suggested next steps are filled in from the tracker. Review, then copy. Nothing is sent automatically.</p></div><button class="btn primary" id="saveDirectorScoreSnapshot" type="button" disabled>Create update</button></div>
  <div class="trendLiveStatus" id="directorTrendLiveStatus">Loading current scorecard…</div>
- <details class="simpleReportDetails"><summary>Review auto-filled notes <span class="meta">· edit if needed</span></summary><div class="trendNotesGrid"><div class="field"><label for="directorReportWins">Wins</label><textarea id="directorReportWins" maxlength="1200" placeholder="What went well?"></textarea></div><div class="field"><label for="directorReportRisks">Risks</label><textarea id="directorReportRisks" maxlength="1200" placeholder="What needs attention?"></textarea></div><div class="field"><label for="directorReportAsks">Help needed from Daniel</label><textarea id="directorReportAsks" maxlength="1200" placeholder="Any decision or support needed?"></textarea></div><div class="field"><label for="directorReportNext">Next steps</label><textarea id="directorReportNext" maxlength="1200" placeholder="Your top priorities before the next check-in."></textarea></div></div><label for="directorSnapshotPeriod">Check-in type</label> <select id="directorSnapshotPeriod"><option>Mid-month</option><option>Month-end</option><option>Ad hoc</option></select></details>
+ <details class="simpleReportDetails"><summary>Review auto-filled notes <span class="meta">· edit if needed</span></summary><div class="trendNotesGrid"><div class="field"><label for="directorReportWins">Wins &amp; evidence</label><textarea id="directorReportWins" maxlength="6000" placeholder="What went well?"></textarea></div><div class="field"><label for="directorReportRisks">Gaps &amp; risks</label><textarea id="directorReportRisks" maxlength="6000" placeholder="What needs attention?"></textarea></div><div class="field"><label for="directorReportAsks">Help needed from Daniel</label><textarea id="directorReportAsks" maxlength="6000" placeholder="Any decision or support needed?"></textarea></div><div class="field"><label for="directorReportNext">How we win &amp; keep winning</label><textarea id="directorReportNext" maxlength="6000" placeholder="Your top priorities before the next check-in."></textarea></div></div><label for="directorSnapshotPeriod">Check-in type</label> <select id="directorSnapshotPeriod"><option>Mid-month</option><option>Month-end</option><option>Ad hoc</option></select></details>
  <div class="trendReportHead"><div><div class="label">REVIEW YOUR DRAFT</div><span class="meta" id="directorDraftHint">Select Create update to fill this in.</span></div><button class="btn" id="copyDirectorBrief" type="button" disabled>Copy update</button></div>
  <textarea class="directorBriefOutput" id="directorDanielBrief" aria-label="Daniel-ready director update" placeholder="Your update will appear here. You can edit it before copying."></textarea>
  <details class="simpleReportDetails"><summary>Past updates &amp; progress</summary><div class="trendSummary" id="directorScoreTrendSummary"></div><div class="trendGrid"><div class="trendChart" id="directorScoreTrendChart"></div><div class="trendHistory"><div class="label">SAVED CHECK-INS</div><div id="directorScoreSnapshotHistory"></div></div></div><button class="btn" id="generateDirectorBrief" type="button">Restore latest saved draft</button></details>
@@ -1704,7 +1704,7 @@ function buildDirectorScoreSnapshot(dashboard,capturedAt,notes,period,previous,w
  const leadPoints=Math.min(100,projectedRatio/1.15*100)*.30,activePoints=Math.min(100,counts.total/200*100)*.20;
  const tierPoints=channelPoints+aPoints+bPoints,total=Math.round((tierPoints+leadPoints+activePoints)*10)/10;
  const dashMetrics=dashboard&&dashboard.metrics||{},health=dashMetrics.relationshipHealth||{},portfolio={directorAccounts:Number(dashMetrics.directorAccounts)||0,atRisk:Number(dashMetrics.atRisk)||0,watch:Number(health.watch)||0,leadCheckIns:Number(dashMetrics.leadCheckIns)||0,growthOpportunities:Number(dashMetrics.growthOpportunities)||0};
- const dateKey=dLocalDate(now),clean=x=>String(x||'').trim().slice(0,1200),activity=directorPeriodActivity(shared,workRows,now,previous);
+ const dateKey=dLocalDate(now),clean=x=>String(x||'').trim().slice(0,6000),activity=directorPeriodActivity(shared,workRows,now,previous);
  return{
   id:'director-score-'+dateKey,capturedAt:now.toISOString(),dateKey,period:String(period||'Check-in'),sourceStamp:verified.stamp,
   target:{label:target.label,Channel:target.Channel,A:target.A,B:target.B},counts,portfolio,activity,monthLeads,daysElapsed,daysInMonth,projectedRatio,
@@ -1721,33 +1721,43 @@ function buildDirectorScoreSnapshot(dashboard,capturedAt,notes,period,previous,w
  };
 }
 function directorSuggestedReportNotes(current,previous,opportunities=[]){
- const c=current.counts,t=current.target,a=current.activity||{},p=current.portfolio||{},wins=[],risks=[],next=[];
+ const c=current.counts,t=current.target,a=current.activity||{},p=current.portfolio||{},wins=[],risks=[],next=[],sustain=[];
  const met=['A','Channel','B'].filter(k=>c[k]>=t[k]);
- if(met.length)wins.push(met.join(' and ')+' meet the current tier targets.');
- if(previous&&current.score>previous.score)wins.push('Score increased '+(current.score-previous.score).toFixed(1)+' points since the previous saved check-in.');
- if(a.meetingsHeld>0)wins.push(a.meetingsHeld+' meetings logged as held in the report period.');
- if(a.relationshipsAdvanced>0)wins.push(a.relationshipsAdvanced+' director actions logged as Relationship Advanced.');
- if(a.relationshipsProtected>0)wins.push(a.relationshipsProtected+' director actions logged as Relationship Protected.');
- if(!wins.length)wins.push('No additional wins established by the available data.');
- if(current.score<100)risks.push((100-current.score).toFixed(1)+' points to the 100% scorecard goal.');
- if(current.score<85)risks.push('Also '+(85-current.score).toFixed(1)+' points below the 85% minimum.');
+ if(met.length)wins.push(met.join(' and ')+' meet the current tier targets: '+met.map(k=>c[k]+' '+k+' against a target of '+t[k]+(c[k]>t[k]?' ('+(c[k]-t[k])+' above target)':'')).join('; ')+'. These are current portfolio results, not proof of new tier moves. Channel remains included in A.');
+ if(previous){
+  const change=current.score-previous.score;
+  wins.push('Since the previous saved check-in, the score '+(change>0?'increased '+change.toFixed(1):change<0?'decreased '+Math.abs(change).toFixed(1):'held steady at '+current.score.toFixed(1))+(change?' points.':'%.'));
+  const gains=['A','B','Channel'].filter(k=>c[k]>previous.counts[k]);
+  if(gains.length)wins.push('Net portfolio gains since that check-in: '+gains.map(k=>(c[k]-previous.counts[k])+' '+k).join(', ')+'. Net gains do not identify which individual agents moved.');
+ }else wins.push('This is the first saved comparison baseline; growth since a prior check-in cannot yet be established.');
+ wins.push(current.monthLeads+' referred leads are recorded month-to-date.');
+ if(a.meetingsHeld>0)wins.push(a.meetingsHeld+' meetings were logged as held in the report period'+(a.meetingsBooked>0?', with '+a.meetingsBooked+' meeting bookings logged':'')+'. This shows relationship activity; the records do not establish how many referrals or closings those meetings produced.');
+ if(a.relationshipsAdvanced>0||a.relationshipsProtected>0)wins.push('Director work includes '+(a.relationshipsAdvanced||0)+' actions marked Relationship Advanced and '+(a.relationshipsProtected||0)+' marked Relationship Protected. These are logged outcomes, not a count of unique agents.');
+ if(current.score<100)risks.push((100-current.score).toFixed(1)+' points to the 100% scorecard goal'+(current.score<85?'; '+(85-current.score).toFixed(1)+' points below the 85% minimum':'')+'.');
  const gaps=['B','A','Channel'].filter(k=>c[k]<t[k]).map(k=>(t[k]-c[k])+' '+k);
- if(gaps.length)risks.push('Tier gaps: '+gaps.join(', ')+'.');
- if(p.atRisk>0)risks.push(p.atRisk+' director accounts flagged at risk.');
- if(previous&&current.score<previous.score)risks.push('Score declined '+(previous.score-current.score).toFixed(1)+' points since the previous saved check-in.');
- if(!risks.length)risks.push('No score or tier-target gaps flagged in these figures; continue monitoring relationship health.');
- const leadGap=Math.max(0,100-current.monthLeads);
+ if(gaps.length)risks.push('Tier gaps: '+gaps.join(', ')+'. Additional meetings alone will not close these gaps; partner production must move enough agents into the needed tiers.');
+ const metricLabels={active:'Active-agent base',agentToLead:'Agent-to-lead ratio',b:'B partners',a:'A partners',channel:'Channel partners'};
+ const pointGaps=Object.entries(current.metrics||{}).filter(([key,m])=>metricLabels[key]&&Number.isFinite(m.weight)&&Number.isFinite(m.points)&&m.weight>m.points).map(([key,m])=>({label:metricLabels[key],gap:m.weight-m.points})).sort((x,y)=>y.gap-x.gap);
+ if(pointGaps.length)risks.push('Largest unearned scorecard points: '+pointGaps.slice(0,3).map(x=>x.label+' '+x.gap.toFixed(1)).join('; ')+'.');
+ if(p.atRisk>0)risks.push(p.atRisk+' director accounts are flagged at risk. Review the account evidence and last contact before deciding the intervention; an alert is not proof the relationship is lost.');
+ if(!risks.length)risks.push('Current score and tier targets are met. Protect those results as the reporting window and targets change.');
  const ratioGoal=Number(current.metrics&&current.metrics.agentToLead&&current.metrics.agentToLead.goal)||1.15;
  const fullLeadTarget=Math.max(100,Math.ceil(c.total*ratioGoal)),fullLeadGap=Math.max(0,fullLeadTarget-current.monthLeads);
- if(fullLeadGap)next.push('Target '+fullLeadGap+' more referred leads this month ('+fullLeadTarget+' total at the current active-agent base) to support full lead-score points.' );
- if(leadGap)next.push('The monthly minimum is '+leadGap+' more leads, but that is not the finish line.');
- if(c.total<200)next.push('Grow the LP active-agent base by '+(200-c.total)+' to reach 200.');
- if(p.atRisk>0)next.push('Review the '+p.atRisk+' at-risk accounts and confirm owners and follow-up dates.');
- const near=opportunities.filter(row=>row.gap===1);if(near.length)next.push('Prioritize the '+near.length+' agent'+(near.length===1?'':'s')+' one closing from the next tier; confirm buyer opportunities with the LP.');
- if(gaps.length)next.push('Close the tier gaps: '+gaps.join(', ')+'.');
- next.push('Aim for 100% on the scorecard; 85% is only the minimum.');
- const asks=a.leadershipRouted>0?a.leadershipRouted+' director actions were routed to leadership in this period. Review those records to confirm whether Daniel has an outstanding decision.':'No leadership request identified in the logged director work. Add one only if needed.';
- return{wins:wins.join(' '),risks:risks.join(' '),asks,next:'Suggested priorities: '+next.join(' ')};
+ if(fullLeadGap)next.push('Lead production: target '+fullLeadGap+' more referred leads this month ('+fullLeadTarget+' total at the current active-agent base) to support full lead-score points. Recalculate as the active base changes; the score uses a projected month-end ratio until month-end.');
+ else next.push('Lead production: protect the current monthly lead result and keep the referral pipeline moving as the active base grows.');
+ if(current.monthLeads<100)next.push('The 100-lead minimum still needs '+(100-current.monthLeads)+' more leads; reaching it alone does not mean a 100% scorecard.');
+ if(c.total<200)next.push('New relationships: grow the LP active-agent base by '+(200-c.total)+' to reach 200. Suggested owners: Amanda runs cold calls and buddy-introduction follow-ups; Nyny supports introductions and relationship strategy. Count results only when the source data qualifies the agent as active.');
+ const targetOrder=['B','A','Channel'].filter(k=>c[k]<t[k]).concat(['B','A','Channel'].filter(k=>c[k]>=t[k]));
+ const near=opportunities.filter(row=>row.gap===1).sort((x,y)=>targetOrder.indexOf(x.target)-targetOrder.indexOf(y.target)||String(x.agent).localeCompare(String(y.agent)));
+ if(near.length){const name=x=>typeof directorDisplayName==='function'?directorDisplayName(x):String(x);next.push('Tier advancement: '+near.length+' agent'+(near.length===1?' is':'s are')+' one closing from the next tier. Examples to review, with under-target tiers first: '+near.slice(0,4).map(row=>name(row.agent)+' → '+row.target+' (owner: '+(row.owner||'unassigned')+')').join('; ')+'. Each owner should confirm active buyer opportunities with the LP, identify the next useful action, and record a follow-up date. Pipeline is not synced here, so these are candidates to review, not forecasted promotions.');}
+ if(gaps.length)next.push('Close the tier gaps: '+gaps.join(', ')+'. Review the full move-up list after the first priority contacts.');
+ next.push('Transaction calls: use Tuesday updates and CTC calls to earn a meeting with listing agents who do not currently work with NFM. Keep the transaction update useful, then ask for the next conversation; log the outcome and follow-up.');
+ if(p.atRisk>0)sustain.push('Nyny: review the '+p.atRisk+' at-risk accounts, confirm the specific concern, and assign a next action and due date. Keep A, B, Channel and builder relationships on their agreed contact cadence.');
+ sustain.push('Amanda: keep weekly Realtor calls, cold outreach, buddy introductions and scheduled follow-ups moving. After each new-agent meeting, confirm whether the agent belongs in the four-week campaign and schedule the next touch.');
+ sustain.push('At the next check-in, compare referred leads, active-agent and tier counts, meetings held and unresolved risks. Check whether outreach led to meetings and referrals before treating activity volume as a win. Repeat what produces results and adjust stalled follow-ups.');
+ sustain.push('Aim for 100% on the scorecard; 85% is only the minimum.');
+ const asks=a.leadershipRouted>0?a.leadershipRouted+' director actions were routed to leadership in this period. Review those records, identify the unresolved decision and add the owner and needed-by date before asking Daniel for support.':'No leadership request is established by the logged director work. Suggested discussion only: confirm priorities and ask for a targeted introduction or escalation support if a specific account is blocked; do not present this as an existing commitment.';
+ return{wins:wins.join('\n\n'),risks:risks.join('\n\n'),asks,next:'HOW WE WIN — proposed actions\n'+next.map(x=>'• '+x).join('\n\n')+'\n\nHOW WE KEEP WINNING — repeatable follow-through\n'+sustain.map(x=>'• '+x).join('\n\n')};
 }
 
 function buildDanielDirectorBrief(current,previous){
@@ -1770,7 +1780,7 @@ function buildDanielDirectorBrief(current,previous){
   'Team activity ('+current.activity.from+' to '+current.activity.to+'): '+current.activity.calls+' calls, '+current.activity.connections+' connections, '+current.activity.meetingsBooked+' meetings booked, '+current.activity.meetingsHeld+' held.'
  ];
  if(!current.activity.complete)lines.push('Activity coverage starts '+current.activity.coveredFrom+'; earlier activity may be missing.');
- [['Wins',notes.wins],['Risks',notes.risks],['Help needed',notes.asks],['Next steps',notes.next]].forEach(([label,value])=>{if(value)lines.push('',label+': '+value)});
+ [['WINS & EVIDENCE',notes.wins],['GAPS & RISKS',notes.risks],['LEADERSHIP SUPPORT',notes.asks],['EXECUTION PLAN',notes.next]].forEach(([label,value])=>{if(value)lines.push('',label+': '+value)});
  lines.push('','Source data as of '+new Date(current.sourceStamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'.');
  return lines.join('\n');
 }
