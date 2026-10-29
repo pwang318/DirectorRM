@@ -1,7 +1,7 @@
   
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nyny · Director Workspace</title><meta name="director-version" content="director-moveup-v6-20261029">
+<title>Nyny · Director Workspace</title><meta name="director-version" content="director-news-v7-20261029">
 <style>
 :root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
 .whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
@@ -251,7 +251,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 </div></div></details>
 <details class="overviewDetails"><summary><span>Meetings &amp; Central Ohio market brief</span><span class="detailsHint">Director planning and timely talking points</span></summary><div class="overviewDetailsBody">
 <div class="card workbenchCard directorWeekBoard"><div class="directorWeekHead"><div><div class="label">DIRECTOR WEEK BOARD · MANUAL PLAN</div><h2>Meetings where your presence matters</h2><p class="workbenchIntro">Plan the meetings you want to join, your role, and the result you want. Shows overdue and upcoming meetings through the next 14 days.</p></div><button class="btn primary" type="button" id="planDirectorMeeting">+ Plan a meeting</button></div><div class="meta">Meeting dates are entered manually and saved in this browser; Amanda’s shared activity feed does not include future calendar dates or attendance plans.</div><div id="directorMeetingList" class="directorMeetingList"><div class="queueEmpty">No Director meetings planned yet.</div></div></div>
-<div class="card workbenchCard marketBrief"><div class="label">CENTRAL OHIO · AGENT VALUE BRIEF · UPDATED OCT 13, 2026</div><h2>A timely reason to check in</h2><p class="workbenchIntro">September inventory rose 12.3% to 6,530 homes and median days on market rose to 33 from 30. Supply is still only 2.6 months, so the region remains seller-leaning overall.</p><div class="marketTalkTrack"><b>Try this with an agent:</b> “Buyers have more homes and a little more time to compare. What are you seeing in your business? Send me a listing or buyer scenario you want to plan around, and we can talk through financing options early.”</div><div class="workbenchLinks"><a href="https://columbusrealtors.com/news/central-ohio-housing-reports---september-2026" target="_blank" rel="noopener">Open Columbus REALTORS’ source report ↗</a><span class="meta">Refresh this brief after each monthly release.</span></div></div>
+<div class="card workbenchCard marketBrief" id="directorMarketBrief"><div class="label">MARKET NEWS · AGENT CONVERSATION STARTERS</div><h2>What’s happening in the market</h2><div style="padding:12px 0 18px;border-bottom:1px solid #e4eae7;margin-bottom:18px"><h3>Daily mortgage updates</h3><p class="workbenchIntro">Mortgage News Daily — check the latest headlines and rate commentary before your agent calls.</p><div class="workbenchLinks"><a href="https://www.mortgagenewsdaily.com/" target="_blank" rel="noopener">Latest headlines ↗</a><a href="https://www.mortgagenewsdaily.com/topic/mortgage-rates" target="_blank" rel="noopener">Mortgage Rate Watch ↗</a><a href="https://www.mortgagenewsdaily.com/mortgage-rates" target="_blank" rel="noopener">Current rate index ↗</a></div><p class="meta">Opens the current source. Article dates and times are shown by Mortgage News Daily.</p></div><h3>Local housing · September 2026 report</h3><p class="meta">Published by Columbus REALTORS®: October 13, 2026 · Report period: September 2026</p><p class="meta" id="marketVerifiedAt" data-checked-at="2026-10-29T21:22:19Z">Source checked October 29, 2026</p><p class="workbenchIntro">Latest local report verified October 29. Monthly reports cover a completed month, so the report month trails today’s date.</p><p class="workbenchIntro">Inventory rose 12.3% to 6,530 homes, with 33 days on market and 2.6 months of supply. Buyers have more choice, while the market remains seller-leaning overall.</p><div class="marketTalkTrack"><b>Try this with an agent:</b> “Which buyers are still hoping to move before year-end? Let’s review their financing and any listings where there may be room to negotiate.”</div><div class="workbenchLinks"><a href="https://columbusrealtors.com/news/central-ohio-housing-reports---september-2026" target="_blank" rel="noopener">Read this report ↗</a><a href="https://columbusrealtors.com/recent-news" target="_blank" rel="noopener">Check latest releases ↗</a></div><p class="meta" id="marketFreshnessStatus" role="status"></p><p class="meta">Local summary is a verified snapshot; it does not refresh automatically. Use the source links for new releases.</p></div>
 </div></details>
 <details class="overviewDetails"><summary><span>Browse all dashboard sections</span><span class="detailsHint">Quick links to the detail views below</span></summary><div class="overviewDetailsBody">
 <div class="grid modules" id="overviewModules">
@@ -2136,6 +2136,21 @@ function bindAmandaTrend(){
  card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){launch(e)}});
 }
 
+function directorMarketFreshness(checkedAt,now=new Date()){
+ const checked=new Date(checkedAt).getTime(),age=now.getTime()-checked;
+ if(!Number.isFinite(checked)||age<0)return 'Verification date unavailable';
+ return age>7*86400000?'Source recheck due':'Recently verified';
+}
+function renderDirectorMarketBrief(){
+ const stamp=$('marketVerifiedAt'),status=$('marketFreshnessStatus');if(!stamp||!status)return;
+ const checkedAt=stamp.dataset.checkedAt,freshness=directorMarketFreshness(checkedAt);
+ const timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+ const formatted=new Intl.DateTimeFormat(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(checkedAt));
+ stamp.textContent='Source checked: '+formatted+' · Your device time zone ('+timezone+')';
+ status.textContent=freshness+(freshness==='Source recheck due'?' — this brief may have a newer release. Use “Check latest releases” before sharing.':freshness==='Recently verified'?' · Latest available report when checked.':'');
+ status.style.color=freshness==='Source recheck due'?'#97551c':'';
+}
+
 function directorMoveUpCandidates(dashboard){
  const shared=dashboard.shared||{},snapshot=dirLatestPbSnapshot(shared.profiles||[],shared.receipt);
  const key=value=>String(value||'').trim().replace(/\s+/g,' ').toLowerCase();
@@ -2171,7 +2186,7 @@ function mountDirectorHome(){
  const workbench=overview.querySelector('.workbench'),search=workbench.children[0],queue=workbench.children[1];
  const today=$('amandaTodayCoach'),meetings=overview.querySelector('.directorWeekBoard');
  const attention=overview.querySelector('.overviewDetails');$('view-relationships').append(attention);
- const market=overview.querySelector('.marketBrief');if(market)growth.append(market);
+ const market=overview.querySelector('.marketBrief');if(market)growth.append(market);renderDirectorMarketBrief();
  overview.replaceChildren();
  const home=document.createElement('div');home.id='directorFocusHome';
  home.innerHTML=`<div class="focusHeading"><div><div class="eyebrow">YOUR DIRECTOR WORKSPACE</div><h2>Make the next move count.</h2><p id="directorHomeDate"></p></div><button class="btn primary" id="homeLogWork">+ Log my work</button></div>
@@ -2218,6 +2233,7 @@ function openDirectorFullQueue(){
  closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
 }
 function renderDirectorHome(){
+ renderDirectorMarketBrief();
  renderDirectorMoveUps();
  if(!$('directorFocusHome'))return;
  const dashboard=window.__directorDashboard;
