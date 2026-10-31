@@ -1,7 +1,7 @@
   
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nyny · Director Workspace</title><meta name="director-version" content="director-detailed-v11-20261029">
+<title>Nyny · Director Workspace</title><meta name="director-version" content="director-detailed-v12-20261031">
 <style>
 :root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
 .whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
@@ -311,7 +311,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <section class="view" id="view-impact"><div class="viewHead"><div><h2>Daniel update</h2><div class="meta">Create a draft from your current numbers, review it, then copy it for Daniel.</div></div><button class="backBtn" data-view="overview">← Overview</button></div>
 <div class="card directorTrendPanel" id="directorScoreTrendPanel">
  <div class="trendPanelHead"><div><div class="label">YOUR NEXT CHECK-IN</div><h3>A clear update, without the extra steps.</h3><p class="meta">Your numbers, wins, risks and suggested next steps are filled in from the tracker. Review, then copy. Nothing is sent automatically.</p></div><button class="btn primary" id="saveDirectorScoreSnapshot" type="button" disabled>Create update</button></div>
- <div class="trendLiveStatus" id="directorTrendLiveStatus">Loading current scorecard…</div>
+ <div class="trendLiveStatus" id="directorTrendLiveStatus">Loading current scorecard…</div><p class="meta" style="margin:7px 0 13px">Checkpoints save in this browser only. Use <b>Exports &amp; backups</b> to keep a copy or move between devices. The draft is not sent to Daniel automatically.</p>
  <details class="simpleReportDetails"><summary>Review auto-filled notes <span class="meta">· edit if needed</span></summary><div class="trendNotesGrid"><div class="field"><label for="directorReportWins">Wins &amp; evidence</label><textarea id="directorReportWins" maxlength="6000" placeholder="What went well?"></textarea></div><div class="field"><label for="directorReportRisks">Gaps &amp; risks</label><textarea id="directorReportRisks" maxlength="6000" placeholder="What needs attention?"></textarea></div><div class="field"><label for="directorReportAsks">Help needed from Daniel</label><textarea id="directorReportAsks" maxlength="6000" placeholder="Any decision or support needed?"></textarea></div><div class="field"><label for="directorReportNext">How we win &amp; keep winning</label><textarea id="directorReportNext" maxlength="6000" placeholder="Your top priorities before the next check-in."></textarea></div></div><label for="directorSnapshotPeriod">Check-in type</label> <select id="directorSnapshotPeriod"><option>Mid-month</option><option>Month-end</option><option>Ad hoc</option></select></details>
  <div class="trendReportHead"><div><div class="label">REVIEW YOUR DRAFT</div><span class="meta" id="directorDraftHint">Select Create update to fill this in.</span></div><button class="btn" id="copyDirectorBrief" type="button" disabled>Copy update</button></div>
  <textarea class="directorBriefOutput" id="directorDanielBrief" aria-label="Daniel-ready director update" placeholder="Your update will appear here. You can edit it before copying."></textarea>
@@ -1762,27 +1762,30 @@ function directorSuggestedReportNotes(current,previous,opportunities=[]){
 
 function buildDanielDirectorBrief(current,previous){
  if(!current)throw new Error('Save a score snapshot first.');
- const delta=(a,b)=>{const n=Number(a||0)-Number(b||0);return(n>0?'+':'')+n.toFixed(1)};
- const countDelta=(a,b)=>{const n=Number(a||0)-Number(b||0);return(n>0?'+':'')+n};
- const d=new Date(current.capturedAt),date=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
- const trend=previous?' ('+delta(current.score,previous.score)+' points vs '+new Date(previous.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'})+')':' (baseline; next checkpoint will show change)';
- const tierDelta=k=>previous?' · '+countDelta(current.counts[k],previous.counts[k])+' vs prior':'';
- const pace=current.tierOnPace?'On pace for this checkpoint’s tier targets.':'Behind this checkpoint’s targets: '+[['Channel',current.target.Channel-current.counts.Channel],['A',current.target.A-current.counts.A],['B',current.target.B-current.counts.B]].filter(x=>x[1]>0).map(x=>x[1]+' '+x[0]).join(', ')+'.';
- const note=x=>x||'None noted.',portfolioDelta=k=>previous?' ('+countDelta(current.portfolio&&current.portfolio[k],previous.portfolio&&previous.portfolio[k])+' vs prior)':'';
- const notes=current.notes||{},lines=[
-  'DIRECTOR UPDATE · '+date,
-  '',
-  'Scorecard: '+Number(current.score).toFixed(1)+' / 100'+trend+'.',
-  'Partner mix: '+current.counts.Channel+' Channel, '+current.counts.A+' A, '+current.counts.B+' B. Channel is included in A.',
-  'Active agents: '+current.counts.total+' / 200. Realtor leads this month: '+current.monthLeads+'.',
-  pace,
-  'Relationship health: '+current.portfolio.atRisk+' at risk; '+current.portfolio.growthOpportunities+' growth opportunities.',
-  'Team activity ('+current.activity.from+' to '+current.activity.to+'): '+current.activity.calls+' calls, '+current.activity.connections+' connections, '+current.activity.meetingsBooked+' meetings booked, '+current.activity.meetingsHeld+' held.'
+ const c=current.counts||{},t=current.target||{},p=current.portfolio||{},a=current.activity||{},notes=current.notes||{};
+ const date=new Date(current.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+ const n=v=>Number(v)||0,sign=v=>(v>0?'+':'')+v,score=n(current.score);
+ const scoreChange=previous?' ('+sign((score-n(previous.score)).toFixed(1))+' pts since '+new Date(previous.capturedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'})+')':' (first saved baseline; no prior comparison)';
+ const tierKeys=['Channel','A','B'],tierLine=tierKeys.map(k=>k+' '+n(c[k])+'/'+n(t[k])+(previous?' ('+sign(n(c[k])-n(previous.counts&&previous.counts[k]))+' net)':'')).join(' · ');
+ const shortfall=Math.max(0,200-n(c.total)),leadMinimumGap=Math.max(0,100-n(current.monthLeads));
+ const leadRatioGoal=n(current.metrics&&current.metrics.agentToLead&&current.metrics.agentToLead.goal)||1.15;
+ const fullLeadGoal=Math.max(100,Math.ceil(n(c.total)*leadRatioGoal)),fullLeadGap=Math.max(0,fullLeadGoal-n(current.monthLeads));
+ const compact=(value,limit)=>String(value||'').replace(/HOW WE WIN\s*[—-]\s*proposed actions/ig,'').replace(/HOW WE KEEP WINNING\s*[—-]\s*repeatable follow-through/ig,'').replace(/[•]/g,'').split(/\n\s*\n|\n/).map(x=>x.trim()).filter(Boolean).slice(0,limit).join(' ');
+ const lines=[
+  'DIRECTOR CHECKPOINT | '+date+' | '+current.period,
+  'WEIGHTED SCORE: '+score.toFixed(1)+'/100'+scoreChange+'. '+Math.max(0,85-score).toFixed(1)+' pts to 85% minimum; '+Math.max(0,100-score).toFixed(1)+' pts to 100% goal.',
+  'PARTNER MIX (50% of score): '+tierLine+'. Channel is included in A, not counted as an additional active agent.',
+  'ACTIVE BASE (20%): '+n(c.total)+'/200 ('+shortfall+' remaining)'+(previous?'; '+sign(n(c.total)-n(previous.counts&&previous.counts.total))+' net vs last checkpoint':'')+'.',
+  'LEAD PRODUCTION (30%): '+n(current.monthLeads)+' MTD; '+leadMinimumGap+' to the 100-lead minimum; '+fullLeadGap+' to '+fullLeadGoal+' for full lead-ratio points at the current base. '+(current.daysElapsed<current.daysInMonth?'Lead scoring projects month-end pace.':'Lead scoring reflects month-end pace.'),
+  'KEY WINS: '+(compact(notes.wins,2)||'No verified wins recorded in the notes.'),
+  'RISKS: '+(compact(notes.risks,3)||'Review tier gaps, referral pace, and at-risk relationships.')+' '+n(p.atRisk)+' Director accounts flagged at risk.',
+  'OPPORTUNITIES: '+n(p.growthOpportunities)+' growth opportunities; '+Math.max(0,n(t.B)-n(c.B))+' additional B, '+Math.max(0,n(t.A)-n(c.A))+' additional A, and '+Math.max(0,n(t.Channel)-n(c.Channel))+' additional Channel relationships to meet this checkpoint.',
+  'LEADERSHIP ASK: '+(compact(notes.asks,2)||'No specific request confirmed; identify account, owner, decision and due date before escalating.'),
+  'NEXT-PERIOD ACTIONS: '+(compact(notes.next,3)||'Protect at-risk accounts, prioritize tier advancement, grow the active base, and convert outreach into referred leads.'),
+  'ACTIVITY ('+a.from+' to '+a.to+'): '+n(a.calls)+' calls, '+n(a.connections)+' conversations, '+n(a.meetingsBooked)+' meetings booked, '+n(a.meetingsHeld)+' held'+(!a.complete?' (partial coverage from '+a.coveredFrom+')':'')+'.',
+  'DATA AS OF: '+new Date(current.sourceStamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'. Checkpoint history is saved in this browser; download a backup for safekeeping.'
  ];
- if(!current.activity.complete)lines.push('Activity coverage starts '+current.activity.coveredFrom+'; earlier activity may be missing.');
- [['WINS & EVIDENCE',notes.wins],['GAPS & RISKS',notes.risks],['LEADERSHIP SUPPORT',notes.asks],['EXECUTION PLAN',notes.next]].forEach(([label,value])=>{if(value)lines.push('',label+': '+value)});
- lines.push('','Source data as of '+new Date(current.sourceStamp).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'.');
- return lines.join('\n');
+ return lines.join('\n\n');
 }
 function directorScoreHistoryCsv(history){
  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
@@ -1800,7 +1803,7 @@ function renderDirectorScoreTrends(){
  let live=null;try{if(dashboard)live=buildDirectorScoreSnapshot(dashboard,new Date(),{},'Live',history.filter(row=>row.dateKey!==dLocalDate(new Date())).at(-1)||null,saved(WORK_KEY))}catch(_){}
  if(live){const suggestions=directorSuggestedReportNotes(live,history.filter(row=>row.dateKey!==dLocalDate(new Date())).at(-1)||null,directorMoveUpCandidates(dashboard));[['directorReportWins','wins'],['directorReportRisks','risks'],['directorReportAsks','asks'],['directorReportNext','next']].forEach(([id,key])=>{const field=$(id);if(field&&!field.dataset.userEdited)field.value=suggestions[key]});}
  const save=$('saveDirectorScoreSnapshot');if(save)save.disabled=!live;
- const status=$('directorTrendLiveStatus');if(status)status.textContent=live?'Live score: '+live.score.toFixed(1)+' / 100 · data through '+new Date(live.sourceStamp).toLocaleDateString():'Waiting for current scorecard data. Use Sync Now if needed.';
+ const status=$('directorTrendLiveStatus');if(status)status.textContent=live?'Live score: '+live.score.toFixed(1)+' / 100 · data through '+new Date(live.sourceStamp).toLocaleDateString()+(latest?' · last saved '+Number(latest.score).toFixed(1)+' / 100 ('+((live.score-latest.score)>=0?'+':'')+(live.score-latest.score).toFixed(1)+' pts)':' · no saved checkpoint in this browser'):'Waiting for current scorecard data. Use Sync Now if needed.';
  const summary=$('directorScoreTrendSummary');
  if(summary){if(history.length<1)summary.textContent='Your first update starts your progress history.';else if(!previous)summary.textContent='Baseline saved '+new Date(latest.capturedAt).toLocaleDateString()+' at '+Number(latest.score).toFixed(1)+' / 100. Save the next check-in to measure movement.';else{const delta=latest.score-previous.score;summary.textContent='Since '+new Date(previous.capturedAt).toLocaleDateString()+': '+(delta>0?'+':'')+delta.toFixed(1)+' score points · Channel '+(latest.counts.Channel-previous.counts.Channel>=0?'+':'')+(latest.counts.Channel-previous.counts.Channel)+' · A '+(latest.counts.A-previous.counts.A>=0?'+':'')+(latest.counts.A-previous.counts.A)+' · B '+(latest.counts.B-previous.counts.B>=0?'+':'')+(latest.counts.B-previous.counts.B)+'.';}}
  const chart=$('directorScoreTrendChart');
