@@ -197,8 +197,7 @@ body{background:var(--bg);color:var(--ink)}
 .trendCapture label{font-size:11px;color:var(--muted);display:grid;gap:5px}
 .trendCapture select{border:1px solid var(--line);border-radius:9px;padding:9px;background:#fff;color:var(--ink)}
 .trendLiveStatus{margin:13px 0 7px;padding:9px 12px;border-radius:9px;background:#f1f7f3;color:#3c6f5b;font-size:11px}
-.trendSummary{font-size:12px;font-weight:650;color:#285f50;margin:8px 0 12px}
-.trendGrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(240px,.8fr);gap:14px;align-items:stretch}
+.trendSummary{font-size:12px;font-weight:650;color:#285f50;margin:8px 0 12px}.trendGrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(240px,.8fr);gap:14px;align-items:stretch}
 .trendChart,.trendHistory{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px}
 .trendChart svg{display:block;width:100%;height:200px;overflow:visible}
 .trendChart svg line{stroke:#e5ece7;stroke-width:1}.trendChart svg text{fill:#71877f;font:10px Arial,sans-serif}
@@ -397,8 +396,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
     const type = String(input.type || '').trim();
     const outcome = String(input.outcome || '').trim();
     const tier = String(input.tier || '').trim().toUpperCase();
-    let days = null;
-    let reason = '';
+    let days = null;    let reason = '';
     if (/At-Risk Intervention|Escalation/i.test(type) || /Routed to Leadership/i.test(outcome)) {
       days = 3; reason = 'urgent intervention';
     } else if (/Follow-up Needed/i.test(outcome) || /Warm Introduction/i.test(type)) {
@@ -597,8 +595,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
   }
 
   function accountTier(profile) {
-    const tier = (text(profile && profile.tier) || text(profile && profile.powerbi_level)).toUpperCase();
-    if (text(profile && profile.relationship_type).toLowerCase() === 'strategic_partner' && !['A', 'B', 'CHANNEL', 'BUILDER'].includes(tier)) return 'STRATEGIC';
+    const tier = (text(profile && profile.tier) || text(profile && profile.powerbi_level)).toUpperCase();    if (text(profile && profile.relationship_type).toLowerCase() === 'strategic_partner' && !['A', 'B', 'CHANNEL', 'BUILDER'].includes(tier)) return 'STRATEGIC';
     return tier;
   }
 
@@ -797,8 +794,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 
     const historyByName = new Map();
     (Array.isArray(input.profiles) ? input.profiles : []).forEach(profile => {
-      const name = keyName(profile && profile.agent_name);
-      const tier = accountTier(profile);
+      const name = keyName(profile && profile.agent_name);      const tier = accountTier(profile);
       if (!name || !tier) return;
       const rows = historyByName.get(name) || [];
       rows.push(profile);
@@ -997,8 +993,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
     }).slice().sort((left, right) => direction * String(left.agent || '').localeCompare(String(right.agent || ''), undefined, {sensitivity: 'base'}));
   }
 
-  function relationshipTypePatch(rawType) {
-    const type = String(rawType || '').trim().toUpperCase();
+  function relationshipTypePatch(rawType) {    const type = String(rawType || '').trim().toUpperCase();
     if (type === 'A' || type === 'B' || type === 'C') return {tier: type, powerbi_level: type, relationship_type: 'realtor', relationship_status: 'active'};
     if (type === 'CHANNEL' || type === 'BUILDER' || type === 'STRATEGIC') return {tier: type, powerbi_level: null, relationship_type: 'strategic_partner', relationship_status: 'active'};
     if (type === 'UNASSIGNED') return {tier: null, powerbi_level: null, relationship_type: 'realtor', relationship_status: 'active'};
@@ -1197,8 +1192,7 @@ function closeModal(id){
 function openWorkFor(name){
  closeAllOverlays(); openModal('workModal');
  const f=document.querySelector('#workForm [name="agent"]'); if(f)f.value=name;
- updateWorkSuggestion();
-}
+ updateWorkSuggestion();}
 function openLeadCheckin(name){
  openWorkFor(name);
  const form=$('workForm');if(!form)return;
@@ -1397,8 +1391,7 @@ function saveForm(form,key){
  if(key===WORK_KEY){const follow=form.elements.followup;if(follow){follow.dataset.manual='';follow.dataset.autoValue=''}updateWorkSuggestion()}
  closeModal(key===WORK_KEY?'workModal':key===FEEDBACK_KEY?'feedbackModal':'coachModal');
  const activeRange=document.querySelector('[data-range].active');renderWhoNeeds(activeRange?activeRange.dataset.range:'month');
- if(key===WORK_KEY&&window.__directorDashboard)rebuildDirectorDashboardFromCurrent();
- toastMsg(key===WORK_KEY?'Director work saved':key===FEEDBACK_KEY?'Agent feedback saved':'Coaching note saved');
+ if(key===WORK_KEY&&window.__directorDashboard)rebuildDirectorDashboardFromCurrent(); toastMsg(key===WORK_KEY?'Director work saved':key===FEEDBACK_KEY?'Agent feedback saved':'Coaching note saved');
 }
 function parseLocalDate(v){
  if(!v)return null; const p=v.split('-').map(Number);
@@ -1597,8 +1590,7 @@ async function loadDirectorSharedPowerBi(force){
   ['kpiActive','dirChannelCount','dirACount','dirBCount'].forEach(id=>dirSetText(id,'—'));
   if(st){st.textContent='⚠ Shared Power BI unavailable · '+(e.message||'Unknown error')+' · Select Sync Now to retry';st.setAttribute('role','alert');}
   return null;
- }
-}
+ }}
 function rowsChannel(rows){return (rows||[]).filter(p=>String(p.tier||'').trim().toUpperCase()==='CHANNEL').length}
 window.loadDirectorSharedPowerBi=loadDirectorSharedPowerBi;
 
@@ -1797,8 +1789,7 @@ function directorSuggestedReportNotes(current,previous,opportunities=[]){
  if(p.atRisk>0)sustain.push('Nyny: review the '+p.atRisk+' at-risk accounts, confirm the specific concern, and assign a next action and due date. Keep A, B, Channel and builder relationships on their agreed contact cadence.');
  sustain.push('Amanda: keep weekly Realtor calls, cold outreach, buddy introductions and scheduled follow-ups moving. After each new-agent meeting, confirm whether the agent belongs in the four-week campaign and schedule the next touch.');
  sustain.push('At the next check-in, compare referred leads, active-agent and tier counts, meetings held and unresolved risks. Check whether outreach led to meetings and referrals before treating activity volume as a win. Repeat what produces results and adjust stalled follow-ups.');
- sustain.push('Aim for 100% on the scorecard; 85% is only the minimum.');
- const asks=a.leadershipRouted>0?a.leadershipRouted+' director actions were routed to leadership in this period. Review those records, identify the unresolved decision and add the owner and needed-by date before asking Daniel for support.':'No leadership request is established by the logged director work. Suggested discussion only: confirm priorities and ask for a targeted introduction or escalation support if a specific account is blocked; do not present this as an existing commitment.';
+ sustain.push('Aim for 100% on the scorecard; 85% is only the minimum.'); const asks=a.leadershipRouted>0?a.leadershipRouted+' director actions were routed to leadership in this period. Review those records, identify the unresolved decision and add the owner and needed-by date before asking Daniel for support.':'No leadership request is established by the logged director work. Suggested discussion only: confirm priorities and ask for a targeted introduction or escalation support if a specific account is blocked; do not present this as an existing commitment.';
  return{wins:wins.join('\n\n'),risks:risks.join('\n\n'),asks,next:'HOW WE WIN — proposed actions\n'+next.map(x=>'• '+x).join('\n\n')+'\n\nHOW WE KEEP WINNING — repeatable follow-through\n'+sustain.map(x=>'• '+x).join('\n\n')};
 }
 
@@ -1997,8 +1988,7 @@ function dPace(actual,goal){return goal<=0?'':actual>=goal?'On track':actual>=go
 function dFmtPct(n,d){return d?Math.round(n/d*100)+'%':'—'}
 
 
-function dTodayPaint(id,value,status){
- const el=$(id);if(!el)return;
+function dTodayPaint(id,value,status){ const el=$(id);if(!el)return;
  const big=el.querySelector('.big'),st=el.querySelector('.status');
  if(big)big.textContent=value;if(st&&status)st.textContent=status;
 }
@@ -2197,8 +2187,7 @@ function openAmandaTrend(){
  });
  const days=Object.keys(byDay).sort().reverse();
  const dayRows=days.length?days.map(d=>`<div class="result"><h3>${esc(d)}</h3><div class="meta">Calls ${byDay[d].calls} · Connections ${byDay[d].connections} · Booked ${byDay[d].booked} · Held ${byDay[d].held}</div></div>`).join(''):
-   `<div class="result"><h3>No activity</h3><div class="meta">No Amanda activity matched ${esc(b.label.toLowerCase())}.</div></div>`;
- $('drawerTitle').textContent='Amanda Trend View';
+   `<div class="result"><h3>No activity</h3><div class="meta">No Amanda activity matched ${esc(b.label.toLowerCase())}.</div></div>`; $('drawerTitle').textContent='Amanda Trend View';
  $('drawerSummary').textContent=b.label+' · live RM activity';
  $('drawerResults').innerHTML=`
  <div class="result"><h3>Performance Funnel</h3><div class="meta">Call attempts <b>${calls.length}</b> → Agent connections <b>${connections.length}</b> → Meetings booked <b>${booked.length}</b> → Meetings held <b>${held.length}</b></div></div>
@@ -2399,5 +2388,52 @@ window.addEventListener('unhandledrejection',e=>{
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',directorLiveStartup);
 else directorLiveStartup();
 
+
+/* Director-only consolidated RM/LP data diagnostics. Does not change source validation. */
+(function mountTrackerDiagnostics(){
+ const css=document.createElement('style');
+ css.textContent='#directorTrackerDiagnostics{margin:0 0 16px;padding:14px 16px;border:1px solid #d9e0e9;background:#fff;border-radius:11px;font-size:12px;color:#26344a}#directorTrackerDiagnostics h2{font-size:15px;margin:0 0 8px}#directorTrackerDiagnostics .diagGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#directorTrackerDiagnostics .diagPanel{border:1px solid #e5e9ef;border-radius:9px;padding:11px}#directorTrackerDiagnostics .diagPanel strong{display:block;font-size:13px;margin-bottom:4px}#directorTrackerDiagnostics .diagError{color:#9b3d24}#directorTrackerDiagnostics .diagOk{color:#207250}#directorTrackerDiagnostics small{font-size:11px;color:#657184}#directorTrackerDiagnostics button{padding:6px 10px;border:1px solid #ced7e2;background:#fff;border-radius:7px;cursor:pointer;font-size:11px}#directorTrackerDiagnostics .diagHead{display:flex;align-items:center;justify-content:space-between;gap:10px}#directorTrackerDiagnostics .diagList{margin:5px 0 0;padding-left:17px;line-height:1.6}@media(max-width:700px){#directorTrackerDiagnostics .diagGrid{grid-template-columns:1fr}}';
+ document.head.append(css);
+ const escapeDiag=v=>String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
+ async function load(){
+  const el=document.getElementById('directorTrackerDiagnostics');if(!el)return;
+  const lp=document.getElementById('directorDiagLP'),rm=document.getElementById('directorDiagRM');
+  lp.textContent='Checking latest shared import…';rm.textContent='Checking RM activity connection…';
+  try{
+   const [logs,profiles]=await Promise.all([
+    dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),
+    dSb('agent_profiles?select=agent_name,powerbi_last_seen_at,powerbi_level&limit=2000')
+   ]);
+   if(!logs?.length)throw Error('Latest LP Power BI import receipt missing');
+   const x=logs[0],receipt=String(x.imported_at||''),stampMatch=/profileStamp=([^;]+)/.exec(String(x.source_app||''));
+   const stamp=stampMatch?decodeURIComponent(stampMatch[1]):receipt;
+   const batch=profiles.filter(p=>p.powerbi_last_seen_at&&Math.abs(new Date(p.powerbi_last_seen_at).getTime()-new Date(stamp).getTime())<1500);
+   const unique=new Set(batch.map(p=>String(p.agent_name||'').trim().toLowerCase()).filter(Boolean)).size;
+   const expected=Number(x.rows_processed);
+   const tierCounts=Object.fromEntries(['A','B','C','CHANNEL'].map(t=>[t,batch.filter(p=>String(p.powerbi_level||'').toUpperCase()===t).length]));
+   const issues=[];
+   if(String(x.errors||'0')!=='0')issues.push('Import reported errors: '+String(x.errors));
+   if(!Number.isFinite(expected)||!expected)issues.push('Import count unavailable');
+   else if(unique!==expected)issues.push(expected+' source rows / '+unique+' matched profiles ('+(expected-unique)+' unmatched)');
+   if(!batch.length)issues.push('No profiles verified against latest import timestamp');
+   const reported=Object.fromEntries([...String(x.source_app||'').matchAll(/(?:^|;)(Channel|A|B|C)=(\d+)/g)].map(m=>[m[1].toUpperCase(),Number(m[2])]));
+   for(const tier of ['A','B','C','CHANNEL'])if(reported[tier]!==undefined&&reported[tier]!==tierCounts[tier])issues.push(tier+' count: reported '+reported[tier]+', profiles '+tierCounts[tier]);
+   lp.innerHTML='<div class="'+(issues.length?'diagError':'diagOk')+'">'+(issues.length?'<strong>Needs reconciliation</strong><ul class="diagList">'+issues.map(s=>'<li>'+escapeDiag(s)+'</li>').join('')+'</ul>':'<strong>Latest import verified</strong>')+'</div><small>Latest import: '+escapeDiag(receipt||'unknown')+'</small>';
+  }catch(e){lp.innerHTML='<strong class="diagError">LP data check failed</strong><small>'+escapeDiag(e.message||e)+'</small>'}
+  try{
+   const rows=await dSb('amanda_activities?select=id,created_at&order=created_at.desc&limit=1');
+   rm.innerHTML='<strong class="diagOk">RM shared activity connection responding</strong><small>'+(rows?.length?'Latest recorded activity: '+escapeDiag(rows[0].created_at||'date unavailable'):'No RM activities returned')+'</small>';
+  }catch(e){rm.innerHTML='<strong class="diagError">RM activity feed unavailable</strong><small>'+escapeDiag(e.message||e)+'</small>'}
+  const time=document.getElementById('directorDiagChecked');if(time)time.textContent='Checked '+new Date().toLocaleString();
+ }
+ function mount(){
+  if(document.getElementById('directorTrackerDiagnostics'))return;
+  const main=document.querySelector('.main');if(!main)return;
+  const el=document.createElement('section');el.id='directorTrackerDiagnostics';el.setAttribute('aria-label','Director-only RM and LP system diagnostics');
+  el.innerHTML='<div class="diagHead"><h2>RM + LP system diagnostics · Director only</h2><button id="directorDiagRefresh" type="button">Recheck</button></div><div class="diagGrid"><div class="diagPanel"><strong>LP Tracker · Power BI</strong><div id="directorDiagLP">Checking…</div></div><div class="diagPanel"><strong>RM Tracker · Activity feed</strong><div id="directorDiagRM">Checking…</div></div></div><small id="directorDiagChecked">Loading live system checks…</small><p style="margin:6px 0 0;font-size:11px;color:#687486">Reports import mismatches and shared-data connectivity. Browser-only UI errors in the RM and LP trackers require a separate centralized error log.</p>';
+  main.insertBefore(el,main.firstChild);document.getElementById('directorDiagRefresh').addEventListener('click',load);load();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+})();
 
 </script></body></html>
