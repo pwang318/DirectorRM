@@ -2178,23 +2178,6 @@ function bindAmandaManager(){
 
 function bindDirectorNavigation(){
  bindAmandaManager();
- if(!window.__directorDelegatedTileHandler){
-  window.__directorDelegatedTileHandler=true;
-  document.addEventListener('click',function(e){
-    const target=e.target.closest('[data-drill],.module[data-view]');
-    if(!target||target.dataset.directBound==='1'||target.closest('.drawer,.modal'))return;
-    if(target.matches('[data-drill]')){e.preventDefault();openDrill(target.dataset.drill);}
-    else if(target.matches('.module[data-view]')){e.preventDefault();showView(target.dataset.view);}
-  });
-  document.addEventListener('keydown',function(e){
-    if(e.key!=='Enter'&&e.key!==' ')return;
-    const target=e.target.closest('[data-drill],.module[data-view]');
-    if(!target||target.dataset.directBound==='1'||target.closest('.drawer,.modal'))return;
-    e.preventDefault();
-    if(target.matches('[data-drill]'))openDrill(target.dataset.drill);
-    else showView(target.dataset.view);
-  });
- }
 
  document.querySelectorAll('.module[data-view], [data-view].module').forEach(el=>activateLikeButton(el,()=>showView(el.dataset.view)));
  document.querySelectorAll('[data-drill]').forEach(el=>{if(!el.closest('.drawer,.modal'))activateLikeButton(el,()=>openDrill(el.dataset.drill));});
