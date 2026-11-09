@@ -2436,4 +2436,53 @@ else directorLiveStartup();
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
 
+
+/* Director-only RM business outcome view sourced from shared saved activity. */
+(function directorAmandaOutcomes(){
+ const style=document.createElement('style');
+ style.textContent='#directorAmandaOutcomes{border:1px solid #dee4ed;border-radius:11px;padding:15px;margin:0 0 15px;background:#fff;color:#26334b}#directorAmandaOutcomes h2{font-size:15px;margin:0 0 5px}#directorAmandaOutcomes p{font-size:11px;color:#65718a;line-height:1.5;margin:5px 0}#directorAmandaOutcomes .daoGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}#directorAmandaOutcomes .daoMetric{padding:10px;border:1px solid #e7ebf1;border-radius:8px}#directorAmandaOutcomes .daoMetric b{display:block;font-size:20px;color:#4c3683}#directorAmandaOutcomes .daoMetric span{font-size:11px;color:#5d6575}#directorAmandaOutcomes button{border:1px solid #cad6e6;background:white;border-radius:7px;padding:6px 10px;cursor:pointer;font-size:11px}@media(max-width:800px){#directorAmandaOutcomes .daoGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}';document.head.append(style);
+ const escape=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const key=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const localDate=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+ const percent=(n,d)=>d?Math.round(n/d*100)+'%':'—';
+ const attempt=a=>/^(Cold Calls|Agent Talk-to|New Agent Follow-up|Reconnect Outreach|Realtor Buddy Referral Ask)$/i.test(a.act_type||'');
+ const connected=a=>/positive|connected|reached|talked|meaningful conversation|meeting scheduled/i.test(a.outcome||'');
+ const booked=a=>/meeting scheduled|meeting booked/i.test(a.outcome||'');
+ const held=a=>/^(New Realtor Meeting|Business Planning|Break Breads?|Team Meeting|Partner Meeting|Strategic Partner Meeting|Retention Meeting)$/i.test(a.act_type||'')&&/meeting held|positive|completed/i.test(a.outcome||'');
+ function mount(){
+  if(document.getElementById('directorAmandaOutcomes'))return;
+  const main=document.querySelector('main.main');if(!main)return;
+  const e=document.createElement('section');e.id='directorAmandaOutcomes';
+  e.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>Amanda · activity to business outcomes</h2><button type="button" id="directorAmandaRefresh">Recheck</button></div><p>This month · successful activity must be saved in the RM tracker. Counts are not equivalent to retention or verified scorecard points.</p><div class="daoGrid" id="directorAmandaGrid"><div class="daoMetric">Loading saved outcomes…</div></div><p id="directorAmandaMeta"></p>';
+  const top=main.querySelector('.top');if(top)top.after(e);else main.prepend(e);
+  e.querySelector('#directorAmandaRefresh').onclick=load;load();
+ }
+ let busy=false;
+ async function load(){
+  if(busy)return;busy=true;
+  const grid=document.getElementById('directorAmandaGrid');if(!grid){busy=false;return}
+  try{
+   const begin=localDate().slice(0,7)+'-01';
+   const [activities,work]=await Promise.all([
+    dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,follow_up_date&act_date=gte.'+begin+'&order=act_date.desc&limit=10000'),
+    dSb('rm_work_queue?select=id,status,owner&status=eq.open&owner=eq.Amanda&limit=1000').catch(()=>null)
+   ]);
+   if(!Array.isArray(activities))throw Error('Saved activity response missing');
+   const a=[...new Map(activities.filter(x=>x.id!=null).map(x=>[x.id,x])).values()];
+   const attempts=a.filter(attempt),connections=attempts.filter(connected),schedules=a.filter(booked),heldRows=a.filter(held);
+   const cold=a.filter(x=>x.act_type==='Cold Calls');
+   const vals=[
+    ['Cold calls this month',cold.length],['Live connections',connections.length],['Connection rate',percent(connections.length,attempts.length)],
+    ['Meetings scheduled',schedules.length],['Meetings held',heldRows.length],['Booking / conversation',percent(schedules.length,connections.length)],
+    ['Open RM work-queue entries',Array.isArray(work)?work.length:'Unavailable'],['Retention / referred business','Verify separately']
+   ];
+   grid.innerHTML=vals.map(([name,value])=>'<div class="daoMetric"><b>'+escape(value)+'</b><span>'+escape(name)+'</span></div>').join('');
+   document.getElementById('directorAmandaMeta').textContent='Refreshed '+new Date().toLocaleString()+'. 4-week campaign due counts are calculated in the RM daily checklist. Open it for the exact agent list; meeting-held and booking totals are not necessarily the same cohort.';
+  }catch(e){grid.innerHTML='<div class="daoMetric">Data unavailable · cannot verify Amanda activity</div>';document.getElementById('directorAmandaMeta').textContent=String(e.message||e)}
+  finally{busy=false}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+ window.addEventListener('focus',()=>{if(document.getElementById('directorAmandaOutcomes'))load()});
+})();
+
 </script></body></html>
