@@ -1,7 +1,7 @@
   
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Director Growth & Impact</title><meta name="director-version" content="director-detailed-v14-20261102">
+<title>Director Growth & Impact</title><meta name="director-version" content="director-detailed-v15-20261109">
 <style>
 :root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
 .whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
@@ -1543,27 +1543,40 @@ function dirUpdateGrowthDrills(snapshot,receipt){
  }
 }
 async function loadDirectorSharedPowerBi(force){
- const st=$('dirPowerBiStatus');if(st)st.textContent='Syncing latest LP Power BI data…';
+ const st=$('dirPowerBiStatus');
+ if(st){st.textContent='Refreshing shared Power BI data…';st.setAttribute('role','status');}
  try{
   const [logs,profiles]=await Promise.all([
    dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),
    dSb('agent_profiles?select=*&powerbi_last_seen_at=not.is.null&limit=5000')
   ]);
-  const row=logs&&logs[0],receipt=row?dirParsePbReceipt(row.source_app,row.imported_at):null,snapshot=dirLatestPbSnapshot(profiles,row);
-  const receiptMs=Date.parse(receipt&&receipt.imported_at||'')||0,snapMs=Date.parse(snapshot&&snapshot.stamp||'')||0;
-  const useReceipt=!!receipt&&receiptMs>=snapMs;
-  // Counts follow RM V410 authority: newest LP receipt when it is as fresh/newer; otherwise latest verified profile snapshot.
-  const A=useReceipt?Number(receipt.levels.A||0):snapshot.counts.A;
-  const B=useReceipt?Number(receipt.levels.B||0):snapshot.counts.B;
-  const C=useReceipt?Number(receipt.levels.C||0):snapshot.counts.C;
-  const Channel=useReceipt?Number(receipt.levels.Channel||0):rowsChannel(snapshot.rows);
-  // Active partner count follows imported A+B+C population. Channel may overlap A in business semantics, so never double-add it.
-  const active=snapshot.counts.total;
-  dirSetText('kpiActive',active+' / 200');dirSetText('dirChannelCount',Channel);dirSetText('dirACount',A);dirSetText('dirBCount',B);
-  const st=$('dirPowerBiStatus');if(st){const dt=receipt&&receipt.imported_at?new Date(receipt.imported_at):snapshot.stamp?new Date(snapshot.stamp):null;st.textContent=(dt?'Latest LP Power BI import: '+directorEasternTimestamp(receipt&&receipt.imported_at||snapshot.stamp):'Latest LP Power BI import')+' · '+active+' active · auto-refreshing';}
-  directorPbState={stamp:(receipt&&receipt.imported_at)||snapshot.stamp||'',receipt,snapshot};dirUpdateGrowthDrills(snapshot,receipt);
+  const row=logs&&logs[0],receipt=row?dirParsePbReceipt(row.source_app,row.imported_at):null;
+  if(!row||!receipt||String(row.errors||'0')!=='0')throw new Error('No successful shared Power BI import receipt');
+  const batchStamp=decodeURIComponent((String(row.source_app||'').match(/(?:^|;)profileStamp=([^;]+)/)||[])[1]||'')||row.imported_at;
+  const expected=Number(row.rows_processed),batchTime=Date.parse(batchStamp);
+  if(!Number.isInteger(expected)||expected<1||!Number.isFinite(batchTime))throw new Error('Invalid Power BI import receipt');
+  const matching=(profiles||[]).filter(p=>Math.abs(Date.parse(p.powerbi_last_seen_at||'')-batchTime)<1000);
+  const unique=new Map();
+  matching.forEach(p=>{const key=String(p.agent_name||'').trim().replace(/\\s+/g,' ').toLowerCase();if(key)unique.set(key,p);});
+  if(unique.size!==expected)throw new Error('Power BI import incomplete: '+unique.size+' of '+expected+' unique agent profiles stamped. Displaying no stale count.');
+  const snapshot=dirLatestPbSnapshot([...unique.values()],row);
+  const levels=receipt.levels;
+  const calculated=['A','B','C'].reduce((out,t)=>(out[t]=[...unique.values()].filter(p=>String(p.powerbi_level||'').trim().toUpperCase()===t).length,out),{});
+  if(['A','B','C'].some(t=>Number(levels[t])!==calculated[t]))throw new Error('Power BI tier totals do not match the shared import receipt');
+  const active=unique.size;
+  dirSetText('kpiActive',active+' / 200');
+  dirSetText('dirChannelCount',levels.Channel);dirSetText('dirACount',levels.A);dirSetText('dirBCount',levels.B);
+  if(st)st.textContent='Shared Power BI verified · '+active+' agents · '+directorEasternTimestamp(row.imported_at)+' · auto-refresh every 60 seconds';
+  directorPbState={stamp:row.imported_at,receipt,snapshot};
+  dirUpdateGrowthDrills({rows:[...unique.values()]},receipt);
   return directorPbState;
- }catch(e){console.error('Director shared Power BI load failed',e);const st=$('dirPowerBiStatus');if(st)st.textContent='Shared Power BI data could not refresh · '+(e.message||'Unknown error');return null}
+ }catch(e){
+  console.error('Director shared Power BI load failed',e);
+  directorPbState={stamp:'',receipt:null,snapshot:null};
+  ['kpiActive','dirChannelCount','dirACount','dirBCount'].forEach(id=>dirSetText(id,'—'));
+  if(st){st.textContent='⚠ Shared Power BI unavailable · '+(e.message||'Unknown error')+' · Select Sync Now to retry';st.setAttribute('role','alert');}
+  return null;
+ }
 }
 function rowsChannel(rows){return (rows||[]).filter(p=>String(p.tier||'').trim().toUpperCase()==='CHANNEL').length}
 window.loadDirectorSharedPowerBi=loadDirectorSharedPowerBi;
