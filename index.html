@@ -1,7 +1,7 @@
   
  <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Director Growth & Impact</title><meta name="director-version" content="director-detailed-v15-20261109">
+<title>Director Growth & Impact</title><meta name="director-version" content="director-detailed-v16-20261109">
 <style>
 :root{--navy:#102f56;--blue:#2f6fed;--ink:#172235;--muted:#6e7a8e;--line:#e4e9f1;--bg:#f6f8fb;--card:#fff;--green:#168a5b;--amber:#b97a11;--red:#bf4650;--soft:#eef4ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-weight:400}button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:var(--navy);color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-size:19px;font-weight:600;margin:0 8px 22px}.trackerSwitch{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px}.trackerSwitch a{display:flex;align-items:center;justify-content:center;min-height:39px;border:1px solid #ffffff2c;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:11px;font-weight:500}.trackerSwitch a.current{background:#fff;color:var(--navy)}.quickActions{display:grid;gap:8px;margin-bottom:18px}.quickActions button{border:1px solid #ffffff35;background:#fff;color:var(--navy);padding:10px 12px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:550;text-align:left}.quickActions button+button{background:#ffffff12;color:#fff}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#dce7f7;text-align:left;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:450}.nav button:hover,.nav button.active{background:#ffffff17;color:#fff}.side small{display:block;color:#afc0d7;margin:22px 10px 0;line-height:1.5}.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.top h1{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}.top p{margin:5px 0;color:var(--muted);font-size:13px}.controlbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.range{display:flex;background:#fff;border:1px solid var(--line);padding:4px;border-radius:11px}.range button{border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:500}.range button.active{background:var(--navy);color:#fff}.attentionBtn{border:1px solid #efc6ca;background:#fff5f6;color:#9f3540;border-radius:11px;padding:9px 11px;font-size:11px;font-weight:600;cursor:pointer}.grid{display:grid;gap:14px}.kpis{grid-template-columns:1.45fr repeat(5,1fr)}.card,.module{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #17304d0a}.card{padding:17px}.click,.module{cursor:pointer;transition:.16s transform,.16s box-shadow,.16s border}.click:hover,.module:hover{transform:translateY(-2px);box-shadow:0 9px 24px #17304d15;border-color:#bfd0ed}.label{font-size:11px;font-weight:550;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.big{font-size:27px;font-weight:650;margin-top:7px}.delta{font-size:12px;font-weight:500;margin-top:4px}.up{color:var(--green)}.down{color:var(--red)}.hint{font-size:11px;color:#8a95a6;margin-top:8px}.whoNeeds{margin-top:18px;padding:18px 20px;cursor:pointer}
 .whoHead{display:flex;justify-content:space-between;gap:16px;align-items:center}
@@ -170,7 +170,7 @@ body{background:var(--bg);color:var(--ink)}
 
 /* Director overview simplification: signal first, reference details on demand */
 #overviewKpis{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:14px}
-#overviewKpis .card[data-drill="channel"],#overviewKpis .card[data-drill="tierA"],#overviewKpis .card[data-drill="tierB"]{display:none}
+#overviewKpis .card[data-drill]{display:block}
 .workbench{grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);margin-bottom:14px}
 .workbenchCard:nth-child(2){order:-1}
 #directorActionQueue{max-height:270px}
@@ -1130,7 +1130,25 @@ function showView(name){
  window.scrollTo(0,0);
  try{history.replaceState(null,'',DirectorPage.viewUrl(location.href,name))}catch(_){}
 }
+function directorVerifiedLpDrill(key){
+ const state=directorPbState;
+ if(!state||!state.receipt||!state.snapshot||!Array.isArray(state.snapshot.rows))return null;
+ const source=state.snapshot.rows,levels=state.receipt.levels||{};
+ const selected=source.filter(p=>{
+  const level=String(p.powerbi_level||'').trim().toUpperCase();
+  if(key==='active')return ['A','B','C'].includes(level);
+  if(key==='tierA')return level==='A';
+  if(key==='tierB')return level==='B';
+  if(key==='channel')return Number(p.closes_past_year||0)>=10;
+  return false;
+ });
+ const expected=key==='active'?source.length:key==='tierA'?Number(levels.A):key==='tierB'?Number(levels.B):Number(levels.Channel);
+ if(selected.length!==expected)return {error:'LP details do not match the '+key+' tile ('+selected.length+' vs '+expected+'). Select Sync Now to retry.'};
+ const titles={active:'All Active LP Agents',tierA:'A-Level LP Agents',tierB:'B-Level LP Agents',channel:'Channel Agents · 10+ Closings'};
+ return {title:titles[key],summary:'Verified LP tracker Power BI import · '+directorEasternTimestamp(state.stamp),rows:selected.map(p=>[p.agent_name,String(p.powerbi_level||'—'),String(p.brokerage||''),String(p.closes_past_year??'')+' closings in 12 months'])};
+}
 function currentDrillData(key){
+ if(['active','tierA','tierB','channel'].includes(key))return directorVerifiedLpDrill(key);
  syncRealDrills();
  const base=demoData[key];if(!base)return null;
  const localOrMerged=new Set(['whoNeeds','feedback','repeat','feedbackRisk','protected','strategic','escalations','leadership','wins']);
@@ -1138,16 +1156,19 @@ function currentDrillData(key){
  const rows=!localOrMerged.has(key)&&Array.isArray(live)?live:base.rows;
  return{...base,rows:Array.isArray(rows)?rows:[]};
 }
-function openDrill(key){
- const d=currentDrillData(key); if(!d)return;
- $('drawerTitle').textContent=d.title;
- const metricKey={active:'active',tierA:'A',tierB:'B',channel:'Channel'}[key];
- const expected=metricKey&&window.__directorDashboard?window.__directorDashboard.metrics.powerBi[metricKey]:null;
- $('drawerSummary').textContent=(expected!==null?expected+' agents from LP · '+d.rows.length+' agent profiles available'+(expected>d.rows.length?' · '+(expected-d.rows.length)+' profiles pending sync':''):d.rows.length+' matching record'+(d.rows.length===1?'':'s'))+' · '+d.summary;
- $('drawerResults').innerHTML=d.rows.length?d.rows.map((r,i)=>`<div class="result"><div class="resultTop"><div><h3>${esc(directorDisplayName(r[0]))}</h3><div class="meta">${r.slice(1).map(esc).join(' · ')}</div></div><span class="pill ${/risk|repeat|high/i.test(r.join(' '))?'risk':'good'}">${i+1}</span></div><div class="actions"><button class="primary" data-view-agent="${esc(r[0])}">View Relationship</button><button data-log-agent="${esc(r[0])}">Log Activity</button></div></div>`).join(''):`<div class="result"><h3>0 matching records</h3><div class="meta">${esc(d.summary)} The tile is working; there are no records in this category right now.</div></div>`;
- closeAllOverlays();
- safeClass('drawerBack','add','open');
- document.body.style.overflow='hidden';
+async function openDrill(key){
+ if(['active','tierA','tierB','channel'].includes(key))await loadDirectorSharedPowerBi(true);
+ const d=currentDrillData(key);
+ if(!d||d.error){
+  $('drawerTitle').textContent='Data unavailable';
+  $('drawerSummary').textContent='Shared tracker refresh';
+  $('drawerResults').innerHTML='<div class="result"><h3>Could not verify this tile</h3><div class="meta">'+esc(d&&d.error||'Latest shared import unavailable. Select Sync Now to retry.')+'</div></div>';
+ }else{
+  $('drawerTitle').textContent=d.title;
+  $('drawerSummary').textContent=d.rows.length+' verified records · '+d.summary;
+  $('drawerResults').innerHTML=d.rows.length?d.rows.map((r,i)=>`<div class="result"><div class="resultTop"><div><h3>${esc(directorDisplayName(r[0]))}</h3><div class="meta">${r.slice(1).map(esc).join(' · ')}</div></div><span class="pill good">${i+1}</span></div><div class="actions"><button class="primary" data-view-agent="${esc(r[0])}">View Relationship</button><button data-log-agent="${esc(r[0])}">Log Activity</button></div></div>`).join(''):'<div class="result"><h3>No matching records</h3><div class="meta">There are no records in this category.</div></div>';
+ }
+ closeAllOverlays();safeClass('drawerBack','add','open');document.body.style.overflow='hidden';
 }
 function closeDrawer(){
  safeClass('drawerBack','remove','open');
@@ -1559,7 +1580,7 @@ async function loadDirectorSharedPowerBi(force){
   const unique=new Map();
   matching.forEach(p=>{const key=String(p.agent_name||'').trim().replace(/\\s+/g,' ').toLowerCase();if(key)unique.set(key,p);});
   if(unique.size!==expected)throw new Error('Power BI import incomplete: '+unique.size+' of '+expected+' unique agent profiles stamped. Displaying no stale count.');
-  const snapshot=dirLatestPbSnapshot([...unique.values()],row);
+  const snapshot={stamp:row.imported_at,rows:[...unique.values()]};
   const levels=receipt.levels;
   const calculated=['A','B','C'].reduce((out,t)=>(out[t]=[...unique.values()].filter(p=>String(p.powerbi_level||'').trim().toUpperCase()===t).length,out),{});
   if(['A','B','C'].some(t=>Number(levels[t])!==calculated[t]))throw new Error('Power BI tier totals do not match the shared import receipt');
@@ -2326,6 +2347,7 @@ async function directorLiveStartup(){
  directorRefreshController=DirectorPage.createRefreshController({
    load:async()=>{
      const dashboardPromise=loadDirectorUnifiedDashboard();
+     await loadDirectorSharedPowerBi(true);
      await Promise.allSettled([loadAmandaExecutionLive(window.__directorSelectedRange||initialRange),loadAmandaTodayCoach()]);
      return dashboardPromise;
    },
