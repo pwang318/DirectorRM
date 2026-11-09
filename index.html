@@ -1605,22 +1605,30 @@ async function dSb(path){
  }finally{clearTimeout(timer)}
 }
 
+function clearDirectorPartialWarning(){const el=document.getElementById('directorPartialWarning');if(el)el.remove();}
+function reportDirectorPartialError(error){
+ console.warn('Director section data unavailable',error);
+ let el=document.getElementById('directorPartialWarning');
+ if(!el){el=document.createElement('div');el.id='directorPartialWarning';el.setAttribute('role','alert');el.style.cssText='position:sticky;top:0;z-index:999;background:#fff3dc;color:#793f06;border:2px solid #e8a83c;padding:12px 18px;font-weight:600;text-align:center';document.body.prepend(el);}
+ el.textContent='⚠ Some Director sections could not refresh from the shared server. Data may be incomplete. Select Sync Now to retry.';
+}
 let directorRefreshController=null;
 async function loadDirectorUnifiedDashboard(){
+ clearDirectorPartialWarning();
  const since=new Date();since.setDate(since.getDate()-90);
  const today=dLocalDate(new Date());
  const monthStart=dLocalDate(new Date(new Date().getFullYear(),new Date().getMonth(),1));
  const [profiles,recentActivities,leadOutcomeActivities,leadTypeActivities,leadReferralActivities,dueActivities,logs,assignments,ownershipConfirmations,monthLeads]=await Promise.all([
    dSb('agent_profiles?select=*&limit=5000'),
    dSb('amanda_activities?select=*&act_date=gte.'+dLocalDate(since)+'&order=created_at.desc&limit=5000'),
-   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&outcome=ilike.*buyer%20opportunity%20received*&order=act_date.desc&limit=5000').catch(()=>[]),
-   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*lead%20received*&order=act_date.desc&limit=5000').catch(()=>[]),
-   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*referral%20received*&order=act_date.desc&limit=5000').catch(()=>[]),
-   dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+today+'&order=follow_up_date.asc&limit=5000').catch(()=>[]),
-   dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1').catch(()=>[]),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&outcome=ilike.*buyer%20opportunity%20received*&order=act_date.desc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*lead%20received*&order=act_date.desc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
+   dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*referral%20received*&order=act_date.desc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
+   dSb('amanda_activities?select=*&follow_up_date=not.is.null&follow_up_date=lte.'+today+'&order=follow_up_date.asc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
+   dSb('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1').catch(error=>{reportDirectorPartialError(error);return []}),
    dSb('agent_assignments?select=agent_name,rm,lp,level,updated_at&limit=5000'),
-   dSb('amanda_activities?act_type=eq.Relationship%20Ownership%20Confirmation&select=agent_name,act_type,outcome,act_date,created_at&order=created_at.desc&limit=5000').catch(()=>[]),
-   dSb('velocify_leads?date_added=gte.'+monthStart+'&select=referral_partner_name,date_added&limit=10000').catch(()=>[])
+   dSb('amanda_activities?act_type=eq.Relationship%20Ownership%20Confirmation&select=agent_name,act_type,outcome,act_date,created_at&order=created_at.desc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
+   dSb('velocify_leads?date_added=gte.'+monthStart+'&select=referral_partner_name,date_added&limit=10000').catch(error=>{reportDirectorPartialError(error);return []})
  ]);
  const activityMap=new Map();
  (recentActivities||[]).concat(dueActivities||[]).forEach(activity=>{
