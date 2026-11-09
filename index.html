@@ -1521,7 +1521,7 @@ Root cause: the prior all-tiles patch did not include .module and explicitly ski
 function activateLikeButton(el,fn){
  if(el.dataset.directBound==='1')return;
  el.dataset.directBound='1';el.setAttribute('role','button');if(!el.hasAttribute('tabindex'))el.tabIndex=0;el.style.cursor='pointer';
- const run=e=>{if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;if(e.target.closest('a,button,input,select,textarea,label'))return;if(e.type==='keydown')e.preventDefault();e.preventDefault();e.stopPropagation();fn();};
+ const run=e=>{if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;const nested=e.target.closest('a,button,input,select,textarea,label');if(nested&&nested!==el)return;if(e.type==='keydown')e.preventDefault();e.preventDefault();e.stopPropagation();fn();};
  el.addEventListener('click',run);el.addEventListener('keydown',run);
 }
 
@@ -1910,6 +1910,7 @@ function completeDirectorMeeting(id){
 function renderDirectorUnifiedDashboard(dashboard){
  window.__directorDashboard=dashboard;
  DirectorPage.applyDashboard(document,dashboard,demoData);
+ loadDirectorSharedPowerBi(true).catch(error=>reportDirectorPartialError(error));
  renderDirectorWeightedScore(dashboard);
  renderDirectorScoreTrends();
  const focus=(dashboard.drills.whoNeeds||[]).length;
@@ -2347,7 +2348,6 @@ async function directorLiveStartup(){
  directorRefreshController=DirectorPage.createRefreshController({
    load:async()=>{
      const dashboardPromise=loadDirectorUnifiedDashboard();
-     await loadDirectorSharedPowerBi(true);
      await Promise.allSettled([loadAmandaExecutionLive(window.__directorSelectedRange||initialRange),loadAmandaTodayCoach()]);
      return dashboardPromise;
    },
