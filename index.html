@@ -2496,7 +2496,7 @@ else directorLiveStartup();
 .directorCompassLinks{display:flex;gap:7px;flex-wrap:wrap}
 .directorCompassLinks button,.directorCompassActions button{border:1px solid #d9e3dc;background:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;color:#2d594d;font-size:12px;font-weight:600}
 .directorCompassLinks button:hover,.directorCompassActions button:hover{background:#eff5f0;border-color:#a8c6b7}
-.directorCompassActions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:17px}
+.directorCompassActions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-top:17px}
 .directorCompassActions button{text-align:left;display:flex;flex-direction:column;gap:6px;min-height:89px;padding:14px}
 .directorCompassActions button strong{font-size:13px;color:#28443a}
 .directorCompassActions button span{font-size:11px;font-weight:400;color:#6a7b72;line-height:1.4}
@@ -2525,7 +2525,7 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
     if(!home||!overview||document.getElementById('directorDailyCompass'))return;
     const compass=document.createElement('section');
     compass.id='directorDailyCompass';
-    compass.innerHTML='<div class="directorCompassTop"><div><div class="eyebrow">START HERE · DIRECTOR PRIORITIES</div><h2>Lead the business, not the task list.</h2><p>Protect key partnerships, grow production, coach Amanda, then handle strategic relationships when they need you.</p></div><div class="directorCompassLinks"><button type="button" data-focus-route="priorities">Due &amp; overdue</button><button type="button" data-focus-route="impact">Scorecard &amp; reports</button></div></div><div class="directorCompassActions"><button type="button" data-focus-type="CHANNEL"><strong>Channel accounts</strong><span>Retention, lead flow and production</span></button><button type="button" data-focus-type="A,B"><strong>A &amp; B accounts</strong><span>Protect and move relationships up</span></button><button type="button" data-focus-type="BUILDER"><strong>Builder accounts</strong><span>Commitments, opportunities and follow-ups</span></button><button type="button" data-focus-type="STRATEGIC"><strong>Strategic partners</strong><span>Title reps and high-value introductions</span></button></div>';
+    compass.innerHTML='<div class="directorCompassTop"><div><div class="eyebrow">START HERE · DIRECTOR PRIORITIES</div><h2>Lead the business, not the task list.</h2><p>Protect key partnerships, grow production, coach Amanda, then handle strategic relationships when they need you.</p></div><div class="directorCompassLinks"><button type="button" data-focus-route="priorities">Due &amp; overdue</button><button type="button" data-focus-route="impact">Scorecard &amp; reports</button></div></div><div class="directorCompassActions"><button type="button" data-focus-type="CHANNEL"><strong>Channel accounts</strong><span>Retention, lead flow and production</span></button><button type="button" data-focus-type="A"><strong>A accounts</strong><span>Protect top producers</span></button><button type="button" data-focus-type="B"><strong>B accounts</strong><span>Build toward A and Channel</span></button><button type="button" data-focus-type="BUILDER"><strong>Builder accounts</strong><span>Commitments, opportunities and follow-ups</span></button><button type="button" data-focus-type="STRATEGIC"><strong>Strategic partners</strong><span>Title reps and high-value introductions</span></button></div>';
     const heading=home.querySelector('.focusHeading');
     if(heading)heading.after(compass);else home.prepend(compass);
     const search=document.getElementById('homeSearch'),meetings=document.getElementById('homeMeetings');
@@ -2554,19 +2554,12 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
       const owner=document.getElementById('accountOwnerFilter'),type=document.getElementById('accountTypeFilter'),search=document.getElementById('accountSearch');
       if(owner){owner.value='Nyny';owner.dispatchEvent(new Event('change',{bubbles:true}))}
       if(type){
-        // A/B is a combined director portfolio; use search as a clear point of entry for both.
-        type.value=target.dataset.focusType==='A,B'?'ALL':target.dataset.focusType;
+        type.value=target.dataset.focusType;
         type.dispatchEvent(new Event('change',{bubbles:true}));
       }
       if(search){search.value='';search.dispatchEvent(new Event('input',{bubbles:true}))}
-      if(target.dataset.focusType==='A,B'){
-        const h=document.querySelector('#view-relationships .viewHead h2');
-        if(h)h.textContent='My relationships · select A or B in account type';
-        type&&type.focus();
-      }else{
-        const h=document.querySelector('#view-relationships .viewHead h2');
-        if(h)h.textContent='My Relationships';
-      }
+      const h=document.querySelector('#view-relationships .viewHead h2');
+      if(h)h.textContent='My Relationships';
     });
     // Tiles are never decorative: keyboard users can open their same existing data drill.
     document.querySelectorAll('.card[data-drill],.module[data-view]').forEach(el=>{
