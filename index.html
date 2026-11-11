@@ -230,7 +230,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Today</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="face-time">Face Time</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
 <main class="main"><div class="top"><div><h1>Director Growth & Impact</h1><p>Start with the people and opportunities that need you most.</p><div class="syncStatusRow" style="display:flex;align-items:center;gap:8px;margin-top:4px">
 <span id="dirPowerBiStatus" style="font-size:10px;color:#667085">Waiting to sync shared tracker data…</span>
-<button id="dirSyncNow" type="button" style="border:1px solid #d7dfeb;background:#fff;border-radius:8px;padding:5px 9px;font-size:10px;cursor:pointer">Sync Now</button>
+<button id="dirSyncNow" type="button" style="border:1px solid #d7dfeb;background:#fff;border-radius:8px;padding:5px 9px;font-size:10px;cursor:pointer">Sync Now</button><button type="button" onclick="return directorExportLPAssignments()" style="border:1px solid #cbd5e1;background:#f8fbff;color:#153d65;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:600;cursor:pointer">Export LP Assignments</button>
 </div></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership"><span id="leadershipAttentionCount">0</span> NEED LEADERSHIP ↗</button></div></div>
 
 <section class="view active" id="view-overview">
@@ -1625,6 +1625,39 @@ function dBounds(k){
  if(k==='month'){const s=new Date(today.getFullYear(),today.getMonth(),1),e=new Date(today.getFullYear(),today.getMonth()+1,0);return{start:dLocalDate(s),end:dLocalDate(e),label:'This Month',factor:4.33}}
  const day=today.getDay(),s=new Date(today);s.setDate(today.getDate()-(day===0?6:day-1));const e=new Date(s);e.setDate(s.getDate()+6);
  return{start:dLocalDate(s),end:dLocalDate(e),label:'This Week',factor:1};
+}
+async function directorExportLPAssignments(){
+ const btn=Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()==='Export LP Assignments');
+ const original=btn&&btn.textContent;if(btn){btn.disabled=true;btn.textContent='Preparing export…';}
+ try{
+  const [profiles,assignments]=await Promise.all([
+   dSb('agent_profiles?select=agent_name,display_name,tier,powerbi_level,powerbi_last_seen_at,relationship_status,email,phone,latest_lead_date,closes_past_year,total_leads_past_year&powerbi_last_seen_at=not.is.null&order=powerbi_last_seen_at.desc&limit=5000'),
+   dSb('agent_assignments?select=agent_name,lp,rm&limit=5000')
+  ]);
+  if(!profiles.length)throw Error('No current Power BI roster available');
+  const stamp=Date.parse(profiles[0].powerbi_last_seen_at),by={};
+  if(!Number.isFinite(stamp))throw Error('Missing shared Power BI import stamp');
+  const key=n=>String(n||'').trim().toLowerCase().replace(/\s+/g,' ');
+  assignments.forEach(a=>{if(a.agent_name)by[key(a.agent_name)]=a;});
+  const hidden=new Set(['__HIDDEN__','__REMOVED__','__ROSTER_DELETE_V42__']);
+  const data=profiles.filter(p=>{
+   const ms=Date.parse(p.powerbi_last_seen_at||''),a=by[key(p.agent_name)]||{};
+   return Number.isFinite(ms)&&Math.abs(ms-stamp)<=15*60000&&p.relationship_status==='active'
+    &&!hidden.has(String(p.display_name||'').toUpperCase())&&['A','B','C'].includes(String(p.powerbi_level||p.tier||'').toUpperCase())
+    &&a.lp!=='__REMOVED__';
+  }).map(p=>{
+   const a=by[key(p.agent_name)]||{};
+   return [a.lp||'Unassigned',p.agent_name,String(p.tier||'').toUpperCase()==='CHANNEL'?'Channel':p.powerbi_level||p.tier,a.rm||'Unassigned',p.phone||'',p.email||'',p.total_leads_past_year??'',p.closes_past_year??'',p.latest_lead_date||'',new Date(stamp).toISOString().slice(0,10)];
+  }).sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));
+  const header=['Loan Partner','Agent','Level','RM Owner','Phone','Email','Leads Past Year','Closings Past Year','Latest Lead','Power BI Import'];
+  const escape=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const blob=new Blob(['\uFEFF'+[header,...data].map(r=>r.map(escape).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const link=document.createElement('a'),url=URL.createObjectURL(blob);
+  link.href=url;link.download='Management-All-LP-Agent-Assignments-'+new Date(stamp).toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ }catch(e){alert('Assignment export unavailable: '+String(e.message||e));console.error(e);}
+ finally{if(btn){btn.disabled=false;btn.textContent=original;}}
+ return false;
 }
 async function dSb(path){
  const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),12000);
