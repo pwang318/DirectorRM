@@ -227,7 +227,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 
 .priorityExplanation{margin-top:9px}.priorityExplanation p{font-size:12px;line-height:1.6;color:var(--muted);margin:6px 0}.priorityExplanation p>b{color:var(--ink);display:block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}.priorityContext{margin-top:9px}.priorityContext summary{font-size:11px;color:#386e64;cursor:pointer;padding:4px 0}.priorityContext p{white-space:pre-wrap;background:#f5f8f2;padding:10px;border-radius:8px}.focusQueue .queueItem{align-items:start}.focusQueue .queueTag{text-transform:none}.focusQueue .quickResultActions{margin-top:7px}.focusQueue .queueItem strong{font-size:15px}
 </style><style>.moveUpShortcut{margin:0 0 20px;padding:10px 0!important;text-align:left}.moveUpRow{display:grid;grid-template-columns:1.1fr 1fr 1.5fr auto;gap:20px;align-items:center;padding:18px 0;border-top:1px solid #e9e4f0}.moveUpRow p{margin:5px 0;font-size:13px;line-height:1.5}.moveUpRow progress{width:100%;max-width:170px;height:7px;accent-color:#8662b1}.moveUpActions{display:flex;flex-direction:column;gap:8px}#directorMoveUps{scroll-margin-top:20px}#directorMoveUps select{padding:8px;border:1px solid #ded5e9;border-radius:8px;background:white;color:#49355e}#directorMoveUps summary{cursor:pointer;font-size:12px;color:#756586}@media(max-width:800px){.moveUpRow{grid-template-columns:1fr 1fr}.moveUpRow>div:nth-child(3){grid-column:1/-1}.moveUpActions{flex-direction:row;grid-column:1/-1}}</style><style>.simpleReportDetails{border-top:1px solid #e4eae7;padding:15px 0}.simpleReportDetails>summary{cursor:pointer;font-weight:650;color:#35574f}.simpleReportDetails[open]>summary{margin-bottom:14px}#directorScoreTrendPanel .directorBriefOutput{min-height:270px;font-family:inherit;font-size:14px;line-height:1.65}#directorScoreTrendPanel .trendReportHead{margin-top:20px}</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
-<div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Today</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
+<div class="app"><aside class="side"><div class="brand">Director View</div><div class="trackerSwitch"><a class="current" href="#" data-view="overview">Director</a><a href="https://pwang318.github.io/amanda-tracker/">RM Tracker</a><a href="https://pwang318.github.io/core-team-tracker/">LP Tracker</a></div><div class="quickActions"><button id="logWorkBtn">+ Log My Work</button><button id="myActivityBtn">View My Activity</button><button id="addFeedbackBtn">+ Agent Feedback</button></div><div class="nav"><button class="active" data-view="overview">Today</button><button data-view="growth">Growth</button><button data-view="relationships">Relationships</button><button data-view="face-time">Face Time</button><button data-view="execution">Amanda Execution</button><button data-view="feedback">Agent Feedback</button><button data-view="impact">Director Impact</button><button data-view="priorities">Priorities</button></div><small>Executive overview first.<br>Details are one click underneath.</small></aside>
 <main class="main"><div class="top"><div><h1>Director Growth & Impact</h1><p>Start with the people and opportunities that need you most.</p><div class="syncStatusRow" style="display:flex;align-items:center;gap:8px;margin-top:4px">
 <span id="dirPowerBiStatus" style="font-size:10px;color:#667085">Waiting to sync shared tracker data…</span>
 <button id="dirSyncNow" type="button" style="border:1px solid #d7dfeb;background:#fff;border-radius:8px;padding:5px 9px;font-size:10px;cursor:pointer">Sync Now</button>
@@ -263,6 +263,26 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 </div></details></section>
 
 <section class="view" id="view-growth"><div class="viewHead"><h2>Growth</h2><button class="backBtn" data-view="overview">← Overview</button></div><div class="grid two"><div class="card click" data-drill="active"><div class="label">LP Active Agent Base</div><div class="big" id="growthActiveCount">Loading…</div><div class="delta up">Latest LP Power BI import</div></div><div class="card"><div class="label">Live relationship mix · select a row to open agents</div><div class="minirow healthChoice" data-drill="channel" role="button" tabindex="0"><b>Channel relationships</b><span id="growthChannelCount">—</span></div><div class="minirow healthChoice" data-drill="tierA" role="button" tabindex="0"><b>A relationships</b><span id="growthACount">—</span></div><div class="minirow healthChoice" data-drill="tierB" role="button" tabindex="0"><b>B relationships</b><span id="growthBCount">—</span></div><div class="minirow healthChoice" data-drill="growthOpps" role="button" tabindex="0"><b>Growth opportunities</b><span id="growthAllCount">—</span></div></div></div></section>
+
+<section class="view" id="view-face-time">
+<div class="viewHead"><h2>Face Time · Channel, A &amp; B</h2><button class="backBtn" data-view="overview">← Overview</button></div>
+<div class="card" id="directorFaceTimePanel">
+<p class="meta">Your accounts only. Schedule Break Breads, office visits and agent lunches; C accounts belong in Amanda’s RM Tracker.</p>
+<div class="grid three" style="margin:12px 0">
+<div class="card"><div class="label">Eligible Director accounts</div><div class="big" id="dirFaceEligible">—</div></div>
+<div class="card"><div class="label">Without future visit</div><div class="big" id="dirFaceUnscheduled">—</div></div>
+<div class="card"><div class="label">Visits scheduled</div><div class="big" id="dirFaceScheduled">—</div></div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+<input id="dirFaceSearch" type="search" placeholder="Search agent names…" aria-label="Search Director face time agents" style="flex:2;min-width:180px;padding:10px;border:1px solid #d9e0ea;border-radius:8px">
+<select id="dirFaceTier" aria-label="Filter account tier" style="padding:9px;border:1px solid #d9e0ea;border-radius:8px"><option value="all">Channel, A &amp; B</option><option value="Channel">Channel</option><option value="A">A</option><option value="B">B</option></select>
+<select id="dirFaceStatus" aria-label="Filter visit status" style="padding:9px;border:1px solid #d9e0ea;border-radius:8px"><option value="all">All visits</option><option value="unscheduled">Needs scheduling</option><option value="scheduled">Already scheduled</option></select>
+<button type="button" id="dirFaceRefresh">↻ Refresh</button>
+</div>
+<p id="dirFaceMessage" class="meta" aria-live="polite">Loading shared visit coverage…</p>
+<div style="overflow:auto"><table style="width:100%;border-collapse:collapse;min-width:630px"><thead><tr style="text-align:left"><th style="padding:10px">Agent</th><th>Tier</th><th>Last Break Bread</th><th>Upcoming visit</th><th>Action</th></tr></thead><tbody id="dirFaceRows"></tbody></table></div>
+<p class="meta">“Not recorded” means no visit in shared history, not necessarily that a visit never happened. Completed visits remain in history and do not count as future bookings.</p>
+</div></section>
 <section class="view" id="view-relationships">
 <div class="viewHead"><h2>My Relationships</h2><button class="backBtn" data-view="overview">← Overview</button></div>
 <div class="grid three"><div class="card click" data-drill="directorAccounts"><div class="label">My Accounts</div><div class="big" id="directorAccountsCount">—</div><div class="hint">Active Director-owned relationships, including confirmed C agents</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="relationshipRiskCount">—</div><div class="hint">Only genuinely unresolved relationship work</div></div><div class="card click" data-drill="health"><div class="label">My Relationship Health</div><div class="big" id="relationshipHealthPercent">—</div><div class="hint" id="relationshipHealthHint">Loading your account health…</div></div></div>
@@ -2541,7 +2561,7 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
     if(homeAmanda){homeAmanda.querySelectorAll('.meta').forEach(p=>{if(p.textContent.includes('saved in this browser'))p.textContent='Review RM outcomes and save coaching notes; verify shared data before reporting.'})}
     const top=document.querySelector('.top h1');if(top)top.textContent='Director Command Center';
     const subtitle=document.querySelector('.top p');if(subtitle)subtitle.textContent='Your daily priorities, relationships and team leadership in one place.';
-    const navLabels={overview:'Today',relationships:'Accounts',execution:'Amanda',growth:'Growth',feedback:'Feedback',impact:'Reports',priorities:'Follow-ups'};
+    const navLabels={overview:'Today',relationships:'Accounts',execution:'Amanda',growth:'Growth',feedback:'Feedback',impact:'Reports',priorities:'Follow-ups','face-time':'Face Time'};
     document.querySelectorAll('.nav button[data-view]').forEach(b=>b.textContent=navLabels[b.dataset.view]||b.textContent);
     function navigate(name){
       const nav=document.querySelector('.nav button[data-view="'+name+'"]');
@@ -2571,6 +2591,59 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(mount,0));
   else setTimeout(mount,0);
+})();
+</script>
+
+<script>
+/* Director Face Time: latest Power BI profiles, restricted to Channel/A/B.
+   Shared face_time_events and break_breads prevent duplicate scheduling. */
+(function(){
+ 'use strict';
+ const byId=id=>document.getElementById(id);
+ const norm=v=>String(v||'').trim().toLowerCase().replace(/\s+/g,' ');
+ const day=v=>String(v||'').slice(0,10);
+ const escape=v=>String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;',"'":'&#39;'}[x]));
+ const localDay=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ let all=[],loading=false;
+ const tier=p=>{const t=String(p.powerbi_level||p.tier||'').trim().toUpperCase();if(Number(p.closes_past_year||0)>=10&&t==='A')return 'Channel';return t==='A'||t==='B'?t:null};
+ function render(){
+  const root=byId('directorFaceTimePanel');if(!root)return;
+  const term=norm(byId('dirFaceSearch').value),tierFilter=byId('dirFaceTier').value,status=byId('dirFaceStatus').value;
+  const shown=all.filter(x=>(tierFilter==='all'||x.tier===tierFilter)&&(status==='all'||(status==='scheduled'?!!x.next:!x.next))&&norm(x.name).includes(term));
+  byId('dirFaceEligible').textContent=all.length;byId('dirFaceUnscheduled').textContent=all.filter(x=>!x.next).length;
+  byId('dirFaceScheduled').textContent=all.filter(x=>!!x.next).length;
+  byId('dirFaceMessage').textContent=shown.length+' matching Director relationships · Source: latest shared Power BI & visit records.';
+  byId('dirFaceRows').innerHTML=shown.length?shown.map(x=>'<tr style="border-top:1px solid #e8edf2"><td style="padding:11px 10px"><button type="button" data-view-agent="'+escape(x.source)+'" style="border:0;background:none;padding:0;text-decoration:underline;color:#315e9b;cursor:pointer">'+escape(x.name)+'</button></td><td>'+escape(x.tier)+'</td><td>'+escape(x.last||'Not recorded')+'</td><td>'+escape(x.next||'Not scheduled')+'</td><td><button type="button" data-view-agent="'+escape(x.source)+'">Open</button> <button type="button" data-log-agent="'+escape(x.source)+'">Log</button></td></tr>').join(''):'<tr><td colspan="5" style="padding:15px">No matching Director accounts.</td></tr>';
+ }
+ async function refresh(){
+  if(loading||!byId('dirFaceRows'))return;loading=true;byId('dirFaceMessage').textContent='Checking shared account and visit records…';
+  try{
+   if(typeof dSb!=='function')throw Error('Shared data client unavailable');
+   const [profiles,breads,events]=await Promise.all([
+     dSb('agent_profiles?select=agent_name,display_name,powerbi_level,tier,closes_past_year,powerbi_last_seen_at,relationship_status,do_not_contact&powerbi_last_seen_at=not.is.null&limit=5000'),
+     dSb('break_breads?select=agent_name,date&order=date.desc&limit=5000'),
+     dSb('face_time_events?select=agent_name,event_date,status&order=event_date.desc&limit=5000')
+   ]);
+   if(!Array.isArray(profiles)||!Array.isArray(breads)||!Array.isArray(events))throw Error('Shared records incomplete');
+   const stamp=profiles.map(p=>String(p.powerbi_last_seen_at||'')).sort().at(-1)||'',today=localDay();
+   const last=new Map(),future=new Map();
+   breads.forEach(b=>{const k=norm(b.agent_name),d=day(b.date);if(k&&d&&(!last.has(k)||last.get(k)<d))last.set(k,d)});
+   events.forEach(e=>{const k=norm(e.agent_name),d=day(e.event_date),s=norm(e.status);if(k&&d>=today&&!/cancel|done|complete|held/.test(s)&&(!future.has(k)||future.get(k)>d))future.set(k,d)});
+   const seen=new Set();all=profiles.filter(p=>{const k=norm(p.agent_name),t=tier(p);if(!k||seen.has(k)||!t||p.powerbi_last_seen_at!==stamp||p.do_not_contact===true||norm(p.relationship_status)==='inactive'||p.display_name==='__HIDDEN__')return false;seen.add(k);return true})
+   .map(p=>({name:p.display_name||p.agent_name,source:p.agent_name,tier:tier(p),last:last.get(norm(p.agent_name))||'',next:future.get(norm(p.agent_name))||''}))
+   .sort((a,b)=>Number(!!a.next)-Number(!!b.next)||a.name.localeCompare(b.name));
+   render();
+  }catch(e){byId('dirFaceMessage').textContent='Unable to load live Face Time coverage: '+(e.message||'Refresh to retry');byId('dirFaceRows').replaceChildren();}
+  finally{loading=false}
+ }
+ function mount(){
+  if(!byId('directorFaceTimePanel'))return;
+  ['dirFaceSearch','dirFaceTier','dirFaceStatus'].forEach(id=>byId(id).addEventListener(id==='dirFaceSearch'?'input':'change',render));
+  byId('dirFaceRefresh').addEventListener('click',refresh);
+  document.querySelector('.nav [data-view="face-time"]')?.addEventListener('click',refresh);
+  refresh();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
 </script>
 </body></html>
