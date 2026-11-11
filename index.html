@@ -2629,7 +2629,7 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
    const last=new Map(),future=new Map();
    breads.forEach(b=>{const k=norm(b.agent_name),d=day(b.date);if(k&&d&&(!last.has(k)||last.get(k)<d))last.set(k,d)});
    events.forEach(e=>{const k=norm(e.agent_name),d=day(e.event_date),s=norm(e.status);if(k&&d>=today&&!/cancel|done|complete|held/.test(s)&&(!future.has(k)||future.get(k)>d))future.set(k,d)});
-   const seen=new Set();all=profiles.filter(p=>{const k=norm(p.agent_name),t=tier(p);if(!k||seen.has(k)||!t||p.powerbi_last_seen_at!==stamp||p.do_not_contact===true||norm(p.relationship_status)==='inactive'||p.display_name==='__HIDDEN__')return false;seen.add(k);return true})
+   const seen=new Set();all=profiles.filter(p=>{const k=norm(p.agent_name),t=tier(p);if(!k||seen.has(k)||!t||day(p.powerbi_last_seen_at)!==day(stamp)||p.do_not_contact===true||norm(p.relationship_status)==='inactive'||p.display_name==='__HIDDEN__')return false;seen.add(k);return true})
    .map(p=>({name:p.display_name||p.agent_name,source:p.agent_name,tier:tier(p),last:last.get(norm(p.agent_name))||'',next:future.get(norm(p.agent_name))||''}))
    .sort((a,b)=>Number(!!a.next)-Number(!!b.next)||a.name.localeCompare(b.name));
    render();
