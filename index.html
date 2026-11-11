@@ -2485,4 +2485,98 @@ else directorLiveStartup();
  window.addEventListener('focus',()=>{if(document.getElementById('directorAmandaOutcomes'))load()});
 })();
 
-</script></body></html>
+</script>
+<!-- director-daily-focus-v17 -->
+<style>
+/* A small director-level starting point, without removing underlying tools. */
+#directorDailyCompass{margin:0 0 18px;background:#fff;border:1px solid #dfe7e2;border-radius:16px;padding:20px 22px}
+#directorDailyCompass h2{font-size:20px;font-weight:650;letter-spacing:-.45px;margin:4px 0 6px;color:#263c36}
+#directorDailyCompass p{font-size:12px;line-height:1.55;color:#63766d;margin:0}
+.directorCompassTop{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.directorCompassLinks{display:flex;gap:7px;flex-wrap:wrap}
+.directorCompassLinks button,.directorCompassActions button{border:1px solid #d9e3dc;background:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;color:#2d594d;font-size:12px;font-weight:600}
+.directorCompassLinks button:hover,.directorCompassActions button:hover{background:#eff5f0;border-color:#a8c6b7}
+.directorCompassActions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:17px}
+.directorCompassActions button{text-align:left;display:flex;flex-direction:column;gap:6px;min-height:89px;padding:14px}
+.directorCompassActions button strong{font-size:13px;color:#28443a}
+.directorCompassActions button span{font-size:11px;font-weight:400;color:#6a7b72;line-height:1.4}
+#directorHomeLower{margin-top:16px;border:1px solid #e0e7e1;border-radius:14px;background:#fff;overflow:hidden}
+#directorHomeLower>summary{cursor:pointer;list-style:none;padding:15px 18px;color:#3b5b50;font-size:13px;font-weight:650}
+#directorHomeLower>summary::-webkit-details-marker{display:none}
+#directorHomeLower>summary:after{content:'+';float:right;font-size:18px}
+#directorHomeLower[open]>summary:after{content:'−'}
+#directorHomeLower .directorHomeLowerBody{padding:0 16px 16px}
+#directorFocusHome .focusSnapshot{margin-bottom:14px}
+#directorFocusHome .focusHeading{margin-bottom:14px}
+#directorFocusHome .focusHeading h2{font-size:26px}
+#directorFocusHome .focusSearch{margin-bottom:14px}
+#directorFocusHome .focusQueue .queueList{max-height:430px;overflow-y:auto}
+#directorFocusHome .focusQueue{padding:17px}
+#directorFocusHome .focusColumns{gap:14px}
+#directorTrackerDiagnostics,#directorAmandaOutcomes{display:none}
+body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-execution.active) #directorAmandaOutcomes{display:block}
+@media(max-width:800px){#directorDailyCompass{padding:16px}.directorCompassTop{display:block}.directorCompassLinks{margin-top:12px}.directorCompassActions{grid-template-columns:repeat(2,minmax(0,1fr))}#directorFocusHome .focusHeading h2{font-size:24px}}
+@media(max-width:430px){.directorCompassActions{grid-template-columns:1fr 1fr}.directorCompassActions button{padding:10px;min-height:106px}}
+</style>
+<script>
+(function(){
+  function mount(){
+    const home=document.getElementById('directorFocusHome'),overview=document.getElementById('view-overview');
+    if(!home||!overview||document.getElementById('directorDailyCompass'))return;
+    const compass=document.createElement('section');
+    compass.id='directorDailyCompass';
+    compass.innerHTML='<div class="directorCompassTop"><div><div class="eyebrow">START HERE · DIRECTOR PRIORITIES</div><h2>Lead the business, not the task list.</h2><p>Protect key partnerships, grow production, coach Amanda, then handle strategic relationships when they need you.</p></div><div class="directorCompassLinks"><button type="button" data-focus-route="priorities">Due &amp; overdue</button><button type="button" data-focus-route="impact">Scorecard &amp; reports</button></div></div><div class="directorCompassActions"><button type="button" data-focus-type="CHANNEL"><strong>Channel accounts</strong><span>Retention, lead flow and production</span></button><button type="button" data-focus-type="A,B"><strong>A &amp; B accounts</strong><span>Protect and move relationships up</span></button><button type="button" data-focus-type="BUILDER"><strong>Builder accounts</strong><span>Commitments, opportunities and follow-ups</span></button><button type="button" data-focus-type="STRATEGIC"><strong>Strategic partners</strong><span>Title reps and high-value introductions</span></button></div>';
+    const heading=home.querySelector('.focusHeading');
+    if(heading)heading.after(compass);else home.prepend(compass);
+    const search=document.getElementById('homeSearch'),meetings=document.getElementById('homeMeetings');
+    if(search&&meetings){
+      const details=document.createElement('details');details.id='directorHomeLower';
+      details.innerHTML='<summary>Find an account and review upcoming meetings</summary><div class="directorHomeLowerBody"></div>';
+      const body=details.querySelector('.directorHomeLowerBody');
+      body.append(search,meetings);
+      home.append(details);
+    }
+    const homeAmanda=home.querySelector('#homeAmanda .amandaPeriod');
+    if(homeAmanda){homeAmanda.querySelectorAll('.meta').forEach(p=>{if(p.textContent.includes('saved in this browser'))p.textContent='Review RM outcomes and save coaching notes; verify shared data before reporting.'})}
+    const top=document.querySelector('.top h1');if(top)top.textContent='Director Command Center';
+    const subtitle=document.querySelector('.top p');if(subtitle)subtitle.textContent='Your daily priorities, relationships and team leadership in one place.';
+    const navLabels={overview:'Today',relationships:'Accounts',execution:'Amanda',growth:'Growth',feedback:'Feedback',impact:'Reports',priorities:'Follow-ups'};
+    document.querySelectorAll('.nav button[data-view]').forEach(b=>b.textContent=navLabels[b.dataset.view]||b.textContent);
+    function navigate(name){
+      const nav=document.querySelector('.nav button[data-view="'+name+'"]');
+      if(nav){nav.click();return true}return false;
+    }
+    compass.addEventListener('click',event=>{
+      const route=event.target.closest('[data-focus-route]');
+      if(route){navigate(route.dataset.focusRoute);return}
+      const target=event.target.closest('[data-focus-type]');if(!target)return;
+      if(!navigate('relationships'))return;
+      const owner=document.getElementById('accountOwnerFilter'),type=document.getElementById('accountTypeFilter'),search=document.getElementById('accountSearch');
+      if(owner){owner.value='Nyny';owner.dispatchEvent(new Event('change',{bubbles:true}))}
+      if(type){
+        // A/B is a combined director portfolio; use search as a clear point of entry for both.
+        type.value=target.dataset.focusType==='A,B'?'ALL':target.dataset.focusType;
+        type.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+      if(search){search.value='';search.dispatchEvent(new Event('input',{bubbles:true}))}
+      if(target.dataset.focusType==='A,B'){
+        const h=document.querySelector('#view-relationships .viewHead h2');
+        if(h)h.textContent='My relationships · select A or B in account type';
+        type&&type.focus();
+      }else{
+        const h=document.querySelector('#view-relationships .viewHead h2');
+        if(h)h.textContent='My Relationships';
+      }
+    });
+    // Tiles are never decorative: keyboard users can open their same existing data drill.
+    document.querySelectorAll('.card[data-drill],.module[data-view]').forEach(el=>{
+      if(!el.hasAttribute('tabindex'))el.tabIndex=0;
+      if(!el.hasAttribute('role'))el.setAttribute('role','button');
+      el.addEventListener('keydown',e=>{if(e.target!==el)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}});
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(mount,0));
+  else setTimeout(mount,0);
+})();
+</script>
+</body></html>
