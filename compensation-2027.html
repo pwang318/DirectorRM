@@ -66,9 +66,9 @@ const matchesReceipt=Number(receipt.rows_processed)===rows.length; const stamped
 const known=rows.filter(p=>closeCount(p)!==null);
 const counts={channel:known.filter(p=>closeCount(p)>=10).length,a:known.filter(p=>closeCount(p)>=4).length,b:known.filter(p=>closeCount(p)>=2).length,active:null,p:null};
 const end=quarterEnd(), endMs=Date.parse(end+'T23:59:59Z'), noFuture=Date.now()>=endMs, now=endMs;
-const qualified=rows.filter(p=>{const lead=days(p.latest_lead_date,now),close=days(p.latest_close_date,now);return (lead!==null&&lead>=0&&lead<=90)||(close!==null&&close>=0&&close<=90)});
+const snapshotAt=atQuarterEnd?endMs:Date.parse(stampedDay+'T23:59:59Z'); const qualified=rows.filter(p=>{const lead=days(p.latest_lead_date,snapshotAt),close=days(p.latest_close_date,snapshotAt);return (lead!==null&&lead>=0&&lead<=90)||(close!==null&&close>=0&&close<=90)});
 const hasDates=rows.every(p=>p.latest_lead_date!==undefined&&p.latest_close_date!==undefined);
-if(hasDates&&noFuture)counts.active=atQuarterEnd?qualified.length:null;
+if(hasDates&&Number.isFinite(snapshotAt))counts.active=qualified.length;
 sourceVerified=matchesReceipt&&known.length===rows.length&&noFuture&&hasDates&&atQuarterEnd;
 current=counts;
 const base=rows.map(p=>({name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p}));
@@ -76,13 +76,13 @@ const sets=[
 ['C to B: one closing away',base.filter(r=>r.closes===1),'Amanda • identify next qualifying referral and LP follow-through'],
 ['B to A: one closing away',base.filter(r=>r.closes===3),'Director • verify opportunity and completed closings'],
 ['A to Channel: one closing away',base.filter(r=>r.closes===9),'Director • prioritize Channel growth and retention'],
-['Approaching 90-day inactivity',base.filter(r=>{const x=days(r.lead,now),y=days(r.close,now),latest=Math.min(x===null?99999:x,y===null?99999:y);return latest>=60&&latest<90}),'Director/RM • re-engage before active status expires']
+['Approaching 90-day inactivity',base.filter(r=>{const x=days(r.lead,Date.now()),y=days(r.close,Date.now()),latest=Math.min(x===null?99999:x,y===null?99999:y);return latest>=60&&latest<90}),'Director/RM • re-engage before active status expires']
 ];
 actions=sets.flatMap(([group,rs,action])=>rs.map(r=>({group,...r,action})));
 $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="metric">'+safe(label)+'</div><div class="value">'+rs.length+'</div></div>').join('');
 $('worklists').innerHTML=sets.map(([label,rs,action])=>drawTable(label,label,rs.map(r=>({...r,action})),action)).join('');
 $('status').className=sourceVerified?'warn ok':'warn';
-$('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+'Current score is withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
+$('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+'Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
 updateScore();
 }catch(e){$('status').className='warn error';$('status').textContent='Unable to verify official records: '+String(e.message||e)+'. No bonus result will be shown.';$('worklists').innerHTML='';$('workstats').innerHTML='';updateScore()}
 }
