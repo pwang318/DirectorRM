@@ -7,7 +7,7 @@
 <main>
 <div class="control"><label>Quarter<select id="quarter"><option value="1">Q1 • Mar 31</option><option value="2">Q2 • Jun 30</option><option value="3">Q3 • Sep 30</option><option value="4">Q4 • Dec 31</option></select></label><button id="refresh">Refresh shared data</button><button class="btn-alt" id="download">Export priority actions CSV</button></div>
 <div id="status" class="warn" role="status">Loading verified Power BI records…</div>
-<div class="grid" id="metrics"></div>
+<section class="card"><h2>Director's weekly priorities</h2><p class="muted">Focus on qualifying referral activity, completed closings, and protecting relationships. Today's worklists are based on the last shared import, not an award determination.</p><div class="grid" id="priorityCards"></div><div id="weeklyFocus" class="note"></div></section><div class="grid" id="metrics"></div>
 <section class="card"><div class="actions"><h2>Quarterly bonus score</h2><span class="pill">No rounding before tier assignment</span></div>
 <p class="muted">The bonus uses five weighted metrics. This model does not count scheduled closings as completed, and it does not treat a contact or meeting as an active partner. It refuses to present an earned bonus when required evidence is missing.</p>
 <div class="grid"><div><div class="metric">Weighted score</div><div class="value" id="score">—</div></div><div><div class="metric">Estimated quarterly bonus</div><div class="value" id="bonus">—</div></div><div><div class="metric">Gap to score 2.00</div><div class="value" id="scoreGap">—</div></div><div><div class="metric">Quarter-end evidence</div><div class="value" id="evidence">Incomplete</div></div></div>
@@ -15,7 +15,7 @@
 </section>
 <section class="card"><h2>Referral productivity • Verified-input scenario</h2><p class="muted">Enter verified figures from your official reporting for the chosen quarter. These fields are temporary calculations only, not saved scorecard evidence. Refreshing or changing quarter clears them. The denominator is the sum of the three month-end active-partner counts—not the latest count multiplied by three.</p>
 <div class="control"><label>Total referred leads in quarter<input id="leads" type="number" min="0" step="1" placeholder="Quarter total"></label><label>Month 1 active<input id="month1" type="number" min="0" step="1" placeholder="Month-end"></label><label>Month 2 active<input id="month2" type="number" min="0" step="1" placeholder="Month-end"></label><label>Month 3 active<input id="month3" type="number" min="0" step="1" placeholder="Month-end"></label><button id="calculate">Calculate scenario</button></div><div id="productivity" class="muted">No verified quarterly counts entered.</div></section>
-<section class="card"><h2>Growth opportunity worklists</h2><p class="muted">These lists use the latest verified shared Power BI profile import. Production-based opportunities are directional until completed closing dates are independently reconciled. Assignment labels never change compensation eligibility.</p><div class="grid" id="workstats"></div><div id="worklists"></div></section>
+<section class="card"><h2>Growth opportunity worklists</h2><div class="control"><label>Find agent<input id="agentSearch" type="search" placeholder="Search relationships"></label><label>Worklist<select id="listFilter"><option value="all">All opportunities</option><option value="C to B">C → B</option><option value="B to A">B → A</option><option value="A to Channel">A → Channel</option><option value="inactivity">At risk</option></select></label></div><p class="muted">These lists use the latest verified shared Power BI profile import. Production-based opportunities are directional until completed closing dates are independently reconciled. Assignment labels never change compensation eligibility.</p><div class="grid" id="workstats"></div><div id="worklists"></div></section>
 <section class="card"><h2>Director operating cadence</h2><div class="note"><b>Monday:</b> Reconcile official counts and identify the highest-impact verified gaps. <b>Tuesday:</b> Review Amanda's C→B list and outstanding LP follow-through. <b>Wednesday:</b> Prioritize your own B→A, A→Channel, builders and strategic accounts. <b>Thursday:</b> Validate completed closings and upcoming 90-day inactivity. <b>Friday:</b> Recalculate the weighted score, quarter-end risks, and the specific owners/actions required.</div><div class="warn"><b>Fixed compensation baseline (Nov 19, 2026):</b> 1 Channel, 20 A-level (including Channel), 41 B-or-higher, 128 active. This baseline must not be replaced by an older Power BI snapshot. The current verified population may differ.</div></section>
 </main>
 <script>
@@ -24,7 +24,7 @@
 const API='https://uclucbdkjqyqdvifyptx.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjbHVjYmRranF5cWR2aWZ5cHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTUyMTMsImV4cCI6MjA5NjA3MTIxM30.VnqWcFT1WLQwCJxSdEIzIgOvETaOQly2IQxht-9uI7E';
 const defs=[{id:'channel',name:'Channel partners',weight:.15,min:4,meets:5,exceeds:6,base:1},{id:'a',name:'A-level incl. Channel',weight:.15,min:22,meets:25,exceeds:30,base:20},{id:'b',name:'B-or-higher',weight:.20,min:53,meets:60,exceeds:72,base:41},{id:'p',name:'Monthly leads per active',weight:.30,min:.85,meets:1,exceeds:1.15,base:null},{id:'active',name:'Active partners',weight:.20,min:180,meets:200,exceeds:220,base:128}];
-let current=null, actions=[], sourceVerified=false;
+let current=null, actions=[], sourceVerified=false, snapshotRows=[];
 const $=id=>document.getElementById(id), safe=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number.isFinite(Number(v))&&v!==''&&v!==null?Number(v):null;
 function level(v,def){if(v==null||!Number.isFinite(v))return null;if(v>=def.exceeds)return 3;if(v>=def.meets)return 2;if(v>=def.min)return 1;return 0}
@@ -50,9 +50,16 @@ $('scoreGap').textContent=Math.max(0,2-score).toFixed(2);
 $('formulaNote').textContent='Provisional scenario only. Final bonus depends on verified quarter-end counts, quarter referral totals, the 90-day active definition, and Daniel/Mackenzie approval. No rounding of input metrics.';
 }
 function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>12m closings</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td>'+safe(r.name)+'</td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="5">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
+function renderActions(){
+ const q=String($('agentSearch').value||'').trim().toLowerCase(),filter=$('listFilter').value;
+ const rows=actions.filter(r=>(!q||String(r.name).toLowerCase().includes(q))&&(filter==='all'||r.group.toLowerCase().includes(filter.toLowerCase())));
+ const grouped=new Map();
+ rows.forEach(r=>{if(!grouped.has(r.group))grouped.set(r.group,[]);grouped.get(r.group).push(r)});
+ $('worklists').innerHTML=[...grouped].map(([group,groupRows])=>drawTable(group,group,groupRows,groupRows[0]?.action||'')).join('')||'<p class="muted">No matching opportunities. Try another filter.</p>';
+}
 function resetScenario(){['leads','month1','month2','month3'].forEach(k=>$(k).value='')}
 async function refresh(){
-sourceVerified=false;current={channel:null,a:null,b:null,active:null,p:null};actions=[];resetScenario();updateScore();
+sourceVerified=false;current={channel:null,a:null,b:null,active:null,p:null};actions=[];snapshotRows=[];resetScenario();updateScore();
 $('status').className='warn';$('status').textContent='Rechecking official shared Power BI import…';
 try{
 const [logs,profiles]=await Promise.all([get('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),get('agent_profiles?select=*&powerbi_last_seen_at=not.is.null&limit=5000')]);
@@ -71,21 +78,38 @@ const hasDates=rows.every(p=>p.latest_lead_date!==undefined&&p.latest_close_date
 if(hasDates&&Number.isFinite(snapshotAt))counts.active=qualified.length;
 sourceVerified=matchesReceipt&&known.length===rows.length&&noFuture&&hasDates&&atQuarterEnd;
 current=counts;
+snapshotRows=rows;
 const base=rows.map(p=>({name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p}));
+const qualifyingDate=p=>{const lead=days(p.latest_lead_date,Date.now()),close=days(p.latest_close_date,Date.now());return Math.min(lead===null?99999:lead,close===null?99999:close)};
+const risk60=rows.filter(p=>{const n=qualifyingDate(p);return n>=60&&n<90}).length;
+const inactive=rows.filter(p=>qualifyingDate(p)>90).length;
+const completedGaps=defs.filter(d=>d.id!=='p').map(d=>({label:d.name,value:counts[d.id]===null?'—':Math.max(0,d.meets-counts[d.id])+' needed',weight:d.weight}));
+$('priorityCards').innerHTML=[
+['Channel conversion',base.filter(r=>r.closes===9).length,'One verified closing away from Channel'],
+['A-level conversion',base.filter(r=>r.closes===3).length,'One verified closing away from A'],
+['Active retention',risk60,'60–89 days since most recent qualifying event'],
+['Inactive recovery',inactive,'No qualifying event within the past 90 days']
+].map(a=>'<div class="card"><div class="metric">'+safe(a[0])+'</div><div class="value">'+a[1]+'</div><div class="sub">'+safe(a[2])+'</div></div>').join('');
+$('weeklyFocus').innerHTML='<b>Most important scorecard gaps:</b> '+completedGaps.map(d=>safe(d.label)+': '+safe(d.value)).join(' · ')+'.<p><b>Your focus:</b> personally review Channel and A conversion opportunities, confirm completed closing evidence, and remove any LP or builder relationship blockers. <b>Amanda:</b> prioritize C→B and retention follow-ups, then confirm with the agent after LP action. <b>Every Friday:</b> review official lead pace and scorecard movement; do not count scheduled closings or meetings as achieved results.</p>';
 const sets=[
 ['C to B: one closing away',base.filter(r=>r.closes===1),'Amanda • identify next qualifying referral and LP follow-through'],
 ['B to A: one closing away',base.filter(r=>r.closes===3),'Director • verify opportunity and completed closings'],
 ['A to Channel: one closing away',base.filter(r=>r.closes===9),'Director • prioritize Channel growth and retention'],
 ['Approaching 90-day inactivity',base.filter(r=>{const x=days(r.lead,Date.now()),y=days(r.close,Date.now()),latest=Math.min(x===null?99999:x,y===null?99999:y);return latest>=60&&latest<90}),'Director/RM • re-engage before active status expires']
 ];
-actions=sets.flatMap(([group,rs,action])=>rs.map(r=>({group,...r,action})));
+actions=sets.flatMap(([group,rs,action])=>rs.map(r=>({group,...r,action,
+ lp:'', owner:group.startsWith('C to B')?'Amanda':'Director'
+})));
+actions.sort((a,b)=>a.group.localeCompare(b.group)||String(a.name).localeCompare(String(b.name)));
 $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="metric">'+safe(label)+'</div><div class="value">'+rs.length+'</div></div>').join('');
-$('worklists').innerHTML=sets.map(([label,rs,action])=>drawTable(label,label,rs.map(r=>({...r,action})),action)).join('');
+renderActions();
 $('status').className=sourceVerified?'warn ok':'warn';
-$('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+'Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
+$('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+' Compensation baseline was 128 active, but this import contains '+rows.length+' total agents; the populations must be reconciled before interpreting net growth. Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
 updateScore();
-}catch(e){$('status').className='warn error';$('status').textContent='Unable to verify official records: '+String(e.message||e)+'. No bonus result will be shown.';$('worklists').innerHTML='';$('workstats').innerHTML='';updateScore()}
+}catch(e){$('status').className='warn error';$('status').textContent='Unable to verify official records: '+String(e.message||e)+'. No bonus result will be shown.';$('worklists').innerHTML='';$('workstats').innerHTML='';$('priorityCards').innerHTML='';$('weeklyFocus').textContent='Shared data unavailable: use the official scorecard before making decisions.';updateScore()}
 }
+$('agentSearch').addEventListener('input',renderActions);
+$('listFilter').addEventListener('change',renderActions);
 $('refresh').addEventListener('click',refresh);
 $('quarter').addEventListener('change',refresh);
 $('calculate').addEventListener('click',updateScore);
