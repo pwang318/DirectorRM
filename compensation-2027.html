@@ -49,7 +49,7 @@ $('bonus').textContent=cash(payment(score));
 $('scoreGap').textContent=Math.max(0,2-score).toFixed(2);
 $('formulaNote').textContent='Provisional scenario only. Final bonus depends on verified quarter-end counts, quarter referral totals, the 90-day active definition, and Daniel/Mackenzie approval. No rounding of input metrics.';
 }
-function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>12m closings</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td>'+safe(r.name)+'</td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="5">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
+function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>12m closings</th><th>Assigned LP</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td>'+safe(r.name)+'</td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="6">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
 function renderActions(){
  const q=String($('agentSearch').value||'').trim().toLowerCase(),filter=$('listFilter').value;
  const rows=actions.filter(r=>(!q||String(r.name).toLowerCase().includes(q))&&(filter==='all'||r.group.toLowerCase().includes(filter.toLowerCase())));
@@ -62,7 +62,7 @@ async function refresh(){
 sourceVerified=false;current={channel:null,a:null,b:null,active:null,p:null};actions=[];snapshotRows=[];resetScenario();updateScore();
 $('status').className='warn';$('status').textContent='Rechecking official shared Power BI import…';
 try{
-const [logs,profiles]=await Promise.all([get('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),get('agent_profiles?select=*&powerbi_last_seen_at=not.is.null&limit=5000')]);
+const [logs,profiles,assignments]=await Promise.all([get('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),get('agent_profiles?select=*&powerbi_last_seen_at=not.is.null&limit=5000'),get('agent_assignments?select=agent_name,lp,rm&limit=2500').catch(()=>[])]);
 const receipt=logs&&logs[0];if(!receipt||String(receipt.errors||'0')!=='0')throw Error('No successful shared Power BI receipt; counts withheld');
 const batchStamp=decodeURIComponent((String(receipt.source_app||'').match(/(?:^|;)profileStamp=([^;]+)/)||[])[1]||'')||receipt.imported_at;
 let rows=profiles.filter(p=>String(p.powerbi_last_seen_at||'')===batchStamp);
@@ -79,7 +79,8 @@ if(hasDates&&Number.isFinite(snapshotAt))counts.active=qualified.length;
 sourceVerified=matchesReceipt&&known.length===rows.length&&noFuture&&hasDates&&atQuarterEnd;
 current=counts;
 snapshotRows=rows;
-const base=rows.map(p=>({name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p}));
+const assignmentMap=new Map((Array.isArray(assignments)?assignments:[]).map(a=>[String(a.agent_name||'').trim().toLowerCase(),a]));
+const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||''}});
 const qualifyingDate=p=>{const lead=days(p.latest_lead_date,Date.now()),close=days(p.latest_close_date,Date.now());return Math.min(lead===null?99999:lead,close===null?99999:close)};
 const risk60=rows.filter(p=>{const n=qualifyingDate(p);return n>=60&&n<90}).length;
 const inactive=rows.filter(p=>qualifyingDate(p)>90).length;
@@ -98,7 +99,7 @@ const sets=[
 ['Approaching 90-day inactivity',base.filter(r=>{const x=days(r.lead,Date.now()),y=days(r.close,Date.now()),latest=Math.min(x===null?99999:x,y===null?99999:y);return latest>=60&&latest<90}),'Director/RM • re-engage before active status expires']
 ];
 actions=sets.flatMap(([group,rs,action])=>rs.map(r=>({group,...r,action,
- lp:'', owner:group.startsWith('C to B')?'Amanda':'Director'
+ lp:r.lp||'', owner:group.startsWith('C to B')?'Amanda':'Director'
 })));
 actions.sort((a,b)=>a.group.localeCompare(b.group)||String(a.name).localeCompare(String(b.name)));
 $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="metric">'+safe(label)+'</div><div class="value">'+rs.length+'</div></div>').join('');
@@ -113,7 +114,7 @@ $('listFilter').addEventListener('change',renderActions);
 $('refresh').addEventListener('click',refresh);
 $('quarter').addEventListener('change',refresh);
 $('calculate').addEventListener('click',updateScore);
-$('download').addEventListener('click',()=>{const csv=[['Group','Agent','12m closings','Last lead','Last closing','Next action'],...actions.map(r=>[r.group,r.name,r.closes??'',r.lead||'',r.close||'',r.action])].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-director-growth-opportunities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+$('download').addEventListener('click',()=>{const csv=[['Group','Agent','12m closings','Assigned LP','Last lead','Last closing','Next action'],...actions.map(r=>[r.group,r.name,r.closes??'',r.lp||'',r.lead||'',r.close||'',r.action])].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-director-growth-opportunities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
 refresh();
 })();
 </script></body></html>
