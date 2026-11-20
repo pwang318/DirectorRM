@@ -13,6 +13,7 @@
 <div class="grid"><div><div class="metric">Weighted score</div><div class="value" id="score">—</div></div><div><div class="metric">Estimated quarterly bonus</div><div class="value" id="bonus">—</div></div><div><div class="metric">Gap to score 2.00</div><div class="value" id="scoreGap">—</div></div><div><div class="metric">Quarter-end evidence</div><div class="value" id="evidence">Incomplete</div></div></div>
 <div id="formulaNote" class="warn">The exact lead productivity measure requires quarter lead totals plus all three month-end active counts.</div>
 </section>
+<section class="card"><h2>Plan the next quarter • What-if bonus forecast</h2><p class="muted">Use target counts to plan. This is a hypothetical scenario, not an earned or officially approved bonus. Channel counts within A, and A within B-or-higher. Enter a monthly productivity goal or calculate it from quarter leads below.</p><div class="control"><label>Channel<input id="forecastChannel" type="number" min="0" step="1" value="5"></label><label>A incl. Channel<input id="forecastA" type="number" min="0" step="1" value="25"></label><label>B-or-higher<input id="forecastB" type="number" min="0" step="1" value="60"></label><label>Active partners<input id="forecastActive" type="number" min="0" step="1" value="200"></label><label>Monthly leads per active<input id="forecastProductivity" type="number" min="0" step="0.001" value="1.00"></label><button id="forecastCalculate">Forecast bonus</button></div><div id="forecastResult" class="warn"></div></section>
 <section class="card"><h2>Referral productivity • Verified-input scenario</h2><p class="muted">Enter verified figures from your official reporting for the chosen quarter. These fields are temporary calculations only, not saved scorecard evidence. Refreshing or changing quarter clears them. The denominator is the sum of the three month-end active-partner counts—not the latest count multiplied by three.</p>
 <div class="control"><label>Total referred leads in quarter<input id="leads" type="number" min="0" step="1" placeholder="Quarter total"></label><label>Month 1 active<input id="month1" type="number" min="0" step="1" placeholder="Month-end"></label><label>Month 2 active<input id="month2" type="number" min="0" step="1" placeholder="Month-end"></label><label>Month 3 active<input id="month3" type="number" min="0" step="1" placeholder="Month-end"></label><button id="calculate">Calculate scenario</button></div><div id="productivity" class="muted">No verified quarterly counts entered.</div></section>
 <section class="card"><h2>Growth opportunity worklists</h2><div class="control"><label>Find agent<input id="agentSearch" type="search" placeholder="Search relationships"></label><label>Worklist<select id="listFilter"><option value="all">All opportunities</option><option value="C to B">C → B</option><option value="B to A">B → A</option><option value="A to Channel">A → Channel</option><option value="inactivity">At risk</option></select></label></div><p class="muted">These lists use the latest verified shared Power BI profile import. Production-based opportunities are directional until completed closing dates are independently reconciled. Assignment labels never change compensation eligibility.</p><div class="grid" id="workstats"></div><div id="worklists"></div></section>
@@ -56,6 +57,15 @@ function renderActions(){
  const grouped=new Map();
  rows.forEach(r=>{if(!grouped.has(r.group))grouped.set(r.group,[]);grouped.get(r.group).push(r)});
  $('worklists').innerHTML=[...grouped].map(([group,groupRows])=>drawTable(group,group,groupRows,groupRows[0]?.action||'')).join('')||'<p class="muted">No matching opportunities. Try another filter.</p>';
+}
+function forecast(){
+const ids=['forecastChannel','forecastA','forecastB','forecastActive','forecastProductivity'];
+const vals=ids.map(id=>num($(id).value.trim()));
+const el=$('forecastResult');
+if(vals.some(v=>v===null||v<0)||vals.slice(0,4).some(v=>!Number.isInteger(v))||vals[0]>vals[1]||vals[1]>vals[2]||vals[2]>vals[3]){el.className='warn error';el.textContent='Enter valid nonnegative values. Channel must not exceed A; A must not exceed B-or-higher; B-or-higher must not exceed active partners.';return}
+const total=defs.reduce((sum,d,i)=>sum+level(vals[i],d)*d.weight,0);
+el.className='warn ok';
+el.textContent='Planning scenario: '+total.toFixed(2)+' / 3 weighted points → '+cash(payment(total))+' potential quarterly bonus ('+cash(payment(total)*4)+' if repeated all four quarters). Actual payments require official verified results.';
 }
 function resetScenario(){['leads','month1','month2','month3'].forEach(k=>$(k).value='')}
 async function refresh(){
@@ -114,6 +124,8 @@ $('listFilter').addEventListener('change',renderActions);
 $('refresh').addEventListener('click',refresh);
 $('quarter').addEventListener('change',refresh);
 $('calculate').addEventListener('click',updateScore);
+$('forecastCalculate').addEventListener('click',forecast);
+forecast();
 $('download').addEventListener('click',()=>{const csv=[['Group','Agent','12m closings','Assigned LP','Last lead','Last closing','Next action'],...actions.map(r=>[r.group,r.name,r.closes??'',r.lp||'',r.lead||'',r.close||'',r.action])].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-director-growth-opportunities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
 refresh();
 })();
