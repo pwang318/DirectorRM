@@ -132,7 +132,7 @@ $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="m
 renderActions();
 const priorityOrder=['Approaching 90-day inactivity','A to Channel: one closing away','B to A: one closing away','C to B: one closing away','Inactive recovery'];
 const shortlist=priorityOrder.flatMap(group=>actions.filter(a=>a.group===group).slice(0,2)).slice(0,5);
-$('topActions').innerHTML='<h3 style="margin:14px 0 6px;font-size:14px">First five relationships to review</h3>'+(shortlist.length?shortlist.map(a=>'<div class="todayRow"><div><b>'+safe(a.name)+'</b><small>'+safe(a.group)+' · LP: '+safe(a.lp||'Unassigned')+' · Follow-up: '+safe(a.followup||'Needs date')+'</small></div><a href="#growth-list">Open worklist</a></div>').join(''):'<p class="muted">No priority relationships in the imported snapshot.</p>');
+$('topActions').innerHTML='<h3 style="margin:14px 0 6px;font-size:14px">First five relationships to review</h3>'+(shortlist.length?shortlist.map(a=>'<div class="todayRow"><div><b>'+safe(a.name)+'</b><small>'+safe(a.group)+' · LP: '+safe(a.lp||'Unassigned')+' · Follow-up: '+safe(a.followup||'Needs date')+'</small></div><button type="button" class="btn-alt priorityJump" data-agent="'+safe(a.name)+'" data-group="'+safe(a.group)+'">Review agent</button></div>').join(''):'<p class="muted">No priority relationships in the imported snapshot.</p>');
 $('status').className=sourceVerified?'warn ok':'warn';
 $('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+(importAgeDays>7?' Import is over seven days old; refresh Power BI before prioritizing. ':'')+' Compensation baseline was 128 active, but this import contains '+rows.length+' total agents; the populations must be reconciled before interpreting net growth. Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
 updateScore();
@@ -141,6 +141,12 @@ updateScore();
 document.querySelectorAll('a[href="#growth-list"]').forEach(a=>a.addEventListener('click',()=>{$('fullWorklists').open=true}));
 $('openBonusPlanning').addEventListener('click',()=>{document.body.classList.add('showAdvanced');$('toggleDetails').textContent='Hide full scorecard';$('toggleDetails').setAttribute('aria-expanded','true')});
 $('toggleDetails').addEventListener('click',()=>{const expanded=document.body.classList.toggle('showAdvanced');$('toggleDetails').textContent=expanded?'Hide full scorecard':'Show full scorecard';$('toggleDetails').setAttribute('aria-expanded',String(expanded))});
+$('topActions').addEventListener('click',event=>{
+const button=event.target.closest('button.priorityJump');if(!button)return;
+$('fullWorklists').open=true;$('agentSearch').value=button.dataset.agent||'';
+$('listFilter').value='all';renderActions();
+$('growth-list').scrollIntoView({behavior:'smooth',block:'start'});
+});
 $('agentSearch').addEventListener('input',renderActions);
 $('listFilter').addEventListener('change',renderActions);
 $('refresh').addEventListener('click',refresh);
