@@ -81,6 +81,52 @@ button:hover,.btn:hover{background:#4d317b}button:focus-visible,a:focus-visible,
  .allAgentsToggle{padding:17px}
  #growth-list details>.control,#growth-list details>.muted,#workstats,#worklists{margin-left:15px;margin-right:15px}
 }
+
+/* Neutral visual system: consistent typography and restrained blue/charcoal accents */
+:root{--ink:#202a38;--muted:#667487;--purple:#315a7a;--purple-strong:#203e5c;--lavender:#f3f6f9;--line:#e3e8ed;--surface:#fff}
+body{background:#f6f8fa;color:#202a38}
+header{background:#192d40;color:#fff}
+header .eyebrow{color:#cbd7e2}header p{color:#dbe3ea}
+.headerTag{border-color:#ffffff2d;background:#ffffff12}
+.eyebrow{color:#556e82}
+.card,.simpleIntro{border-color:#e2e7ec;background:#fff;box-shadow:0 4px 18px rgba(18,44,68,.045)}
+.simpleIntro h2,.card h2,.allAgentsToggle{color:#253241}
+.bonusDot{background:#768a9c}.bonusLine strong{color:#35495a}
+button,.btn{background:#284d6a;color:#fff}
+button:hover,.btn:hover{background:#1c3b54}
+.btn-alt{background:#edf2f6;color:#274963;border:1px solid #d8e2ea}
+.btn-alt:hover{background:#e0eaf1}
+.jump a{color:#475c70;border-color:#dfe6ec;background:#fff}
+.jump a.jumpPrimary{background:#284d6a;border-color:#284d6a;color:#fff}
+.utilityDetails[open],.technical[open]{border-color:#dfe5eb}
+.control label{color:#35495b}.control input,.control select{color:#243648;border-color:#d4dce4}
+.aeCount{background:#edf3f7}.aeCount strong{color:#284d6a}.aeCount span{color:#5c6d7b}
+.aeConversation,.aeTasks{background:#fafbfd;border-color:#e2e8ee}
+.subheading{color:#566f83}.aeScript{color:#2b3d4e;border-color:#e0e6ec;background:#fff}
+.aeScript b{color:#365b77}.aeQ{border-color:#98aebd}.aeQ p{color:#56697c}
+.aeCheck{border-color:#e1e7ed}.aeCheck b{color:#253648}.aeCheck small{color:#68798a}
+.aeCheck.done{background:#f2f8f4;border-color:#bcdac8}.aeCheck input{accent-color:#2d6c68}
+.bar{background:#e4eaf0}.bar i{background:#527c9b}
+.priorityCard #priorityCards .card{background:#f8fafc;border-color:#e3e9ef}
+.priorityCard #priorityCards .metric{color:#576a7d}
+.priorityCard #priorityCards .value,.value{color:#2b4c69}
+.pill{background:#edf2f6;color:#38546a}
+.todayHeading{display:flex;justify-content:space-between;gap:14px;align-items:center;margin:19px 0 3px}
+.todayHeading h3{margin:0 0 5px;font-size:17px;color:#273849;letter-spacing:-.02em}
+.todayHeading p{margin:0;line-height:1.45}
+.todayAgent{min-width:0;flex:1}
+.todayAgent b{font-size:14px;color:#22364a}
+.todayKind{display:inline-block;margin-left:9px;padding:4px 7px;border-radius:7px;font-size:10px;font-weight:750;background:#eaf0f5;color:#3c5870}
+.todayRow{border-bottom:1px solid #e6ebef;padding:15px 0;flex-direction:row;align-items:center}
+.todayRow:last-child{border:0}.todayRow small{display:block;font-size:11px;color:#607184;margin-top:5px;line-height:1.5}
+.focusDetails{border-color:#e2e7ed}.focusDetails summary{color:#365b77}
+.allAgentsToggle small{color:#687a8a}
+a{color:#2d5878}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #8eaec7;outline-offset:2px}
+@media(max-width:650px){
+.todayHeading{align-items:flex-start}.todayRow{align-items:stretch;flex-direction:column}.todayKind{margin-left:6px}
+.todayRow button{width:100%}.todayAgent b{font-size:14px}
+}
 </style></head><body><header><div class="headerInner"><a class="backLink" href="./index.html">← Director Dashboard</a><div class="headerLine"><div><div class="eyebrow">CORE TEAM · DIRECTOR WORKSPACE</div><h1>Your Daily Growth Plan</h1><p>Meaningful conversations. Clear follow-through. Measurable growth.</p></div><span class="headerTag">2027 Goals</span></div></div></header>
 <main>
 <section class="simpleIntro"><div class="introText"><div class="eyebrow">TODAY'S FOCUS</div><h2>Know exactly who to call.</h2><p>Start with due follow-ups, open the agent’s conversation guide, then record the outcome.</p><div class="bonusLine"><span class="bonusDot"></span><span>Scorecard: <strong id="simpleBonus">Waiting for verified quarter-end data</strong></span></div></div><button type="button" class="btn-alt" id="toggleDetails" aria-expanded="false">Show full scorecard</button></section>
