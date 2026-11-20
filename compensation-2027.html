@@ -110,7 +110,7 @@ function aePopulate(){
 }
 function aeTypeFor(group){return group.startsWith('C to B')?'existing':group.startsWith('B to A')?'growthB':group.startsWith('A to Channel')?'growthA':group.toLowerCase().includes('inactive')?'reconnect':'existing'}
 
-function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>12m closings</th><th>Assigned LP</th><th>Next action due</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td>'+safe(r.name)+'</td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.followup||'Not assigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="7">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
+function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent / action</th><th>12m closings</th><th>Assigned LP</th><th>Next action due</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td><b>'+safe(r.name)+'</b><div><button type="button" class="btn-alt aeFromList" data-agent="'+safe(r.name)+'" data-group="'+safe(r.group||title)+'" style="margin-top:7px;padding:6px 8px">Start conversation</button></div></td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.followup||'Not assigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="7">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
 function renderActions(){
  const q=String($('agentSearch').value||'').trim().toLowerCase(),filter=$('listFilter').value;
  const rows=actions.filter(r=>(!q||String(r.name).toLowerCase().includes(q))&&(filter==='all'||r.group.toLowerCase().includes(filter.toLowerCase())));
@@ -207,6 +207,7 @@ $('topActions').addEventListener('click',event=>{
 const button=event.target.closest('button.priorityJump');if(!button)return;
 aeChoose(button.dataset.agent,aeTypeFor(button.dataset.group||''));return;
 });
+$('worklists').addEventListener('click',e=>{const btn=e.target.closest('button.aeFromList');if(!btn)return;aeChoose(btn.dataset.agent,aeTypeFor(btn.dataset.group||''))});
 $('agentSearch').addEventListener('input',renderActions);
 $('listFilter').addEventListener('change',renderActions);
 $('refresh').addEventListener('click',refresh);
