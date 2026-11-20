@@ -297,7 +297,7 @@ sourceVerified=matchesReceipt&&duplicates===0&&known.length===rows.length&&noFut
 current=counts;
 snapshotRows=rows;aePopulate();
 const assignmentMap=new Map((Array.isArray(assignments)?assignments:[]).map(a=>[String(a.agent_name||'').trim().toLowerCase(),a]));
-const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.agent_name,displayName:displayAgentName(p.display_name||p.agent_name),closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||'',followup:date(p.growth_opportunity_deadline)||date(p.next_rm_followup),savedNext:p.next_growth_opportunity||''}});
+const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.agent_name,displayName:displayAgentName(p.display_name||p.agent_name),closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||'',followup:[date(p.growth_opportunity_deadline),date(p.next_rm_followup)].filter(Boolean).sort()[0]||null,savedNext:p.next_growth_opportunity||''}});
 const qualifyingDate=p=>{const lead=days(p.latest_lead_date,Date.now()),close=days(p.latest_close_date,Date.now());return Math.min(lead===null?99999:lead,close===null?99999:close)};
 const risk60=rows.filter(p=>{const n=qualifyingDate(p);return n>=60&&n<90}).length;
 const inactive=rows.filter(p=>qualifyingDate(p)>90).length;
