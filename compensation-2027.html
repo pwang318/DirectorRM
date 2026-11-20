@@ -8,6 +8,9 @@
 <div class="control"><label>Quarter<select id="quarter"><option value="1">Q1 • Mar 31</option><option value="2">Q2 • Jun 30</option><option value="3">Q3 • Sep 30</option><option value="4">Q4 • Dec 31</option></select></label><button id="refresh">Refresh shared data</button><button class="btn-alt" id="download">Export priority actions CSV</button></div>
 <div id="status" class="warn" role="status">Loading verified Power BI records…</div>
 <section class="card"><h2>Director's weekly priorities</h2><p class="muted">Focus on qualifying referral activity, completed closings, and protecting relationships. Today's worklists are based on the last shared import, not an award determination.</p><div class="grid" id="priorityCards"></div><div id="weeklyFocus" class="note"></div></section><div class="grid" id="metrics"></div>
+<section class="card"><h2>Data reconciliation before compensation scoring</h2>
+<div id="reconciliation" class="warn">Checking latest Power BI receipt and unique agent population…</div>
+<p class="muted">Daniel's Nov 19 baseline is contractual, not a count generated from the latest Power BI upload. Missing, duplicated or unqualified relationships cannot be added just to close the gap. Import reconciliation and activity eligibility must be verified separately.</p></section>
 <section class="card"><div class="actions"><h2>Quarterly bonus score</h2><span class="pill">No rounding before tier assignment</span></div>
 <p class="muted">The bonus uses five weighted metrics. This model does not count scheduled closings as completed, and it does not treat a contact or meeting as an active partner. It refuses to present an earned bonus when required evidence is missing.</p>
 <div class="grid"><div><div class="metric">Weighted score</div><div class="value" id="score">—</div></div><div><div class="metric">Estimated quarterly bonus</div><div class="value" id="bonus">—</div></div><div><div class="metric">Gap to score 2.00</div><div class="value" id="scoreGap">—</div></div><div><div class="metric">Quarter-end evidence</div><div class="value" id="evidence">Incomplete</div></div></div>
@@ -25,7 +28,7 @@
 const API='https://uclucbdkjqyqdvifyptx.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjbHVjYmRranF5cWR2aWZ5cHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTUyMTMsImV4cCI6MjA5NjA3MTIxM30.VnqWcFT1WLQwCJxSdEIzIgOvETaOQly2IQxht-9uI7E';
 const defs=[{id:'channel',name:'Channel partners',weight:.15,min:4,meets:5,exceeds:6,base:1},{id:'a',name:'A-level incl. Channel',weight:.15,min:22,meets:25,exceeds:30,base:20},{id:'b',name:'B-or-higher',weight:.20,min:53,meets:60,exceeds:72,base:41},{id:'p',name:'Monthly leads per active',weight:.30,min:.85,meets:1,exceeds:1.15,base:null},{id:'active',name:'Active partners',weight:.20,min:180,meets:200,exceeds:220,base:128}];
-let current=null, actions=[], sourceVerified=false, snapshotRows=[];
+let current=null, actions=[], sourceVerified=false, snapshotRows=[], importQuality=null;
 const $=id=>document.getElementById(id), safe=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number.isFinite(Number(v))&&v!==''&&v!==null?Number(v):null;
 function level(v,def){if(v==null||!Number.isFinite(v))return null;if(v>=def.exceeds)return 3;if(v>=def.meets)return 2;if(v>=def.min)return 1;return 0}
@@ -69,7 +72,7 @@ el.textContent='Planning scenario: '+total.toFixed(2)+' / 3 weighted points → 
 }
 function resetScenario(){['leads','month1','month2','month3'].forEach(k=>$(k).value='')}
 async function refresh(){
-sourceVerified=false;current={channel:null,a:null,b:null,active:null,p:null};actions=[];snapshotRows=[];resetScenario();updateScore();
+sourceVerified=false;current={channel:null,a:null,b:null,active:null,p:null};actions=[];snapshotRows=[];importQuality=null;resetScenario();$('reconciliation').textContent='Checking latest shared import…';updateScore();
 $('status').className='warn';$('status').textContent='Rechecking official shared Power BI import…';
 try{
 const [logs,profiles,assignments]=await Promise.all([get('powerbi_import_log?select=imported_at,source_app,rows_processed,errors&source_app=like.core-team-tracker%25&order=imported_at.desc&limit=1'),get('agent_profiles?select=*&powerbi_last_seen_at=not.is.null&limit=5000'),get('agent_assignments?select=agent_name,lp,rm&limit=2500').catch(()=>[])]);
@@ -77,16 +80,27 @@ const receipt=logs&&logs[0];if(!receipt||String(receipt.errors||'0')!=='0')throw
 const batchStamp=decodeURIComponent((String(receipt.source_app||'').match(/(?:^|;)profileStamp=([^;]+)/)||[])[1]||'')||receipt.imported_at;
 let rows=profiles.filter(p=>String(p.powerbi_last_seen_at||'')===batchStamp);
 if(!rows.length){const max=profiles.map(p=>String(p.powerbi_last_seen_at||'')).sort().at(-1);rows=profiles.filter(p=>String(p.powerbi_last_seen_at||'')===max)}
+const originalRows=rows.length;
 const unique=new Map();rows.forEach(p=>{const k=String(p.agent_name||'').trim().toLowerCase().replace(/\s+/g,' ');if(k&&!unique.has(k))unique.set(k,p)});rows=[...unique.values()];
+const duplicates=originalRows-rows.length;
 if(!rows.length)throw Error('Power BI receipt exists, but no matching agent profiles were found');
-const matchesReceipt=Number(receipt.rows_processed)===rows.length; const stampedDay=String(batchStamp).slice(0,10); const atQuarterEnd=stampedDay===quarterEnd();
+const matchesReceipt=Number(receipt.rows_processed)===rows.length;
+const importDay=String(receipt.imported_at||'').slice(0,10);
+const stampedDay=String(batchStamp).slice(0,10); const atQuarterEnd=stampedDay===quarterEnd();
 const known=rows.filter(p=>closeCount(p)!==null);
 const counts={channel:known.filter(p=>closeCount(p)>=10).length,a:known.filter(p=>closeCount(p)>=4).length,b:known.filter(p=>closeCount(p)>=2).length,active:null,p:null};
+const observedGroups={channel:counts.channel,a:counts.a,b:counts.b,profiles:rows.length};
+const receiptText=String(receipt.source_app||'');
+const receiptTiers=Object.fromEntries(['Channel','A','B','C'].map(key=>{const m=receiptText.match(new RegExp('(?:^|;)'+key+'=([0-9]+)'));return [key,m?Number(m[1]):null]}));
+const crossCheck=receiptTiers.Channel===null||receiptTiers.A===null?'Receipt tier counts unavailable':('Receipt Channel '+receiptTiers.Channel+', A '+receiptTiers.A+', B '+receiptTiers.B+'; observed 10+ '+counts.channel+', 4+ '+counts.a+', 2+ '+counts.b+'. Do not treat these as interchangeable until tier definitions are reconciled.');
+$('reconciliation').className=(!matchesReceipt||duplicates)?'warn error':'warn';
+$('reconciliation').textContent='Import '+importDay+': '+originalRows+' rows / '+rows.length+' unique agents; '+duplicates+' repeated names; receipt '+receipt.rows_processed+' rows. Fixed Nov 19 compensation baseline: 128 active partners. '+crossCheck+' Latest import is not a verified quarter-end compensation snapshot.';
+importQuality={matchesReceipt,duplicates,importDay,receiptTiers,observedGroups};
 const end=quarterEnd(), endMs=Date.parse(end+'T23:59:59Z'), noFuture=Date.now()>=endMs, now=endMs;
 const snapshotAt=atQuarterEnd?endMs:Date.parse(stampedDay+'T23:59:59Z'); const qualified=rows.filter(p=>{const lead=days(p.latest_lead_date,snapshotAt),close=days(p.latest_close_date,snapshotAt);return (lead!==null&&lead>=0&&lead<=90)||(close!==null&&close>=0&&close<=90)});
 const hasDates=rows.every(p=>p.latest_lead_date!==undefined&&p.latest_close_date!==undefined);
 if(hasDates&&Number.isFinite(snapshotAt))counts.active=qualified.length;
-sourceVerified=matchesReceipt&&known.length===rows.length&&noFuture&&hasDates&&atQuarterEnd;
+sourceVerified=matchesReceipt&&duplicates===0&&known.length===rows.length&&noFuture&&hasDates&&atQuarterEnd&&receiptTiers.Channel===counts.channel&&receiptTiers.A===(counts.a-counts.channel);
 current=counts;
 snapshotRows=rows;
 const assignmentMap=new Map((Array.isArray(assignments)?assignments:[]).map(a=>[String(a.agent_name||'').trim().toLowerCase(),a]));
@@ -117,7 +131,7 @@ renderActions();
 $('status').className=sourceVerified?'warn ok':'warn';
 $('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+' Compensation baseline was 128 active, but this import contains '+rows.length+' total agents; the populations must be reconciled before interpreting net growth. Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
 updateScore();
-}catch(e){$('status').className='warn error';$('status').textContent='Unable to verify official records: '+String(e.message||e)+'. No bonus result will be shown.';$('worklists').innerHTML='';$('workstats').innerHTML='';$('priorityCards').innerHTML='';$('weeklyFocus').textContent='Shared data unavailable: use the official scorecard before making decisions.';updateScore()}
+}catch(e){$('status').className='warn error';$('status').textContent='Unable to verify official records: '+String(e.message||e)+'. No bonus result will be shown.';$('reconciliation').className='warn error';$('reconciliation').textContent='Reconciliation unavailable because the official shared source could not be loaded.';$('worklists').innerHTML='';$('workstats').innerHTML='';$('priorityCards').innerHTML='';$('weeklyFocus').textContent='Shared data unavailable: use the official scorecard before making decisions.';updateScore()}
 }
 $('agentSearch').addEventListener('input',renderActions);
 $('listFilter').addEventListener('change',renderActions);
