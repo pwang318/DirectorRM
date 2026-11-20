@@ -83,17 +83,17 @@ button:hover,.btn:hover{background:#4d317b}button:focus-visible,a:focus-visible,
 }
 </style></head><body><header><div class="headerInner"><a class="backLink" href="./index.html">← Director Dashboard</a><div class="headerLine"><div><div class="eyebrow">CORE TEAM · DIRECTOR WORKSPACE</div><h1>Your Daily Growth Plan</h1><p>Meaningful conversations. Clear follow-through. Measurable growth.</p></div><span class="headerTag">2027 Goals</span></div></div></header>
 <main>
-<section class="simpleIntro"><div class="introText"><div class="eyebrow">TODAY'S FOCUS</div><h2>One relationship at a time.</h2><p>Pick an agent, use the conversation guide, and finish with a clear next step.</p><div class="bonusLine"><span class="bonusDot"></span><span>Scorecard: <strong id="simpleBonus">Waiting for verified quarter-end data</strong></span></div></div><button type="button" class="btn-alt" id="toggleDetails" aria-expanded="false">Show full scorecard</button></section>
-<nav class="jump" aria-label="Director shortcuts"><a href="#account-executive" class="jumpPrimary">01 · Conversation guide</a><a href="#do-now">02 · Priority agents</a><a href="#growth-list">All agents</a><a href="#bonus-plan" id="openBonusPlanning">Bonus details</a></nav><details class="utilityDetails"><summary>Data &amp; tools</summary><div class="control"><label>Quarter<select id="quarter"><option value="1">Q1 • Mar 31</option><option value="2">Q2 • Jun 30</option><option value="3">Q3 • Sep 30</option><option value="4">Q4 • Dec 31</option></select></label><button id="refresh">Refresh shared data</button><button class="btn-alt" id="download">Export priority actions CSV</button></div></details>
+<section class="simpleIntro"><div class="introText"><div class="eyebrow">TODAY'S FOCUS</div><h2>Know exactly who to call.</h2><p>Start with due follow-ups, open the agent’s conversation guide, then record the outcome.</p><div class="bonusLine"><span class="bonusDot"></span><span>Scorecard: <strong id="simpleBonus">Waiting for verified quarter-end data</strong></span></div></div><button type="button" class="btn-alt" id="toggleDetails" aria-expanded="false">Show full scorecard</button></section>
+<nav class="jump" aria-label="Director shortcuts"><a href="#do-now" class="jumpPrimary">01 · Today’s call list</a><a href="#account-executive">02 · Conversation guide</a><a href="#growth-list">All agents</a><a href="#bonus-plan" id="openBonusPlanning">Bonus details</a></nav><details class="utilityDetails"><summary>Data &amp; tools</summary><div class="control"><label>Quarter<select id="quarter"><option value="1">Q1 • Mar 31</option><option value="2">Q2 • Jun 30</option><option value="3">Q3 • Sep 30</option><option value="4">Q4 • Dec 31</option></select></label><button id="refresh">Refresh shared data</button><button class="btn-alt" id="download">Export priority actions CSV</button></div></details>
 <details class="technical"><summary>Data status and verification</summary><div id="status" class="warn" role="status">Loading verified Power BI records…</div></details>
-<section class="card aeCard" id="account-executive">
-<div class="sectionHeading"><div><div class="eyebrow">01 · CONVERSATION</div><h2>Talk with purpose</h2><p class="muted">Choose an agent. The questions and checklist will guide you.</p></div><div class="aeCount"><strong id="aeCounter">0 of 7</strong><span>steps complete</span></div></div>
+<section class="card priorityCard" id="do-now"><div class="sectionHeading"><div><div class="eyebrow">01 · YOUR CALL LIST</div><h2>Who to contact today</h2><p class="muted">Due and overdue follow-ups come first. Other suggestions are clearly labeled.</p></div></div><div class="grid" id="priorityCards"></div><div id="topActions" class="note"></div><details class="focusDetails"><summary>See the weekly management plan</summary><div id="weeklyFocus" class="note"></div></details><p class="muted" style="margin:12px 0 0"><a href="https://pwang318.github.io/amanda-tracker/c-to-b-opportunities.html" target="_blank" rel="noopener">Open Amanda's C → B opportunities</a> · <a href="./index.html">Back to Director home</a></p></section><section class="card aeCard" id="account-executive">
+<div class="sectionHeading"><div><div class="eyebrow">02 · ACCOUNT EXECUTIVE APPROACH</div><h2>Talk with purpose</h2><p class="muted">Choose an agent. The questions and checklist will guide you.</p></div><div class="aeCount"><strong id="aeCounter">0 of 7</strong><span>steps complete</span></div></div>
 <div class="control"><label>Agent<select id="aeAgent"><option value="">Choose an agent</option></select></label><label>Conversation type<select id="aeType"><option value="existing">Existing relationship</option><option value="growthB">B → A growth</option><option value="growthA">A → Channel growth</option><option value="reconnect">Reconnection</option><option value="new">New agent introduction</option><option value="builder">Builder / strategic partner</option></select></label><button type="button" class="btn-alt" id="aeReset">Start new conversation</button></div>
 <div class="aeWorkspace"><div class="aeConversation"><div class="subheading">WHAT TO SAY</div><div id="aeScript" class="aeScript">Choose an agent to start your conversation.</div><div class="actions aeCopyLine"><button type="button" class="btn-alt" id="aeCopy">Copy opener</button><span id="aeSaved" class="muted" role="status">Saved on this device only.</span></div></div>
 <div class="aeTasks"><div class="subheading">YOUR CONVERSATION CHECKLIST</div><div id="aeProgress" class="bar"><i id="aeProgressBar" style="width:0%"></i></div><div id="aeChecklist" class="aeChecks"></div></div></div>
 <p class="muted">Mark actions only when completed. These checkboxes are personal reminders, not verified referrals or completed closings. Do not enter buyer names or confidential financial details. Progress is saved in this browser, not shared with Amanda or LPs.</p>
 </section>
-<section class="card priorityCard" id="do-now"><div class="sectionHeading"><div><div class="eyebrow">02 · WHERE TO FOCUS</div><h2>Priority relationships</h2><p class="muted">Start with these agents. Select Review agent to open their conversation guide.</p></div></div><div class="grid" id="priorityCards"></div><div id="topActions" class="note"></div><details class="focusDetails"><summary>See the weekly management plan</summary><div id="weeklyFocus" class="note"></div></details><p class="muted" style="margin:12px 0 0"><a href="https://pwang318.github.io/amanda-tracker/c-to-b-opportunities.html" target="_blank" rel="noopener">Open Amanda's C → B opportunities</a> · <a href="./index.html">Back to Director home</a></p></section><div class="grid advanced" id="metrics"></div>
+<div class="grid advanced" id="metrics"></div>
 <section class="card advanced"><h2>Data reconciliation before compensation scoring</h2>
 <div id="reconciliation" class="warn">Checking latest Power BI receipt and unique agent population…</div>
 <p class="muted">Daniel's Nov 19 baseline is contractual, not a count generated from the latest Power BI upload. Missing, duplicated or unqualified relationships cannot be added just to close the gap. Import reconciliation and activity eligibility must be verified separately.</p></section>
@@ -157,6 +157,20 @@ const AE_SCRIPTS={
  new:{opening:"Hey! I'd love to grab coffee sometime and learn more about your business. I build relationships with agents and look for ways CORE Team can help them grow. Would you be open to connecting?",questions:["What are your business goals this year?","What financing challenges come up most often?","Where would a reliable LP make your work easier?"]},
  builder:{opening:"Hey! I wanted to get your perspective on how things are going with our contracts. Are there financing concerns, communication gaps, or opportunities we should address earlier to help more buyers close?",questions:["Where are buyers getting stuck?","Is LP communication timely and useful?","What could we improve to make your job easier?"]}
 };
+function displayAgentName(value){
+ const s=String(value||'').trim();
+ return s.split(/(\s+|-|')/).map((part)=>{
+  if(!part||/^\s+$/.test(part)||part==='-'||part==="'")return part;
+  if(/^(II|III|IV|V)$/i.test(part))return part.toUpperCase();
+  if(/^(Jr|Sr)\.?$/i.test(part))return part[0].toUpperCase()+'r'+(part.endsWith('.')?'.':'');
+  if(part===part.toUpperCase()||part===part.toLowerCase()){
+    const low=part.toLocaleLowerCase('en-US');
+    if(/^mc[a-z]/i.test(part))return 'Mc'+low.charAt(2).toUpperCase()+low.slice(3);
+    return low.charAt(0).toLocaleUpperCase('en-US')+low.slice(1);
+  }
+  return part;
+ }).join('');
+}
 const aeSafeKey=name=>String(name||'').trim().toLowerCase().replace(/\s+/g,' ');
 const aeStorageKey=()=> 'director-ae-v2:'+new Date().toLocaleDateString('en-CA')+':'+aeSafeKey(aeSelected);
 function aeRead(){if(!aeSelected)return [];try{const v=JSON.parse(localStorage.getItem(aeStorageKey())||'[]');return Array.isArray(v)?v.filter(Number.isInteger):[]}catch(_){return []}}
@@ -173,23 +187,23 @@ function aeRender(){
 function aeChoose(name,type){
  const value=String(name||'').trim();if(!value)return;
  const select=$('aeAgent');
- if(![...select.options].some(o=>o.value===value)){const opt=document.createElement('option');opt.value=value;opt.textContent=value;select.appendChild(opt)}
+ if(![...select.options].some(o=>o.value===value)){const opt=document.createElement('option');opt.value=value;opt.textContent=displayAgentName(value);select.appendChild(opt)}
  aeSelected=value;select.value=value;if(type)$('aeType').value=type;
  aeRender();$('account-executive').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function aePopulate(){
  const existing=$('aeAgent').value;
- const names=[...new Set(snapshotRows.map(p=>String(p.display_name||p.agent_name||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
- $('aeAgent').innerHTML='<option value="">Choose an agent</option>'+names.map(n=>'<option value="'+safe(n)+'">'+safe(n)+'</option>').join('');
- if(existing){if(!names.includes(existing)){const opt=document.createElement('option');opt.value=existing;opt.textContent=existing;$('aeAgent').appendChild(opt)}
+ const names=[...new Set(snapshotRows.map(p=>String(p.agent_name||'').trim()).filter(Boolean))].sort((a,b)=>displayAgentName(a).localeCompare(displayAgentName(b)));
+ $('aeAgent').innerHTML='<option value="">Choose an agent</option>'+names.map(n=>'<option value="'+safe(n)+'">'+safe(displayAgentName(snapshotRows.find(p=>p.agent_name===n)?.display_name||n))+'</option>').join('');
+ if(existing){if(!names.includes(existing)){const opt=document.createElement('option');opt.value=existing;opt.textContent=displayAgentName(existing);$('aeAgent').appendChild(opt)}
  $('aeAgent').value=existing;}
 }
 function aeTypeFor(group){return group.startsWith('C to B')?'existing':group.startsWith('B to A')?'growthB':group.startsWith('A to Channel')?'growthA':group.toLowerCase().includes('inactive')?'reconnect':'existing'}
 
-function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent / action</th><th>12m closings</th><th>Assigned LP</th><th>Next action due</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td><b>'+safe(r.name)+'</b><div><button type="button" class="btn-alt aeFromList" data-agent="'+safe(r.name)+'" data-group="'+safe(r.group||title)+'" style="margin-top:7px;padding:6px 8px">Start conversation</button></div></td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.followup||'Not assigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="7">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
+function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent / action</th><th>12m closings</th><th>Assigned LP</th><th>Next action due</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td><b>'+safe(r.displayName||displayAgentName(r.name))+'</b><div><button type="button" class="btn-alt aeFromList" data-agent="'+safe(r.name)+'" data-group="'+safe(r.group||title)+'" style="margin-top:7px;padding:6px 8px">Start conversation</button></div></td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.followup||'Not assigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="7">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
 function renderActions(){
  const q=String($('agentSearch').value||'').trim().toLowerCase(),filter=$('listFilter').value;
- const rows=actions.filter(r=>(!q||String(r.name).toLowerCase().includes(q))&&(filter==='all'||r.group.toLowerCase().includes(filter.toLowerCase())));
+ const rows=actions.filter(r=>(!q||String(r.name).toLowerCase().includes(q)||String(r.displayName||'').toLowerCase().includes(q))&&(filter==='all'||r.group.toLowerCase().includes(filter.toLowerCase())));
  const grouped=new Map();
  rows.forEach(r=>{if(!grouped.has(r.group))grouped.set(r.group,[]);grouped.get(r.group).push(r)});
  $('worklists').innerHTML=[...grouped].map(([group,groupRows])=>drawTable(group,group,groupRows,groupRows[0]?.action||'')).join('')||'<p class="muted">No matching opportunities. Try another filter.</p>';
@@ -237,7 +251,7 @@ sourceVerified=matchesReceipt&&duplicates===0&&known.length===rows.length&&noFut
 current=counts;
 snapshotRows=rows;aePopulate();
 const assignmentMap=new Map((Array.isArray(assignments)?assignments:[]).map(a=>[String(a.agent_name||'').trim().toLowerCase(),a]));
-const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||'',followup:date(p.growth_opportunity_deadline)||date(p.next_rm_followup),savedNext:p.next_growth_opportunity||''}});
+const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.agent_name,displayName:displayAgentName(p.display_name||p.agent_name),closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||'',followup:date(p.growth_opportunity_deadline)||date(p.next_rm_followup),savedNext:p.next_growth_opportunity||''}});
 const qualifyingDate=p=>{const lead=days(p.latest_lead_date,Date.now()),close=days(p.latest_close_date,Date.now());return Math.min(lead===null?99999:lead,close===null?99999:close)};
 const risk60=rows.filter(p=>{const n=qualifyingDate(p);return n>=60&&n<90}).length;
 const inactive=rows.filter(p=>qualifyingDate(p)>90).length;
@@ -264,7 +278,7 @@ $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="m
 renderActions();
 const priorityOrder=['Approaching 90-day inactivity','A to Channel: one closing away','B to A: one closing away','C to B: one closing away','Inactive recovery'];
 const shortlist=priorityOrder.flatMap(group=>actions.filter(a=>a.group===group).slice(0,2)).slice(0,5);
-$('topActions').innerHTML='<h3 style="margin:14px 0 6px;font-size:14px">First five relationships to review</h3>'+(shortlist.length?shortlist.map(a=>'<div class="todayRow"><div><b>'+safe(a.name)+'</b><small>'+safe(a.group)+' · LP: '+safe(a.lp||'Unassigned')+' · Follow-up: '+safe(a.followup||'Needs date')+'</small></div><button type="button" class="btn-alt priorityJump" data-agent="'+safe(a.name)+'" data-group="'+safe(a.group)+'">Review agent</button></div>').join(''):'<p class="muted">No priority relationships in the imported snapshot.</p>');
+$('topActions').innerHTML='<h3 style="margin:14px 0 6px;font-size:14px">First five relationships to review</h3>'+(shortlist.length?shortlist.map(a=>'<div class="todayRow"><div><b>'+safe(a.displayName||displayAgentName(a.name))+'</b><small>'+safe(a.group)+' · LP: '+safe(a.lp||'Unassigned')+' · Follow-up: '+safe(a.followup||'Needs date')+'</small></div><button type="button" class="btn-alt priorityJump" data-agent="'+safe(a.name)+'" data-group="'+safe(a.group)+'">Review agent</button></div>').join(''):'<p class="muted">No priority relationships in the imported snapshot.</p>');
 $('status').className=sourceVerified?'warn ok':'warn';
 $('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+(importAgeDays>7?' Import is over seven days old; refresh Power BI before prioritizing. ':'')+' Compensation baseline was 128 active, but this import contains '+rows.length+' total agents; the populations must be reconciled before interpreting net growth. Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
 updateScore();
