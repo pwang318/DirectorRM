@@ -63,7 +63,7 @@ const ids=['forecastChannel','forecastA','forecastB','forecastActive','forecastP
 const vals=ids.map(id=>num($(id).value.trim()));
 const el=$('forecastResult');
 if(vals.some(v=>v===null||v<0)||vals.slice(0,4).some(v=>!Number.isInteger(v))||vals[0]>vals[1]||vals[1]>vals[2]||vals[2]>vals[3]){el.className='warn error';el.textContent='Enter valid nonnegative values. Channel must not exceed A; A must not exceed B-or-higher; B-or-higher must not exceed active partners.';return}
-const total=defs.reduce((sum,d,i)=>sum+level(vals[i],d)*d.weight,0);
+const byId={channel:vals[0],a:vals[1],b:vals[2],active:vals[3],p:vals[4]};const total=defs.reduce((sum,d)=>sum+level(byId[d.id],d)*d.weight,0);
 el.className='warn ok';
 el.textContent='Planning scenario: '+total.toFixed(2)+' / 3 weighted points → '+cash(payment(total))+' potential quarterly bonus ('+cash(payment(total)*4)+' if repeated all four quarters). Actual payments require official verified results.';
 }
