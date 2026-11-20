@@ -53,7 +53,7 @@ $('bonus').textContent=cash(payment(score));
 $('scoreGap').textContent=Math.max(0,2-score).toFixed(2);
 $('formulaNote').textContent='Provisional scenario only. Final bonus depends on verified quarter-end counts, quarter referral totals, the 90-day active definition, and Daniel/Mackenzie approval. No rounding of input metrics.';
 }
-function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>12m closings</th><th>Assigned LP</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td>'+safe(r.name)+'</td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="6">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
+function drawTable(id,title,rows,note){return '<h3 style="font-size:14px;margin:18px 0 7px">'+safe(title)+' ('+rows.length+')</h3><p class="muted">'+safe(note)+'</p><div style="overflow-x:auto"><table><thead><tr><th>Agent</th><th>12m closings</th><th>Assigned LP</th><th>Next action due</th><th>Last lead</th><th>Last closing</th><th>Suggested action</th></tr></thead><tbody>'+ (rows.length?rows.slice(0,100).map(r=>'<tr><td>'+safe(r.name)+'</td><td>'+safe(r.closes??'Not verified')+'</td><td>'+safe(r.lp||'Unassigned')+'</td><td>'+safe(r.followup||'Not assigned')+'</td><td>'+safe(r.lead||'Unknown')+'</td><td>'+safe(r.close||'Unknown')+'</td><td>'+safe(r.action)+'</td></tr>').join(''):'<tr><td colspan="7">No matching records in verified import.</td></tr>')+'</tbody></table></div>'}
 function renderActions(){
  const q=String($('agentSearch').value||'').trim().toLowerCase(),filter=$('listFilter').value;
  const rows=actions.filter(r=>(!q||String(r.name).toLowerCase().includes(q))&&(filter==='all'||r.group.toLowerCase().includes(filter.toLowerCase())));
@@ -104,7 +104,7 @@ sourceVerified=matchesReceipt&&duplicates===0&&known.length===rows.length&&noFut
 current=counts;
 snapshotRows=rows;
 const assignmentMap=new Map((Array.isArray(assignments)?assignments:[]).map(a=>[String(a.agent_name||'').trim().toLowerCase(),a]));
-const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||''}});
+const base=rows.map(p=>{const own=assignmentMap.get(String(p.agent_name||'').trim().toLowerCase())||{};return {name:p.display_name||p.agent_name,closes:closeCount(p),lead:date(p.latest_lead_date),close:date(p.latest_close_date),profile:p,lp:own.lp||'',rm:own.rm||'',followup:date(p.growth_opportunity_deadline)||date(p.next_rm_followup),savedNext:p.next_growth_opportunity||''}});
 const qualifyingDate=p=>{const lead=days(p.latest_lead_date,Date.now()),close=days(p.latest_close_date,Date.now());return Math.min(lead===null?99999:lead,close===null?99999:close)};
 const risk60=rows.filter(p=>{const n=qualifyingDate(p);return n>=60&&n<90}).length;
 const inactive=rows.filter(p=>qualifyingDate(p)>90).length;
@@ -123,9 +123,9 @@ const sets=[
 ['Approaching 90-day inactivity',base.filter(r=>{const x=days(r.lead,Date.now()),y=days(r.close,Date.now()),latest=Math.min(x===null?99999:x,y===null?99999:y);return latest>=60&&latest<90}),'Director/RM • re-engage before active status expires']
 ];
 actions=sets.flatMap(([group,rs,action])=>rs.map(r=>({group,...r,action,
- lp:r.lp||'', owner:group.startsWith('C to B')?'Amanda':'Director'
+ lp:r.lp||'', owner:group.startsWith('C to B')?'Amanda':'Director',action:(r.savedNext?'Saved next step: '+r.savedNext+'. ':'')+action
 })));
-actions.sort((a,b)=>a.group.localeCompare(b.group)||String(a.name).localeCompare(String(b.name)));
+actions.sort((a,b)=>{const da=a.followup||'9999-12-31',db=b.followup||'9999-12-31';return da.localeCompare(db)||a.group.localeCompare(b.group)||String(a.name).localeCompare(String(b.name))});
 $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="metric">'+safe(label)+'</div><div class="value">'+rs.length+'</div></div>').join('');
 renderActions();
 $('status').className=sourceVerified?'warn ok':'warn';
@@ -140,7 +140,7 @@ $('quarter').addEventListener('change',refresh);
 $('calculate').addEventListener('click',updateScore);
 $('forecastCalculate').addEventListener('click',forecast);
 forecast();
-$('download').addEventListener('click',()=>{const csv=[['Group','Agent','12m closings','Assigned LP','Last lead','Last closing','Next action'],...actions.map(r=>[r.group,r.name,r.closes??'',r.lp||'',r.lead||'',r.close||'',r.action])].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-director-growth-opportunities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+$('download').addEventListener('click',()=>{const csv=[['Group','Agent','12m closings','Assigned LP','Next action due','Last lead','Last closing','Next action'],...actions.map(r=>[r.group,r.name,r.closes??'',r.lp||'',r.followup||'',r.lead||'',r.close||'',r.action])].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='2027-director-growth-opportunities.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
 refresh();
 })();
 </script></body></html>
