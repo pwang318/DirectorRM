@@ -276,9 +276,29 @@ actions=sets.flatMap(([group,rs,action])=>rs.map(r=>({group,...r,action,
 actions.sort((a,b)=>{const da=a.followup||'9999-12-31',db=b.followup||'9999-12-31';return da.localeCompare(db)||a.group.localeCompare(b.group)||String(a.name).localeCompare(String(b.name))});
 $('workstats').innerHTML=sets.map(([label,rs])=>'<div class="card"><div class="metric">'+safe(label)+'</div><div class="value">'+rs.length+'</div></div>').join('');
 renderActions();
-const priorityOrder=['Approaching 90-day inactivity','A to Channel: one closing away','B to A: one closing away','C to B: one closing away','Inactive recovery'];
-const shortlist=priorityOrder.flatMap(group=>actions.filter(a=>a.group===group).slice(0,2)).slice(0,5);
-$('topActions').innerHTML='<h3 style="margin:14px 0 6px;font-size:14px">First five relationships to review</h3>'+(shortlist.length?shortlist.map(a=>'<div class="todayRow"><div><b>'+safe(a.displayName||displayAgentName(a.name))+'</b><small>'+safe(a.group)+' · LP: '+safe(a.lp||'Unassigned')+' · Follow-up: '+safe(a.followup||'Needs date')+'</small></div><button type="button" class="btn-alt priorityJump" data-agent="'+safe(a.name)+'" data-group="'+safe(a.group)+'">Review agent</button></div>').join(''):'<p class="muted">No priority relationships in the imported snapshot.</p>');
+const localToday=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const today=localToday();
+const directorAgent=r=>{const rm=String(r.rm||'').trim().toLowerCase();const level=String(r.profile?.powerbi_level||r.profile?.tier||'').trim().toUpperCase();return rm.includes('nyny')||rm.includes('director')||(['A','B','CHANNEL'].includes(level)&&!rm.includes('amanda'))||(r.closes>=2&&!rm.includes('amanda'))};
+const candidates=base.filter(directorAgent);
+const latestAge=r=>Math.min(...[days(r.lead,Date.now()),days(r.close,Date.now())].filter(n=>n!==null&&n>=0).concat([99999]));
+const dueRows=candidates.filter(r=>r.followup&&r.followup<=today)
+ .sort((a,b)=>a.followup.localeCompare(b.followup)||latestAge(b)-latestAge(a));
+const dueKeys=new Set(dueRows.map(r=>aeSafeKey(r.name)));
+const riskRows=candidates.filter(r=>!dueKeys.has(aeSafeKey(r.name))&&latestAge(r)>=60&&latestAge(r)<=90)
+ .sort((a,b)=>latestAge(b)-latestAge(a));
+const riskKeys=new Set(riskRows.map(r=>aeSafeKey(r.name)));
+const growthRows=candidates.filter(r=>!dueKeys.has(aeSafeKey(r.name))&&!riskKeys.has(aeSafeKey(r.name))&&[9,3,2,8,7].includes(r.closes))
+ .sort((a,b)=>(a.closes===9?-5:a.closes===3?-4:0)-(b.closes===9?-5:b.closes===3?-4:0)||String(a.displayName).localeCompare(String(b.displayName)));
+const shortlist=[
+ ...dueRows.map(r=>({...r,kind:r.followup<today?'Overdue':'Due today',why:r.savedNext||'Complete the scheduled agent follow-up'})),
+ ...riskRows.map(r=>({...r,kind:'Retention risk',why:'No recent qualifying activity · '+latestAge(r)+' days since latest lead or completed closing'})),
+ ...growthRows.map(r=>({...r,kind:'Growth suggestion',why:r.closes===9?'One completed closing from Channel':r.closes===3?'One completed closing from A':'Discuss the next qualified referral and opportunity'}))
+].slice(0,5);
+const dailyTotal=dueRows.length;
+$('topActions').innerHTML='<div class="todayHeading"><div><h3>Today’s outreach</h3><p class="muted">'+dailyTotal+' due / overdue · '+riskRows.length+' retention warnings · '+growthRows.length+' growth suggestions</p></div><span class="pill">'+shortlist.length+' shown</span></div>'+
+(shortlist.length?shortlist.map(r=>'<div class="todayRow"><div class="todayAgent"><b>'+safe(r.displayName||displayAgentName(r.name))+'</b><span class="todayKind">'+safe(r.kind)+'</span><small>'+safe(r.why)+' · LP: '+safe(r.lp||'Not assigned')+(r.followup?' · Follow-up '+safe(r.followup):'')+'</small></div><button type="button" class="btn-alt priorityJump" data-agent="'+safe(r.name)+'" data-group="'+safe(r.closes>=9?'A to Channel':r.closes>=2&&r.closes<4?'B to A':r.kind.toLowerCase().includes('risk')?'Inactive recovery':'existing')+'">Open conversation</button></div>').join(''):'<p class="muted">No scheduled follow-ups or risk alerts in this import. Check the full worklist for additional prospects.</p>')+
+(dailyTotal>shortlist.filter(r=>r.kind==='Overdue'||r.kind==='Due today').length?'<p class="muted">'+(dailyTotal-shortlist.filter(r=>r.kind==='Overdue'||r.kind==='Due today').length)+' other due follow-ups are not shown in the first five. Open the full agent list to review them.</p>':'');
+
 $('status').className=sourceVerified?'warn ok':'warn';
 $('status').textContent='Shared import: '+safe(receipt.imported_at||'undated')+' • '+rows.length+' unique agents • '+known.length+' with closing counts. '+(matchesReceipt?'Row count matches import receipt. ':'Import row count differs: reconcile before scoring. ')+(noFuture?'Quarter ended. ':'Quarter has not ended: these are planning opportunities, NOT earned quarter-end counts. ')+(hasDates?'90-day source fields present.':'90-day eligibility fields incomplete. ')+(importAgeDays>7?' Import is over seven days old; refresh Power BI before prioritizing. ':'')+' Compensation baseline was 128 active, but this import contains '+rows.length+' total agents; the populations must be reconciled before interpreting net growth. Active count is indicative at the import date; the score stays withheld unless the source snapshot matches the exact quarter-end date and all five metrics are verified.';
 updateScore();
