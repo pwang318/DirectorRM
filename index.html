@@ -234,12 +234,69 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 </div></div><div class="controlbar"><div class="range"><button data-range="today">Today</button><button data-range="week">This Week</button><button class="active" data-range="month">This Month</button></div><button class="attentionBtn" data-drill="leadership"><span id="leadershipAttentionCount">0</span> NEED LEADERSHIP ↗</button></div></div>
 
 <section class="view active" id="view-overview">
-<div class="card directorScore" id="directorWeightedScore"><div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD</div><h2>Progress toward year-end</h2><div class="meta">Loading live counts against this month’s tier targets…</div></div><div class="directorScoreTotal">— / 100<small>weighted score</small></div></div></div>
+<div class="card directorScore" id="directorWeightedScore"><div class="directorScoreHead"><div><div class="label">2026 WEIGHTED PORTFOLIO SCORECARD</div><h2>Progress toward year-end</h2><div class="meta">Loading live counts against this month’s tier targets…</div></div><div class="directorScoreTotal">— / 100<small>weighted score</small></div></div></div>
 <div class="workbench">
 <div class="card workbenchCard"><div class="label">QUICK FIND</div><h2>Find an agent</h2><p class="workbenchIntro">Search your relationships or Amanda’s active prospects. Open the record or take action right here.</p><input class="directorSearch" id="directorQuickSearch" type="search" placeholder="Agent, email, phone, or prospect" autocomplete="off" aria-label="Find an agent or prospect"><div class="searchHint searchShortcut">Tip: press <kbd>Ctrl/⌘</kbd> + <kbd>K</kbd> to jump to search.</div><div class="searchResults" id="directorQuickResults"><div class="searchHint">Start typing to find an agent.</div></div><div class="workbenchLinks"><button type="button" data-view="relationships">All relationships</button><button type="button" data-view="growth">Growth opportunities</button></div></div>
 <div class="card workbenchCard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div class="label">YOUR FOCUS</div><h2>What needs your attention?</h2><p class="workbenchIntro" style="margin-bottom:0">Prioritized: at risk, due follow-ups, lead gaps, then growth.</p></div><div class="whoCount" id="directorQueueCount">—</div></div><div class="queueList" id="directorActionQueue"><div class="queueEmpty">Loading your current actions…</div></div><div class="workbenchLinks"><button type="button" data-drill="atRisk">At risk</button><button type="button" data-drill="upcoming7">Follow-ups</button><button type="button" data-drill="noLead14">No lead in 14+ days <span id="directorLeadCheckinCount">—</span></button><button type="button" data-drill="growthOpps">Growth</button></div></div>
 </div>
 <div class="grid kpis" id="overviewKpis"><div class="card click" data-drill="active"><div class="label">Total Active Agent Goal</div><div class="big" id="kpiActive">Loading…</div><div class="delta" id="kpiActiveDelta" data-live-delta="active">Latest shared Power BI</div><div class="hint">200 overall · Channel / A / B = 50% of score</div></div><div class="card click" data-drill="channel"><div class="label">Channel</div><div class="big"><span id="dirChannelCount">—</span></div><div class="delta" data-live-delta="channel">Latest shared Power BI</div></div><div class="card click" data-drill="tierA"><div class="label">A</div><div class="big"><span id="dirACount">—</span></div><div class="delta" data-live-delta="tierA">Latest shared Power BI</div></div><div class="card click" data-drill="tierB"><div class="label">B</div><div class="big"><span id="dirBCount">—</span></div><div class="delta" data-live-delta="tierB">Latest shared Power BI</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="kpiAtRisk">—</div><div class="delta down">A, B, Channel and Builder</div></div><div class="card click" data-drill="feedback"><div class="label">Agent Voice</div><div class="big" id="feedbackCount">—</div><div class="delta" id="repeatMini">Loading saved feedback…</div></div></div>
+<details class="card" id="directorCore2027" style="margin-top:18px">
+<summary><strong>2027 CORE operating plan and Q1 huddle</strong></summary>
+<p>Enter cumulative Q1 actuals through the same date. Entries are used for this calculation and reset when the page reloads.</p>
+<form id="core2027Huddle">
+<div class="grid two">
+<div class="field"><label for="core2027Date">Q1 reporting date</label><input id="core2027Date" name="date" type="date" min="2027-01-01" max="2027-03-31"></div>
+<div class="field"><label for="core2027Leads">Unique relationship leads / 550</label><input id="core2027Leads" name="leads" type="number" min="0" step="1"><small data-core-leads></small></div>
+<div class="field"><label for="core2027Starts">All-source 1003 file starts / 450</label><input id="core2027Starts" name="starts" type="number" min="0" step="1"><small data-core-starts></small></div>
+<div class="field"><label for="core2027Funded">Dated fundings / 80</label><input id="core2027Funded" name="funded" type="number" min="0" step="1"><small data-core-funded></small></div>
+<div class="field"><label for="core2027Approvals">QTD pre-approval events</label><input id="core2027Approvals" name="approvals" type="number" min="0" step="1"></div>
+<div class="field"><label for="core2027Contracts">QTD contract events</label><input id="core2027Contracts" name="contracts" type="number" min="0" step="1"><small data-core-conversion></small></div>
+</div>
+</form>
+<p class="meta">Daily intake pace is prorated across Q1 calendar days. Planning averages are 42.3 relationship leads and 34.6 starts per week over 13 weeks. Dedupe borrower opportunities across the six relationship sources in CRM. Count all Encompass 1003 starts, including ad starts, and track raw ad inquiries separately.</p>
+<div class="grid two">
+<div><h3>Annual targets</h3><p>2,200+ relationship leads, 1,800+ starts and 400 funded (420 stretch). Quarterly fundings: 80, 120, 120, 80. In-period conversion: 55% start to pre-approval, 65% pre-approval to contract and 75% contract to funding. Track referred lead to 1003 separately at 80%+.</p><p>Funded source targets: 192 Realtor, 60 Rockford, 30 current-client referrals, 30 past-client referrals, 40 returning past clients, 33 personal-friend referrals and 15 advertising. Count one source per funding. Check 10 named current-client and 10 named past-client introductions each month.</p></div>
+<div><h3>Weekly portfolio and Rockford review</h3><p>Q1: 21 A-level including 2 Channel and 24 B. Year end: 200 rolling active partners, 25 A-level including 5 Channel and 35 B. Verify 90-day lead or closing activity and rolling 12-month fundings using reconciled identities.</p><p>Reconcile unique Rockford fundings and open buyers by rep and quarter. Count open buyers against the gap to 60 when they have a confirmed financing next step and expected 2027 completion.</p></div>
+<div><h3>When intake falls behind</h3><p>Mackenzie identifies the gap that day. For lead gaps, RMs and LPs name partners or clients to contact. For start gaps, assign leads, protected calling time and a completed-1003 target to LPs with capacity. Verify completions at the next huddle.</p></div>
+<div><h3>Audit customer journey execution</h3><p>Check the first-call goal, option and decision. For near-complete intake, verify the blocker, owner, due time and agreed callback. Inspect pre-approval figures and next contact, meaningful weekly shopping follow-up, offer contacts and strategy, Tuesday buyer and buyer-agent calls, listing-side follow-up, final terms and post-close dates. Check daily updates on waiting leads or incomplete qualifications unless an exception is documented, and a verbal agent update when qualification exceeds 24 hours. For misses, record the file, expected action, owner and due time, then recheck the correction and next comparable file.</p></div>
+</div>
+</details>
+<script id="core2027HuddleScript">
+(() => {
+  const form = document.getElementById('core2027Huddle');
+  const start = Date.UTC(2027, 0, 1);
+  const end = Date.UTC(2027, 2, 31);
+  const day = 86400000;
+  const readCount = name => {
+    const count = form.elements[name].valueAsNumber;
+    return Number.isInteger(count) && count >= 0 ? count : null;
+  };
+  const write = (name, message) => {
+    form.querySelector('[data-core-' + name + ']').textContent = message;
+  };
+  function update() {
+    const date = form.elements.date.valueAsNumber;
+    const dated = date >= start && date <= end;
+    for (const [name, target] of [['leads', 550], ['starts', 450]]) {
+      const actual = readCount(name);
+      const expected = target * (date - start + day) / (end - start + day);
+      const gap = actual - expected;
+      write(name, !dated ? 'Enter a Q1 reporting date.' : actual === null ? 'Enter a whole-number actual.' :
+        'QTD pace: ' + expected.toFixed(1) + ' · ' + (gap < 0 ? Math.abs(gap).toFixed(1) + ' behind' : 'on pace'));
+    }
+    const funded = readCount('funded');
+    write('funded', dated && funded !== null ? Math.max(0, 80 - funded) + ' remaining to Q1 target' : '');
+    const approvals = readCount('approvals');
+    const contracts = readCount('contracts');
+    const rate = dated && approvals > 0 && contracts !== null ? contracts / approvals * 100 : null;
+    write('conversion', rate === null ? 'Unavailable until dated counts and positive pre-approvals are entered.' :
+      rate.toFixed(1) + '% · Q1 target 60%');
+  }
+  form.addEventListener('submit', event => event.preventDefault());
+  form.addEventListener('input', update);
+  update();
+})();
+</script>
 <details class="overviewDetails"><summary><span>My accounts needing attention</span><span class="detailsHint">Open your owned-account list</span></summary><div class="overviewDetailsBody"><div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
 <div class="whoHead"><div><div class="label">MY ACCOUNTS NEEDING ATTENTION</div><h2 id="whoTitle">My Accounts Needing Attention</h2><p id="whoSubtitle">Your Director-owned A, B, Channel, Builder, Strategic, and confirmed Nyny-owned C relationships.</p></div><div><div class="whoCount" id="whoCount">—</div><div class="hint">your priorities ↗</div></div></div>
 <div class="whoPreview" id="whoPreview"></div>
@@ -1941,7 +1998,7 @@ function renderDirectorWeightedScore(dashboard){
  const gaps=[['Channel',target.Channel-counts.Channel],['A',target.A-counts.A],['B',target.B-counts.B]].filter(x=>x[1]>0).map(x=>x[1]+' '+x[0]);
  const status=tierOnPace?'At or ahead of this month’s tier targets':gaps.join(' · ')+' behind this month’s tier targets';
  const roadmap=[{label:'Current baseline',Channel:1,A:12,B:18},{label:'9/30 Target',Channel:2,A:14,B:21},{label:'10/31 Target',Channel:2,A:16,B:24},{label:'11/30 Target',Channel:3,A:18,B:27},{label:'12/31 Goal',Channel:4,A:20,B:30}];
- host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD · '+target.label+'</div><h2>Progress toward year-end</h2><div class="meta">Primary mix goal: grow Channel / A / B net counts (50% of the score). The active-agent base comes directly from the latest LP upload: source A + B + C, with Channel included rather than added again. Contact restrictions do not reduce that total. A and B counts also follow the LP import. Channel means 10+ closings and remains included in A. Your assigned account book is separate.</div></div><div class="directorScoreTotal">'+total.toFixed(1)+' / 100<small>weighted score · live counts</small></div></div>'
+ host.innerHTML='<div class="directorScoreHead"><div><div class="label">2026 WEIGHTED PORTFOLIO SCORECARD · '+target.label+'</div><h2>Progress toward year-end</h2><div class="meta">Primary mix goal: grow Channel / A / B net counts (50% of the score). The active-agent base comes directly from the latest LP upload: source A + B + C, with Channel included rather than added again. Contact restrictions do not reduce that total. A and B counts also follow the LP import. Channel means 10+ closings and remains included in A. Your assigned account book is separate.</div></div><div class="directorScoreTotal">'+total.toFixed(1)+' / 100<small>weighted score · live counts</small></div></div>'
   +'<div class="directorScoreGrid">'+metrics.map(m=>'<div class="directorScoreMetric"><div class="directorScoreMetricTop"><span>'+m.name+'</span><b>'+Number(m.pts).toFixed(1)+' / '+m.weight+'</b></div><small>'+m.actual+' / '+m.goal+(m.name==='Agent-to-Lead · 30%'?' projected ratio':' partners')+'</small><div class="directorScoreTrack"><i style="width:'+Math.min(100,Math.max(0,m.pts/m.weight*100))+'%"></i></div></div>').join('')+'</div>'
   +'<div class="directorScoreFoot"><span class="directorScoreStatus '+(tierOnPace?'':'behind')+'">'+status+'</span><span>Source: LP Power BI levels · Channel 10+ closings, included in A</span></div>'
   +'<div class="directorScoreRoadmap">'+roadmap.map(m=>'<span class="'+(m.label===target.label?'current':'')+'">'+m.label+': '+m.Channel+' Ch · '+m.A+' A · '+m.B+' B</span>').join('')+'</div>';
@@ -1973,7 +2030,7 @@ function renderDirectorLoadError(error){
  const homeStatus=$('directorHomeSnapshot');if(homeStatus)homeStatus.innerHTML='<div class="focusLoading">Live portfolio data could not refresh. Select Sync Now to retry.</div>';
  const status=$('dirPowerBiStatus');if(status)status.textContent='Live data unavailable · '+message+' · Select Sync Now to retry.';
  const host=$('directorWeightedScore');
- if(host)host.innerHTML='<div class="directorScoreHead"><div><div class="label">WEIGHTED PORTFOLIO SCORECARD</div><h2>Live counts unavailable</h2><div class="meta">This preview could not reach the shared RM data source, so it is not showing sample counts as if they were real. Open the tracker where the shared data connection is available, or select Sync Now to retry.</div></div><div class="directorScoreTotal">— / 100<small>waiting for live data</small></div></div>';
+ if(host)host.innerHTML='<div class="directorScoreHead"><div><div class="label">2026 WEIGHTED PORTFOLIO SCORECARD</div><h2>Live counts unavailable</h2><div class="meta">This preview could not reach the shared RM data source, so it is not showing sample counts as if they were real. Open the tracker where the shared data connection is available, or select Sync Now to retry.</div></div><div class="directorScoreTotal">— / 100<small>waiting for live data</small></div></div>';
  const queue=$('directorActionQueue');if(queue)queue.innerHTML='<div class="queueEmpty">Live agent data did not load. Select Sync Now to retry.</div>';
 }
 function rebuildDirectorDashboardFromCurrent(){
