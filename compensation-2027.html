@@ -146,9 +146,12 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
 <section class="card advanced"><div class="actions"><h2>Quarterly bonus score</h2><span class="pill">No rounding before tier assignment</span></div>
 <p class="muted">The bonus uses five weighted metrics. This model does not count scheduled closings as completed, and it does not treat a contact or meeting as an active partner. It refuses to present an earned bonus when required evidence is missing.</p>
 <div class="grid"><div><div class="metric">Weighted score</div><div class="value" id="score">—</div></div><div><div class="metric">Estimated quarterly bonus</div><div class="value" id="bonus">—</div></div><div><div class="metric">Gap to score 2.00</div><div class="value" id="scoreGap">—</div></div><div><div class="metric">Quarter-end evidence</div><div class="value" id="evidence">Incomplete</div></div></div>
+<ul id="verifiedGoalGaps"></ul>
 <div id="formulaNote" class="warn">The exact lead productivity measure requires quarter lead totals plus all three month-end active counts.</div>
 </section>
-<section class="card advanced" id="bonus-plan"><h2>Plan the next quarter • What-if bonus forecast</h2><p class="muted">Use target counts to plan. This is a hypothetical scenario, not an earned or officially approved bonus. Channel counts within A, and A within B-or-higher. Enter a monthly productivity goal or calculate it from quarter leads below.</p><div class="control"><label>Channel<input id="forecastChannel" type="number" min="0" step="1" value="5"></label><label>A incl. Channel<input id="forecastA" type="number" min="0" step="1" value="25"></label><label>B-or-higher<input id="forecastB" type="number" min="0" step="1" value="60"></label><label>Active partners<input id="forecastActive" type="number" min="0" step="1" value="200"></label><label>Monthly leads per active<input id="forecastProductivity" type="number" min="0" step="0.001" value="1.00"></label><button id="forecastCalculate">Forecast bonus</button></div><div id="forecastResult" class="warn"></div></section>
+<section class="card advanced" id="bonus-plan"><h2>Plan the next quarter • What-if bonus forecast</h2><p class="muted">Use target counts to plan. This is a hypothetical scenario, not an earned or officially approved bonus. Channel counts within A, and A within B-or-higher. Enter a monthly productivity goal or calculate it from quarter leads below.</p><div class="control"><label>Channel<input id="forecastChannel" type="number" min="0" step="1" value="5"></label><label>A incl. Channel<input id="forecastA" type="number" min="0" step="1" value="25"></label><label>B-or-higher<input id="forecastB" type="number" min="0" step="1" value="60"></label><label>Active partners<input id="forecastActive" type="number" min="0" step="1" value="200"></label><label>Monthly leads per active<input id="forecastProductivity" type="number" min="0" step="0.001" value="1.00"></label><button id="forecastCalculate">Forecast bonus</button></div><div id="forecastResult" class="warn"></div><h3>Gaps to each compensation goal</h3>
+<p class="muted">Scenario gaps use the plan’s Meets thresholds. Quarterly loan fundings and intake targets are tracked in the Director Overview.</p>
+<ul id="forecastGoalGaps" aria-live="polite"></ul></section>
 <section class="card advanced"><h2>Referral productivity • Verified-input scenario</h2><p class="muted">Enter verified figures from your official reporting for the chosen quarter. These fields are temporary calculations only, not saved scorecard evidence. Refreshing or changing quarter clears them. The denominator is the sum of the three month-end active-partner counts—not the latest count multiplied by three.</p>
 <div class="control"><label>Total referred leads in quarter<input id="leads" type="number" min="0" step="1" placeholder="Quarter total"></label><label>Month 1 active<input id="month1" type="number" min="0" step="1" placeholder="Month-end"></label><label>Month 2 active<input id="month2" type="number" min="0" step="1" placeholder="Month-end"></label><label>Month 3 active<input id="month3" type="number" min="0" step="1" placeholder="Month-end"></label><button id="calculate">Calculate scenario</button></div><div id="productivity" class="muted">No verified quarterly counts entered.</div></section>
 <section class="card" id="growth-list"><details id="fullWorklists"><summary class="allAgentsToggle"><span>All agent opportunities</span><small>Search the full list when you need it</small></summary><div class="control"><label>Find agent<input id="agentSearch" type="search" placeholder="Search relationships"></label><label>Worklist<select id="listFilter"><option value="all">All opportunities</option><option value="Due or overdue follow-ups">Due / overdue follow-ups</option><option value="C to B">C → B</option><option value="B to A">B → A</option><option value="A to Channel">A → Channel</option><option value="inactivity">At risk</option><option value="Inactive recovery">Inactive recovery</option></select></label></div><p class="muted">These lists use the latest shared Power BI profile import. Production-based opportunities are directional until completed closing dates are independently reconciled. Assignment labels never change compensation eligibility.</p><div class="grid" id="workstats"></div><div id="worklists"></div></details></section>
@@ -164,6 +167,40 @@ let current=null, actions=[], sourceVerified=false, snapshotRows=[], importQuali
 const $=id=>document.getElementById(id), safe=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number.isFinite(Number(v))&&v!==''&&v!==null?Number(v):null;
 function level(v,def){if(v==null||!Number.isFinite(v))return null;if(v>=def.exceeds)return 3;if(v>=def.meets)return 2;if(v>=def.min)return 1;return 0}
+function compensationGoalGaps(counts) {
+  return defs.map(def => {
+    const value = counts[def.id];
+    if (!Number.isFinite(value)) return {def, state:'unverified', gap:null};
+    const gap = Math.max(0, def.meets - value);
+    return {def, state:gap === 0 ? 'met' : 'short', gap};
+  });
+}
+const compensationActions = {
+  channel: 'Director: review A partners approaching 10 rolling fundings and confirm the next supported opportunity.',
+  a: 'Director: review B partners approaching four rolling fundings and assign the next action.',
+  b: 'Amanda: prioritize C partners approaching two rolling fundings and log the next named introduction.',
+  p: 'Director and RMs: review first and repeat referrals with eligible partners. Use verified quarter leads and all three month-end active counts.',
+  active: 'Director and RMs: review partners nearing the end of their 90-day activity window. Confirm actual qualifying leads or fundings.'
+};
+function renderCompensationGaps(id, counts, denominator) {
+  const host = $(id);
+  host.replaceChildren();
+  for (const {def, state, gap} of compensationGoalGaps(counts)) {
+    const row = document.createElement('li');
+    let result = 'Evidence pending';
+    if (state === 'met') result = 'Meets target';
+    if (state === 'short') {
+      const display = def.id === 'p' ? (gap < .0001 ? '<0.0001' : gap.toFixed(4)) + ' leads per active' : String(gap);
+      result = display + ' short. ' + compensationActions[def.id];
+      if (def.id === 'p' && Number.isSafeInteger(denominator) && denominator > 0) {
+        const needed = Math.ceil(def.meets * denominator) - Number($('leads').value);
+        result += ' At this denominator, ' + needed + ' more referred leads would meet target.';
+      }
+    }
+    row.textContent = def.name + ' (' + def.meets + ') · ' + result;
+    host.append(row);
+  }
+}
 function payment(score){if(score<1)return 0;if(score<=2)return 2500+6250*(score-1);return Math.min(12500,8750+3750*(score-2))}
 const cash=v=>'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const date=v=>/^\d{4}-\d{2}-\d{2}/.test(String(v||''))?String(v).slice(0,10):null;
@@ -176,6 +213,7 @@ function cards(counts){$('metrics').innerHTML=defs.map(d=>{const n=counts[d.id],
 function updateScore(){const counts=current||{channel:null,a:null,b:null,active:null};const input=['leads','month1','month2','month3'].map(k=>$ (k).value.trim());const nums=input.map(num);let p=null;if(nums.every((v,i)=>v!==null&&v>=0&&Number.isInteger(v))&&nums.slice(1).reduce((a,b)=>a+b,0)>0)p=nums[0]/nums.slice(1).reduce((a,b)=>a+b,0);counts.p=p;
 $('productivity').textContent=p===null?'Incomplete: enter four verified nonnegative whole-number values with a positive total active denominator.':'Quarterly referral productivity: '+p.toFixed(4)+' leads per month-end active partner. Tier: '+level(p,defs[3])+' of 3.';
 cards(counts);
+renderCompensationGaps('verifiedGoalGaps', sourceVerified ? counts : {p}, p === null ? null : nums.slice(1).reduce((a,b)=>a+b,0));
 const complete=sourceVerified&&defs.every(d=>counts[d.id]!==null&&counts[d.id]!==undefined);
 $('evidence').textContent=complete?'Ready*':'Incomplete';
 if(!complete){$('score').textContent='—';$('bonus').textContent='—';$('scoreGap').textContent='—';$('simpleBonus').textContent='Not yet verified — use the planning view, not a payout estimate.';$('formulaNote').textContent='No payout forecast: one or more official scorecard inputs are missing. *Even a complete calculation remains provisional until closing evidence, active status and totals are independently verified.';return}
@@ -258,8 +296,9 @@ function forecast(){
 const ids=['forecastChannel','forecastA','forecastB','forecastActive','forecastProductivity'];
 const vals=ids.map(id=>num($(id).value.trim()));
 const el=$('forecastResult');
-if(vals.some(v=>v===null||v<0)||vals.slice(0,4).some(v=>!Number.isInteger(v))||vals[0]>vals[1]||vals[1]>vals[2]||vals[2]>vals[3]){el.className='warn error';el.textContent='Enter valid nonnegative values. Channel must not exceed A; A must not exceed B-or-higher; B-or-higher must not exceed active partners.';return}
+if(vals.some(v=>v===null||v<0)||vals.slice(0,4).some(v=>!Number.isInteger(v))||vals[0]>vals[1]||vals[1]>vals[2]||vals[2]>vals[3]){$('forecastGoalGaps').replaceChildren();el.className='warn error';el.textContent='Enter valid nonnegative values. Channel must not exceed A; A must not exceed B-or-higher; B-or-higher must not exceed active partners.';return}
 const byId={channel:vals[0],a:vals[1],b:vals[2],active:vals[3],p:vals[4]};const total=defs.reduce((sum,d)=>sum+level(byId[d.id],d)*d.weight,0);
+renderCompensationGaps('forecastGoalGaps', byId);
 el.className='warn ok';
 el.textContent='Planning scenario: '+total.toFixed(2)+' / 3 weighted points → '+cash(payment(total))+' potential quarterly bonus ('+cash(payment(total)*4)+' if repeated all four quarters). Actual payments require official verified results.';
 }
