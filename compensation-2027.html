@@ -157,31 +157,17 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
 <section class="card" id="growth-list"><details id="fullWorklists"><summary class="allAgentsToggle"><span>All agent opportunities</span><small>Search the full list when you need it</small></summary><div class="control"><label>Find agent<input id="agentSearch" type="search" placeholder="Search relationships"></label><label>Worklist<select id="listFilter"><option value="all">All opportunities</option><option value="Due or overdue follow-ups">Due / overdue follow-ups</option><option value="C to B">C → B</option><option value="B to A">B → A</option><option value="A to Channel">A → Channel</option><option value="inactivity">At risk</option><option value="Inactive recovery">Inactive recovery</option></select></label></div><p class="muted">These lists use the latest shared Power BI profile import. Production-based opportunities are directional until completed closing dates are independently reconciled. Assignment labels never change compensation eligibility.</p><div class="grid" id="workstats"></div><div id="worklists"></div></details></section>
 <section class="card advanced"><h2>Access and data protection</h2><p class="muted">This is currently a public GitHub Pages application using shared browser-side data access. It is not a private payroll portal. Avoid entering confidential borrower details, private compensation notes, or other sensitive records. Before using this with a broader audience, implement authenticated Director-only access and database row-level permissions in a coordinated rollout so RM and LP data workflows are not disrupted.</p></section><section class="card advanced"><h2>Director operating cadence</h2><div class="note"><b>Monday:</b> Reconcile official counts and identify the highest-impact verified gaps. <b>Tuesday:</b> Review Amanda's C→B list and outstanding LP follow-through. <b>Wednesday:</b> Prioritize your own B→A, A→Channel, builders and strategic accounts. <b>Thursday:</b> Validate completed closings and upcoming 90-day inactivity. <b>Friday:</b> Recalculate the weighted score, quarter-end risks, and the specific owners/actions required.</div><div class="warn"><b>Fixed compensation baseline (Nov 19, 2026):</b> 1 Channel, 20 A-level (including Channel), 41 B-or-higher, 128 active. This baseline must not be replaced by an older Power BI snapshot. The current verified population may differ.</div></section>
 </main>
+<script src="./comp-goals.js?v=1"></script>
 <script>
 (function(){
 'use strict';
 const API='https://uclucbdkjqyqdvifyptx.supabase.co';
 const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjbHVjYmRranF5cWR2aWZ5cHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0OTUyMTMsImV4cCI6MjA5NjA3MTIxM30.VnqWcFT1WLQwCJxSdEIzIgOvETaOQly2IQxht-9uI7E';
-const defs=[{id:'channel',name:'Channel partners',weight:.15,min:4,meets:5,exceeds:6,base:1},{id:'a',name:'A-level incl. Channel',weight:.15,min:22,meets:25,exceeds:30,base:20},{id:'b',name:'B-or-higher',weight:.20,min:53,meets:60,exceeds:72,base:41},{id:'p',name:'Monthly leads per active',weight:.30,min:.85,meets:1,exceeds:1.15,base:null},{id:'active',name:'Active partners',weight:.20,min:180,meets:200,exceeds:220,base:128}];
+const {defs, actions:compensationActions, gaps:compensationGoalGaps} = DirectorCompGoals;
 let current=null, actions=[], sourceVerified=false, snapshotRows=[], importQuality=null, aeSelected='';
 const $=id=>document.getElementById(id), safe=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number.isFinite(Number(v))&&v!==''&&v!==null?Number(v):null;
 function level(v,def){if(v==null||!Number.isFinite(v))return null;if(v>=def.exceeds)return 3;if(v>=def.meets)return 2;if(v>=def.min)return 1;return 0}
-function compensationGoalGaps(counts) {
-  return defs.map(def => {
-    const value = counts[def.id];
-    if (!Number.isFinite(value)) return {def, state:'unverified', gap:null};
-    const gap = Math.max(0, def.meets - value);
-    return {def, state:gap === 0 ? 'met' : 'short', gap};
-  });
-}
-const compensationActions = {
-  channel: 'Director: review A partners approaching 10 rolling fundings and confirm the next supported opportunity.',
-  a: 'Director: review B partners approaching four rolling fundings and assign the next action.',
-  b: 'Amanda: prioritize C partners approaching two rolling fundings and log the next named introduction.',
-  p: 'Director and RMs: review first and repeat referrals with eligible partners. Use verified quarter leads and all three month-end active counts.',
-  active: 'Director and RMs: review partners nearing the end of their 90-day activity window. Confirm actual qualifying leads or fundings.'
-};
 function renderCompensationGaps(id, counts, denominator) {
   const host = $(id);
   host.replaceChildren();

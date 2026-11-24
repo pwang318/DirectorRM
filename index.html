@@ -397,6 +397,33 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
   update();
 })();
 </script>
+<details class="card" id="directorCompPace" style="margin-top:18px">
+<summary><strong>Weekly progress against compensation goals</strong></summary>
+<p>Enter the latest verified counts and their reporting date. These figures support weekly planning. Use the <a href="./compensation-2027.html">compensation planner</a> for quarter-end evidence and bonus scoring.</p>
+<form>
+<div class="grid two">
+<div class="field"><label for="compPaceDate">Figures as of</label><input id="compPaceDate" name="asOf" type="date" required></div>
+<div class="field"><label for="compPaceSource">Verified report or source reference</label><input id="compPaceSource" name="source" maxlength="100" required></div>
+</div>
+<div class="grid two" data-comp-fields></div>
+<button type="submit" class="btn primary">Save weekly figures</button>
+</form>
+<p role="status"></p><p data-comp-date>No verified figures entered.</p><ul data-comp-gaps></ul>
+</details>
+<script defer src="./comp-goals.js?v=1"></script>
+<script defer src="./comp-pacing.js?v=1"></script>
+<details class="card" id="directorFundingForecast" style="margin-top:18px">
+<summary><strong>30/60/90-day team funding forecast</strong></summary>
+<p>Use a verified Encompass export with 2027 fundings to date and open loans with supported funding dates. Use file references and omit borrower names. The forecast saves in this browser.</p>
+<form class="grid two">
+<div class="field"><label for="directorForecastAsOf">Export as-of date</label><input id="directorForecastAsOf" name="asOf" type="date" required></div>
+<div class="field"><label for="directorForecastFile">Verified forecast CSV</label><input id="directorForecastFile" name="forecastFile" type="file" accept=".csv,text/csv" required></div>
+<div><button type="submit" class="btn primary">Import forecast</button></div>
+</form>
+<p class="meta">CSV columns are <code>file_id,stage,funding_date,status,blocker,owner,next_action</code>. Use YYYY-MM-DD dates and statuses <code>funded</code>, <code>expected</code>, or <code>at_risk</code>. Open loans need an owner and next action. At-risk loans also need a blocker. Quarter coverage excludes at-risk and slipped files.</p>
+<p role="status"></p><p data-forecast-summary>No forecast imported.</p><div data-forecast-results></div>
+</details>
+<script defer src="./funding-forecast.js?v=1"></script>
 <details class="card" id="directorCoreExecution" style="margin-top:18px">
 <summary><strong>2027 production scorecard, Rockford forecast, and file audits</strong></summary>
 <p>Enter verified totals from CRM and Encompass. Records are saved in this browser. Use the transfer file to share records with an authorized teammate.</p>
