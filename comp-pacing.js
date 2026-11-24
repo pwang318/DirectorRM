@@ -60,6 +60,10 @@
       status.textContent = 'Could not save the weekly figures.';
     }
   });
+  window.addEventListener('core-team-sync-updated', () => {
+    try { render(JSON.parse(localStorage.getItem(storageKey) || 'null')); }
+    catch { status.textContent = 'Could not load saved weekly figures.'; }
+  });
   try { render(JSON.parse(localStorage.getItem(storageKey) || 'null')); }
   catch { status.textContent = 'Could not load saved weekly figures.'; }
 })();

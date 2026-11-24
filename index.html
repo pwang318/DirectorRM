@@ -397,6 +397,22 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
   update();
 })();
 </script>
+<details class="card" id="coreTeamSync" data-surface="director" style="margin-top:18px">
+<summary><strong>Core Team sync</strong></summary>
+<p data-sync-status role="status">Checking sign-in…</p>
+<form data-sync-account>
+<label>Core Team email <input name="email" type="email" autocomplete="username" required></label>
+<label>Password (optional for email link) <input name="password" type="password" autocomplete="current-password"></label>
+<button type="submit" class="btn-sm">Sign in</button>
+</form>
+<div data-sync-authenticated hidden>
+<button type="button" data-sync-refresh class="btn-sm">Refresh shared records</button>
+<button type="button" data-sync-logout class="btn-sm">Sign out</button>
+<p>Publish reviewed browser records to create a shared version. Load the shared version before editing records that a teammate has published.</p>
+<ul data-sync-collections></ul>
+<h3>Verified source coverage</h3><ul data-sync-sources></ul>
+</div>
+</details>
 <details class="card" id="directorCompPace" style="margin-top:18px">
 <summary><strong>Weekly progress against compensation goals</strong></summary>
 <p>Enter the latest verified counts and their reporting date. These figures support weekly planning. Use the <a href="./compensation-2027.html">compensation planner</a> for quarter-end evidence and bonus scoring.</p>
@@ -411,7 +427,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <p role="status"></p><p data-comp-date>No verified figures entered.</p><ul data-comp-gaps></ul>
 </details>
 <script defer src="./comp-goals.js?v=1"></script>
-<script defer src="./comp-pacing.js?v=1"></script>
+<script defer src="./comp-pacing.js?v=2"></script>
 <details class="card" id="directorFundingForecast" style="margin-top:18px">
 <summary><strong>30/60/90-day team funding forecast</strong></summary>
 <p>Use a verified Encompass export with 2027 fundings to date and open loans with supported funding dates. Use file references and omit borrower names. The forecast saves in this browser.</p>
@@ -423,7 +439,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <p class="meta">CSV columns are <code>file_id,stage,funding_date,status,blocker,owner,next_action</code>. Use YYYY-MM-DD dates and statuses <code>funded</code>, <code>expected</code>, or <code>at_risk</code>. Open loans need an owner and next action. At-risk loans also need a blocker. Quarter coverage excludes at-risk and slipped files.</p>
 <p role="status"></p><p data-forecast-summary>No forecast imported.</p><div data-forecast-results></div>
 </details>
-<script defer src="./funding-forecast.js?v=1"></script>
+<script defer src="./funding-forecast.js?v=2"></script>
 <details class="card" id="directorCoreExecution" style="margin-top:18px">
 <summary><strong>2027 production scorecard, Rockford forecast, and file audits</strong></summary>
 <p>Enter verified totals from CRM and Encompass. Records are saved in this browser. Use the transfer file to share records with an authorized teammate.</p>
@@ -463,7 +479,7 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <label>Import transfer file <input type="file" accept=".json,application/json" data-core-import></label>
 <p data-core-status role="status"></p>
 </details>
-<script defer src="./core-execution.js?v=1"></script>
+<script defer src="./core-execution.js?v=2"></script>
 <details class="overviewDetails"><summary><span>My accounts needing attention</span><span class="detailsHint">Open your owned-account list</span></summary><div class="overviewDetailsBody"><div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
 <div class="whoHead"><div><div class="label">MY ACCOUNTS NEEDING ATTENTION</div><h2 id="whoTitle">My Accounts Needing Attention</h2><p id="whoSubtitle">Your Director-owned A, B, Channel, Builder, Strategic, and confirmed Nyny-owned C relationships.</p></div><div><div class="whoCount" id="whoCount">—</div><div class="hint">your priorities ↗</div></div></div>
 <div class="whoPreview" id="whoPreview"></div>
@@ -2956,4 +2972,5 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
 </script>
+<script defer src="./core-team-sync.js?v=1"></script>
 </body></html>

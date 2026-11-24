@@ -106,6 +106,10 @@
       button.disabled = false;
     }
   });
+  window.addEventListener('core-team-sync-updated', () => {
+    try { render(JSON.parse(localStorage.getItem(storageKey) || 'null')); }
+    catch { status.textContent = 'The saved forecast could not be loaded.'; }
+  });
   try { render(JSON.parse(localStorage.getItem(storageKey) || 'null')); }
   catch { status.textContent = 'The saved forecast could not be loaded.'; }
 })();

@@ -137,6 +137,10 @@
       auditList.append(item);
     }
   }
+  window.addEventListener('core-team-sync-updated', () => {
+    try { render(readExecution()); }
+    catch { status.textContent = 'Could not show the shared execution records.'; }
+  });
   renderFields();
   production.addEventListener('input', results);
   find('#coreReportLoad').addEventListener('change', event => {
