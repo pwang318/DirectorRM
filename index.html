@@ -384,11 +384,59 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
       status.textContent = 'Action saved.';
     }
   });
+  window.addEventListener('director-core-huddle-imported', () => {
+    try {
+      state = JSON.parse(localStorage.getItem(storageKey) || 'null') || state;
+      renderHistory();
+    } catch {
+      status.textContent = 'Imported huddles could not be loaded.';
+    }
+  });
   renderHistory();
   form.addEventListener('input', update);
   update();
 })();
 </script>
+<details class="card" id="directorCoreExecution" style="margin-top:18px">
+<summary><strong>2027 production scorecard, Rockford forecast, and file audits</strong></summary>
+<p>Enter verified totals from CRM and Encompass. Records are saved in this browser. Use the transfer file to share records with an authorized teammate.</p>
+<h3>Production scorecard</h3>
+<form data-core-form="production">
+<div class="grid two">
+<div class="field"><label for="coreReportDate">Through date</label><input id="coreReportDate" name="date" type="date" min="2027-01-01" max="2027-12-31" required></div>
+<div class="field"><label for="coreReportLoad">Load saved scorecard</label><select id="coreReportLoad"></select></div>
+</div>
+<div data-core-production-fields></div>
+<p data-core-production-result aria-live="polite"></p>
+<button type="submit" class="btn primary">Save scorecard</button>
+</form>
+<h3>Rockford by rep and quarter</h3>
+<p>Enter unique loans and buyers once across the forecast. Supported open buyers need a confirmed financing next step and an expected 2027 completion.</p>
+<form data-core-form="rockford" class="grid two">
+<div class="field"><label for="coreRep">Rockford rep</label><input id="coreRep" name="rep" maxlength="100" required></div>
+<div class="field"><label for="coreRockQuarter">Expected funding quarter</label><select id="coreRockQuarter" name="quarter"><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option></select></div>
+<div class="field"><label for="coreRockFunded">Unique funded loans</label><input id="coreRockFunded" name="funded" type="number" min="0" step="1" required></div>
+<div class="field"><label for="coreRockOpen">Unique supported open buyers</label><input id="coreRockOpen" name="open" type="number" min="0" step="1" required></div>
+<div><button type="submit" class="btn primary">Save rep and quarter</button></div>
+</form>
+<p data-core-rockford-result></p>
+<ul data-core-rockford></ul>
+<h3>File audit follow-through</h3>
+<p>Use a file reference. Record verification for the corrected file and then for the next comparable file.</p>
+<form data-core-form="audit" class="grid two">
+<div class="field"><label for="coreAuditRef">File reference</label><input id="coreAuditRef" name="reference" maxlength="80" required></div>
+<div class="field"><label for="coreAuditAction">Expected action</label><input id="coreAuditAction" name="action" maxlength="300" required></div>
+<div class="field"><label for="coreAuditOwner">Owner</label><input id="coreAuditOwner" name="owner" maxlength="100" required></div>
+<div class="field"><label for="coreAuditDue">Due time (Eastern)</label><input id="coreAuditDue" name="due" type="datetime-local" required></div>
+<div><button type="submit" class="btn primary">Add file audit</button></div>
+</form>
+<ul data-core-audits></ul>
+<h3>Transfer huddles, scorecards, and audits</h3>
+<button type="button" class="btn" data-core-export>Download transfer file</button>
+<label>Import transfer file <input type="file" accept=".json,application/json" data-core-import></label>
+<p data-core-status role="status"></p>
+</details>
+<script defer src="./core-execution.js?v=1"></script>
 <details class="overviewDetails"><summary><span>My accounts needing attention</span><span class="detailsHint">Open your owned-account list</span></summary><div class="overviewDetailsBody"><div class="card whoNeeds" id="whoNeedsCard" data-drill="whoNeeds">
 <div class="whoHead"><div><div class="label">MY ACCOUNTS NEEDING ATTENTION</div><h2 id="whoTitle">My Accounts Needing Attention</h2><p id="whoSubtitle">Your Director-owned A, B, Channel, Builder, Strategic, and confirmed Nyny-owned C relationships.</p></div><div><div class="whoCount" id="whoCount">—</div><div class="hint">your priorities ↗</div></div></div>
 <div class="whoPreview" id="whoPreview"></div>
