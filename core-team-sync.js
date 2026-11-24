@@ -37,6 +37,127 @@
     line.textContent = text;
     list.append(line);
   }
+  const reviewStatus = find('[data-huddle-review-status]');
+  const reviewHost = find('[data-huddle-review]');
+  const huddleKey = 'director-core-2027-huddle';
+  let reviewReport;
+  function readHuddle() {
+    return JSON.parse(localStorage.getItem(huddleKey) || 'null') || {snapshots:{}, actions:[]};
+  }
+  function saveHuddle(state, message) {
+    localStorage.setItem(huddleKey, JSON.stringify(state));
+    window.dispatchEvent(new Event('director-core-huddle-imported'));
+    renderReview();
+    reviewStatus.textContent = message;
+  }
+  function renderReview() {
+    if (!reviewHost || !reviewReport) return;
+    const {date, fundingExceptions, slipped, accountsReady} = reviewReport;
+    const rm = snapshots.get('rm-weekly');
+    const week = new Date(date + 'T00:00:00Z');
+    week.setUTCDate(week.getUTCDate() - (week.getUTCDay() + 6) % 7);
+    const weekKey = week.toISOString().slice(0, 10);
+    const issues = [
+      ...fundingExceptions.map(row => ({
+        key:'funding:' + row.reference, owner:row.owner || 'Director',
+        action:'Verify funding evidence in Encompass for ' + row.reference + ' (' + row.milestone + '). Confirm the funded date or document why it stays excluded.'
+      })),
+      ...slipped.map(row => ({
+        key:'date:' + row.reference + ':' + row.estimatedDate, owner:row.owner || 'Director',
+        action:'Confirm the new expected funding date or blocker for ' + row.reference + ' (previously ' + row.estimatedDate + ').'
+      })),
+      {key:'intake:' + date, owner:'Mackenzie',
+       action:'Reconcile deduplicated CRM leads across all six relationship sources and verify all-source 1003 starts against the dated Encompass report.'},
+      {key:'comp:' + weekKey, owner:'Director',
+       action:'Verify Channel, A-level including Channel, B-or-higher, active partners, and productivity from official totals. For productivity, record quarter leads and all three month-end active counts.'},
+      {key:'rm:' + weekKey, owner:'Amanda and Director',
+       action:'Verify the RM handoff across two accounts. Confirm a published follow-up has an owner, due date, and next action.',
+       blocked:accountsReady < 2 || !rm?.revision}
+    ];
+    const saved = readHuddle().actions.filter(entry => entry.reconciliationKey);
+    const byKey = new Map(saved.map(entry => [entry.reconciliationKey, entry]));
+    for (const entry of saved) {
+      if (!entry.checked && !issues.some(issue => issue.key === entry.reconciliationKey)) {
+        issues.push({key:entry.reconciliationKey, owner:entry.owner, action:entry.action,
+          blocked:entry.reconciliationKey.startsWith('rm:') && (accountsReady < 2 || !rm?.revision)});
+      }
+    }
+    reviewHost.replaceChildren();
+    reviewStatus.textContent = fundingExceptions.length + ' funding exceptions · ' + slipped.length + ' slipped files · ' +
+      accountsReady + ' approved sign-ins confirmed · ' + (rm?.revision ? 'RM shared version ' + rm.revision : 'RM handoff unpublished');
+    for (const issue of issues) {
+      const entry = byKey.get(issue.key);
+      const item = document.createElement('li');
+      item.textContent = issue.action + ' · ' + (entry?.owner || issue.owner) + ' ';
+      const form = document.createElement('form');
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.required = true;
+      const button = document.createElement('button');
+      button.type = 'submit';
+      button.className = 'btn';
+      if (entry?.checked && entry.evidence) {
+        item.append('Verified · ' + entry.evidence);
+      } else {
+        if (entry) {
+          item.append('Due ' + entry.due.replace('T', ' ') + ' ET. ');
+          label.textContent = 'Verification result or report reference ';
+          input.maxLength = 240;
+          button.textContent = 'Save verification';
+          if (issue.blocked) {
+            button.disabled = true;
+            item.append('A second confirmed account and a published RM version are needed. ');
+          }
+        } else {
+          label.textContent = 'Due time (Eastern) ';
+          input.type = 'datetime-local';
+          button.textContent = 'Add to huddle';
+        }
+        label.append(input);
+        form.append(label, button);
+        item.append(form);
+        form.onsubmit = event => {
+          event.preventDefault();
+          const value = input.value.trim();
+          if (!value) return;
+          try {
+            const latest = readHuddle();
+            const existing = latest.actions.find(row => row.reconciliationKey === issue.key);
+            if (!entry && !existing) {
+              latest.actions.push({
+                id:crypto.randomUUID(), reconciliationKey:issue.key, action:issue.action,
+                owner:issue.owner, due:value
+              });
+              saveHuddle(latest, 'Added to the huddle. Publish the huddle to share this task.');
+            } else if (entry && existing && !existing.checked && !issue.blocked) {
+              existing.evidence = issue.key.startsWith('rm:') ? 'RM shared version ' + rm.revision + ' · ' + value : value;
+              existing.checked = new Date().toISOString();
+              saveHuddle(latest, 'Verification recorded. Publish the huddle to share it.');
+            } else {
+              renderReview();
+            }
+          } catch {
+            reviewStatus.textContent = 'Could not save the reconciliation record.';
+          }
+        };
+      }
+      reviewHost.append(item);
+    }
+  }
+  async function refreshReview(requestSession) {
+    if (!reviewHost) return;
+    const {data, error} = await api.rpc('core_tracker_huddle_review');
+    if (sessionId !== requestSession) return;
+    try {
+      if (error || !data) throw Error();
+      reviewReport = data;
+      renderReview();
+    } catch {
+      reviewReport = null;
+      reviewHost.replaceChildren();
+      reviewStatus.textContent = 'Huddle reconciliation unavailable. Retry after refreshing shared records.';
+    }
+  }
   async function refreshSources() {
     if (!source || !sessionId) return;
     const requestSession = sessionId;
@@ -78,7 +199,10 @@
   function updateLocal(collection, payload) {
     localStorage.setItem(collections[collection][0], JSON.stringify(payload));
     window.dispatchEvent(new Event('core-team-sync-updated'));
-    if (collection === 'director-huddle') window.dispatchEvent(new Event('director-core-huddle-imported'));
+    if (collection === 'director-huddle') {
+      window.dispatchEvent(new Event('director-core-huddle-imported'));
+      renderReview();
+    }
   }
   function renderCollections() {
     const list = find('[data-sync-collections]');
@@ -150,7 +274,7 @@
     try {
       await Promise.all(allowed.map(loadCollection));
       renderCollections();
-      await refreshSources();
+      await Promise.all([refreshSources(), refreshReview(sessionId)]);
     } catch {
       status.textContent = 'Could not refresh shared records.';
     } finally {
@@ -165,6 +289,8 @@
     authenticated.hidden = true;
     account.hidden = false;
     source?.replaceChildren();
+    reviewHost?.replaceChildren();
+    reviewReport = null;
     if (!session?.user?.email) {
       status.textContent = 'Sign in with your approved Core Team account.';
       return;

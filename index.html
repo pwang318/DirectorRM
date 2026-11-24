@@ -340,6 +340,11 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
     for (const entry of state.actions) {
       const item = document.createElement('li');
       item.textContent = entry.action + ' · ' + entry.owner + ' · due ' + entry.due.replace('T', ' ');
+      if (entry.reconciliationKey) {
+        item.append(document.createTextNode(entry.checked && entry.evidence ? ' · Verified: ' + entry.evidence : ' · Evidence pending in Core Team sync'));
+        actions.append(item);
+        continue;
+      }
       const label = document.createElement('label');
       const check = document.createElement('input');
       check.type = 'checkbox';
@@ -411,6 +416,10 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <p>Publish reviewed browser records to create a shared version. Load the shared version before editing records that a teammate has published.</p>
 <ul data-sync-collections></ul>
 <h3>Verified source coverage</h3><ul data-sync-sources></ul>
+<h3>Huddle reconciliation</h3>
+<p>Assign a due time before adding an item. Close it only after recording the source reference or result you verified. Publish Director huddles and actions above to share the updates.</p>
+<p data-huddle-review-status role="status"></p>
+<ul data-huddle-review></ul>
 </div>
 </details>
 <details class="card" id="directorCompPace" style="margin-top:18px">
@@ -2972,5 +2981,5 @@ body:has(#view-impact.active) #directorTrackerDiagnostics,body:has(#view-executi
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
 </script>
-<script defer src="./core-team-sync.js?v=1"></script>
+<script defer src="./core-team-sync.js?v=2"></script>
 </body></html>
