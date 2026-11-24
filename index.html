@@ -239,19 +239,23 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <div class="card workbenchCard"><div class="label">QUICK FIND</div><h2>Find an agent</h2><p class="workbenchIntro">Search your relationships or Amanda’s active prospects. Open the record or take action right here.</p><input class="directorSearch" id="directorQuickSearch" type="search" placeholder="Agent, email, phone, or prospect" autocomplete="off" aria-label="Find an agent or prospect"><div class="searchHint searchShortcut">Tip: press <kbd>Ctrl/⌘</kbd> + <kbd>K</kbd> to jump to search.</div><div class="searchResults" id="directorQuickResults"><div class="searchHint">Start typing to find an agent.</div></div><div class="workbenchLinks"><button type="button" data-view="relationships">All relationships</button><button type="button" data-view="growth">Growth opportunities</button></div></div>
 <div class="card workbenchCard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div class="label">YOUR FOCUS</div><h2>What needs your attention?</h2><p class="workbenchIntro" style="margin-bottom:0">Prioritized: at risk, due follow-ups, lead gaps, then growth.</p></div><div class="whoCount" id="directorQueueCount">—</div></div><div class="queueList" id="directorActionQueue"><div class="queueEmpty">Loading your current actions…</div></div><div class="workbenchLinks"><button type="button" data-drill="atRisk">At risk</button><button type="button" data-drill="upcoming7">Follow-ups</button><button type="button" data-drill="noLead14">No lead in 14+ days <span id="directorLeadCheckinCount">—</span></button><button type="button" data-drill="growthOpps">Growth</button></div></div>
 </div>
+<div class="card" style="margin-top:18px"><h3>2027 Realtor portfolio progress</h3><p class="meta" id="core2027Portfolio">Loading dated partner activity and rolling-year fundings…</p></div>
 <div class="grid kpis" id="overviewKpis"><div class="card click" data-drill="active"><div class="label">Total Active Agent Goal</div><div class="big" id="kpiActive">Loading…</div><div class="delta" id="kpiActiveDelta" data-live-delta="active">Latest shared Power BI</div><div class="hint">200 overall · Channel / A / B = 50% of score</div></div><div class="card click" data-drill="channel"><div class="label">Channel</div><div class="big"><span id="dirChannelCount">—</span></div><div class="delta" data-live-delta="channel">Latest shared Power BI</div></div><div class="card click" data-drill="tierA"><div class="label">A</div><div class="big"><span id="dirACount">—</span></div><div class="delta" data-live-delta="tierA">Latest shared Power BI</div></div><div class="card click" data-drill="tierB"><div class="label">B</div><div class="big"><span id="dirBCount">—</span></div><div class="delta" data-live-delta="tierB">Latest shared Power BI</div></div><div class="card click" data-drill="atRisk"><div class="label">My Accounts At Risk</div><div class="big" id="kpiAtRisk">—</div><div class="delta down">A, B, Channel and Builder</div></div><div class="card click" data-drill="feedback"><div class="label">Agent Voice</div><div class="big" id="feedbackCount">—</div><div class="delta" id="repeatMini">Loading saved feedback…</div></div></div>
 <details class="card" id="directorCore2027" style="margin-top:18px">
 <summary><strong>2027 CORE operating plan and Q1 huddle</strong></summary>
-<p>Enter cumulative Q1 actuals through the same date. Entries are used for this calculation and reset when the page reloads.</p>
+<p>Enter cumulative Q1 actuals through the same date. Saved huddles and action items are available in this browser. Due times use Eastern time.</p>
 <form id="core2027Huddle">
 <div class="grid two">
-<div class="field"><label for="core2027Date">Q1 reporting date</label><input id="core2027Date" name="date" type="date" min="2027-01-01" max="2027-03-31"></div>
+<div class="field"><label for="core2027Date">Q1 reporting date</label><input id="core2027Date" name="date" type="date" required min="2027-01-01" max="2027-03-31"></div>
 <div class="field"><label for="core2027Leads">Unique relationship leads / 550</label><input id="core2027Leads" name="leads" type="number" min="0" step="1"><small data-core-leads></small></div>
 <div class="field"><label for="core2027Starts">All-source 1003 file starts / 450</label><input id="core2027Starts" name="starts" type="number" min="0" step="1"><small data-core-starts></small></div>
 <div class="field"><label for="core2027Funded">Dated fundings / 80</label><input id="core2027Funded" name="funded" type="number" min="0" step="1"><small data-core-funded></small></div>
 <div class="field"><label for="core2027Approvals">QTD pre-approval events</label><input id="core2027Approvals" name="approvals" type="number" min="0" step="1"></div>
 <div class="field"><label for="core2027Contracts">QTD contract events</label><input id="core2027Contracts" name="contracts" type="number" min="0" step="1"><small data-core-conversion></small></div>
 </div>
+<button type="submit" class="btn primary">Save dated huddle</button>
+<label for="core2027History">Load saved huddle</label>
+<select id="core2027History"></select>
 </form>
 <p class="meta">Daily intake pace is prorated across Q1 calendar days. Planning averages are 42.3 relationship leads and 34.6 starts per week over 13 weeks. Dedupe borrower opportunities across the six relationship sources in CRM. Count all Encompass 1003 starts, including ad starts, and track raw ad inquiries separately.</p>
 <div class="grid two">
@@ -260,6 +264,15 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
 <div><h3>When intake falls behind</h3><p>Mackenzie identifies the gap that day. For lead gaps, RMs and LPs name partners or clients to contact. For start gaps, assign leads, protected calling time and a completed-1003 target to LPs with capacity. Verify completions at the next huddle.</p></div>
 <div><h3>Audit customer journey execution</h3><p>Check the first-call goal, option and decision. For near-complete intake, verify the blocker, owner, due time and agreed callback. Inspect pre-approval figures and next contact, meaningful weekly shopping follow-up, offer contacts and strategy, Tuesday buyer and buyer-agent calls, listing-side follow-up, final terms and post-close dates. Check daily updates on waiting leads or incomplete qualifications unless an exception is documented, and a verbal agent update when qualification exceeds 24 hours. For misses, record the file, expected action, owner and due time, then recheck the correction and next comparable file.</p></div>
 </div>
+<h3>Huddle actions</h3>
+<form id="core2027Action" class="grid two">
+<div class="field"><label for="core2027ActionText">Action to verify</label><input id="core2027ActionText" name="action" required maxlength="300"></div>
+<div class="field"><label for="core2027ActionOwner">Owner</label><input id="core2027ActionOwner" name="owner" required maxlength="100"></div>
+<div class="field"><label for="core2027ActionDue">Due time (Eastern)</label><input id="core2027ActionDue" name="due" type="datetime-local" required></div>
+<div><button type="submit" class="btn primary">Add action</button></div>
+</form>
+<p id="core2027Status" role="status"></p>
+<ul id="core2027ActionList"></ul>
 </details>
 <script id="core2027HuddleScript">
 (() => {
@@ -292,7 +305,86 @@ body{background:var(--bg)}.app{grid-template-columns:224px minmax(0,1fr)}.side{b
     write('conversion', rate === null ? 'Unavailable until dated counts and positive pre-approvals are entered.' :
       rate.toFixed(1) + '% · Q1 target 60%');
   }
-  form.addEventListener('submit', event => event.preventDefault());
+  const storageKey = 'director-core-2027-huddle';
+  const fields = ['leads', 'starts', 'funded', 'approvals', 'contracts'];
+  const history = document.getElementById('core2027History');
+  const status = document.getElementById('core2027Status');
+  const actionForm = document.getElementById('core2027Action');
+  const actions = document.getElementById('core2027ActionList');
+  let state = {snapshots: {}, actions: []};
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+    if (saved) state = saved;
+  } catch {
+    status.textContent = 'Saved huddles could not be loaded.';
+  }
+  function persist(change) {
+    try {
+      const latest = JSON.parse(localStorage.getItem(storageKey) || 'null') || state;
+      change(latest);
+      localStorage.setItem(storageKey, JSON.stringify(latest));
+      state = latest;
+      renderHistory();
+      return true;
+    } catch {
+      status.textContent = 'Could not save in this browser.';
+      return false;
+    }
+  }
+  function renderHistory() {
+    const selected = form.elements.date.value;
+    history.replaceChildren(new Option('Choose a saved huddle', ''));
+    for (const date of Object.keys(state.snapshots).sort().reverse()) history.add(new Option(date, date));
+    history.value = selected;
+    actions.replaceChildren();
+    for (const entry of state.actions) {
+      const item = document.createElement('li');
+      item.textContent = entry.action + ' · ' + entry.owner + ' · due ' + entry.due.replace('T', ' ');
+      const label = document.createElement('label');
+      const check = document.createElement('input');
+      check.type = 'checkbox';
+      check.checked = Boolean(entry.checked);
+      check.addEventListener('change', () => {
+        if (!persist(data => {
+          const current = data.actions.find(row => row.id === entry.id);
+          if (current) current.checked = check.checked ? new Date().toISOString() : null;
+        })) check.checked = Boolean(entry.checked);
+      });
+      label.append(check, ' Rechecked' + (entry.checked ? ' ' + new Date(entry.checked).toLocaleString('en-US', {timeZone: 'America/New_York'}) : ''));
+      item.append(' ', label);
+      actions.append(item);
+    }
+  }
+  history.addEventListener('change', () => {
+    const snapshot = state.snapshots[history.value];
+    if (!snapshot) return;
+    form.elements.date.value = history.value;
+    for (const name of fields) form.elements[name].value = snapshot[name] ?? '';
+    update();
+  });
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const snapshot = Object.fromEntries(fields.map(name => [name, readCount(name)]));
+    if (!form.elements.date.value || snapshot.leads === null || snapshot.starts === null) {
+      status.textContent = 'Enter the Q1 date, relationship leads and file starts.';
+      return;
+    }
+    if (persist(data => { data.snapshots[form.elements.date.value] = snapshot; })) {
+      status.textContent = 'Huddle saved for ' + form.elements.date.value + '.';
+    }
+  });
+  actionForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const {action, owner, due} = actionForm.elements;
+    if (!action.value.trim() || !owner.value.trim()) return;
+    if (persist(data => data.actions.push({
+      id: crypto.randomUUID(), action: action.value.trim(), owner: owner.value.trim(), due: due.value
+    }))) {
+      actionForm.reset();
+      status.textContent = 'Action saved.';
+    }
+  });
+  renderHistory();
   form.addEventListener('input', update);
   update();
 })();
@@ -1736,13 +1828,22 @@ function reportDirectorPartialError(error){
  el.textContent='⚠ Some Director sections could not refresh from the shared server. Data may be incomplete. Select Sync Now to retry.';
 }
 let directorRefreshController=null;
+async function loadDirectorProfiles() {
+ const rows = [];
+ for (let offset = 0; ; offset += 1000) {
+   const page = await dSb('agent_profiles?select=*&order=agent_name.asc&limit=1000&offset=' + offset);
+   if (!Array.isArray(page)) throw new Error('Partner profiles could not be loaded.');
+   rows.push(...page);
+   if (page.length < 1000) return rows;
+ }
+}
 async function loadDirectorUnifiedDashboard(){
  clearDirectorPartialWarning();
  const since=new Date();since.setDate(since.getDate()-90);
  const today=dLocalDate(new Date());
  const monthStart=dLocalDate(new Date(new Date().getFullYear(),new Date().getMonth(),1));
  const [profiles,recentActivities,leadOutcomeActivities,leadTypeActivities,leadReferralActivities,dueActivities,logs,assignments,ownershipConfirmations,monthLeads]=await Promise.all([
-   dSb('agent_profiles?select=*&limit=5000'),
+   loadDirectorProfiles(),
    dSb('amanda_activities?select=*&act_date=gte.'+dLocalDate(since)+'&order=created_at.desc&limit=5000'),
    dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&outcome=ilike.*buyer%20opportunity%20received*&order=act_date.desc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
    dSb('amanda_activities?select=id,agent_name,act_type,act_date,outcome,created_at&act_type=ilike.*lead%20received*&order=act_date.desc&limit=5000').catch(error=>{reportDirectorPartialError(error);return []}),
@@ -2008,7 +2109,50 @@ function completeDirectorMeeting(id){
  if(!meeting)return;
  meeting.status='Completed';meeting.completedAt=new Date().toISOString();put(MEETING_KEY,rows);renderDirectorMeetingBoard();toastMsg('Meeting marked held');
 }
+function renderCorePortfolioProgress(host, profiles, asOf) {
+  const cutoff = new Date(asOf + 'T00:00:00Z');
+  cutoff.setUTCDate(cutoff.getUTCDate() - 89);
+  const firstDay = cutoff.toISOString().slice(0, 10);
+  const partners = new Map();
+  for (const row of profiles) {
+    const key = String(row.agent_name || '').normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+    const type = String(row.relationship_type || '').trim().toLowerCase();
+    if (!key || key.startsWith('__') || row.display_name === '__HIDDEN__' ||
+        row.do_not_contact === true || String(row.relationship_status || '').toLowerCase() === 'inactive' ||
+        ['strategic_partner', 'builder', 'builder_rep'].includes(type)) continue;
+    const current = partners.get(key) || {active: false, closes: null, stamp: ''};
+    const active = [row.latest_lead_date, row.latest_close_date].some(value => {
+      const date = String(value || '').slice(0, 10);
+      return date >= firstDay && date <= asOf;
+    });
+    const count = row.closes_past_year ?? row.closed_past_year;
+    const stamp = String(row.powerbi_last_seen_at || row.updated_at || '');
+    if (count != null && count !== '' && Number.isFinite(Number(count)) &&
+        (current.closes === null || stamp > current.stamp)) {
+      current.closes = Number(count);
+      current.stamp = stamp;
+    }
+    current.hasDates ||= Boolean(row.latest_lead_date || row.latest_close_date);
+    current.active ||= active;
+    partners.set(key, current);
+  }
+  const rows = [...partners.values()];
+  const count = predicate => rows.filter(predicate).length;
+  const metrics = [
+    ['90-day active', count(row => row.active), 'verify activity', 200],
+    ['A-level including Channel', count(row => row.closes >= 4), 21, 25],
+    ['Channel within A-level', count(row => row.closes >= 10), 2, 5],
+    ['B', count(row => row.closes >= 2 && row.closes < 4), 24, 35],
+    ['A-level plus B', count(row => row.closes >= 2), 45, 60]
+  ];
+  const hasCloses = rows.some(row => row.closes !== null);
+  const hasDates = rows.some(row => row.hasDates);
+  host.textContent = 'Profile records checked ' + asOf + ' · ' + metrics.map(([label, actual, q1, annual], index) =>
+    label + ': ' + ((index === 0 ? hasDates : hasCloses) ? actual : 'unavailable') +
+    ' (Q1 ' + q1 + ', year end ' + annual + ')').join(' · ');
+}
 function renderDirectorUnifiedDashboard(dashboard){
+ renderCorePortfolioProgress($('core2027Portfolio'), dashboard.shared.profiles || [], dLocalDate(new Date()));
  window.__directorDashboard=dashboard;
  DirectorPage.applyDashboard(document,dashboard,demoData);
  loadDirectorSharedPowerBi(true).catch(error=>reportDirectorPartialError(error));
@@ -2025,6 +2169,7 @@ function renderDirectorUnifiedDashboard(dashboard){
  if($('workModal')&&$('workModal').classList.contains('open'))updateWorkSuggestion();
 }
 function renderDirectorLoadError(error){
+ dirSetText('core2027Portfolio','Partner activity and fundings could not be loaded.');
  renderDirectorScoreTrends();
  const message=String(error&&error.message||error||'Data could not be loaded');
  const homeStatus=$('directorHomeSnapshot');if(homeStatus)homeStatus.innerHTML='<div class="focusLoading">Live portfolio data could not refresh. Select Sync Now to retry.</div>';
